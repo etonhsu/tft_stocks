@@ -1,3 +1,4 @@
+from typing import List
 from pydantic import BaseModel
 
 
@@ -14,7 +15,7 @@ class Player(BaseModel):
 
 class Portfolio(BaseModel):
     username: str
-    player: Player
+    player: List[Player]
     total: int
 
 
