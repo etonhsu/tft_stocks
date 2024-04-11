@@ -1,5 +1,5 @@
 import requests
-from config import riot_api_key
+from config import RIOT_API_KEY
 from time import sleep
 
 summoner_url = 'https://na1.api.riotgames.com/tft/summoner/v1/summoners/'
@@ -24,7 +24,7 @@ def convert(data: list[str]) -> list[dict]:
             sleep(120)
             requests_made = 0  # Reset the counter
 
-        summ_api_url = f"{summoner_url}{entry}?api_key={riot_api_key}"
+        summ_api_url = f"{summoner_url}{entry}?api_key={RIOT_API_KEY}"
         summ_response = requests.get(summ_api_url)
         if summ_response.status_code == 200:
             summ_info = summ_response.json()
@@ -32,7 +32,7 @@ def convert(data: list[str]) -> list[dict]:
             requests_made += 1  # Increment the request counter
 
             if puuid:
-                puuid_api_url = f"{puuid_url}{puuid}?api_key={riot_api_key}"
+                puuid_api_url = f"{puuid_url}{puuid}?api_key={RIOT_API_KEY}"
                 puuid_response = requests.get(puuid_api_url)
                 if puuid_response.status_code == 200:
                     puuid_info = puuid_response.json()
