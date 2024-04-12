@@ -16,7 +16,7 @@ class Player(BasePlayer):
 
 
 class Portfolio(BaseModel):
-    players: Dict[str, Player] = {}
+    players: dict[str, Player] = {}
 
     def total(self) -> int:
         return sum(p.total() for p in self.players.values())
@@ -41,8 +41,7 @@ class UserPublic(BaseModel):
 
 
 class UserSelf(UserPublic):
-    password: Optional[SecretStr] = None
-    balance: float = 0.0
+    balance: float = 100_000.0
 
 
 

@@ -1,11 +1,9 @@
 from datetime import datetime
-
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI, HTTPException, status, Depends
 from pymongo.errors import DuplicateKeyError
 from models import BasePlayer, Player, UserSelf, UserPublic, Transaction, TransactionRequest
 from typing import List
 from database import connect_lp, connect_player_Id, connect_user
-from config import PWD_CONTEXT
 
 app = FastAPI()
 lp_collection = connect_lp()
@@ -46,12 +44,19 @@ async def player_info(gameName: str):
         return {"error": str(e)}
 
 
+async def get_user():
+    user_data = user_collection.find_one({'username': 'new_user'})
+    if not user_data:
+        raise HTTPException(status_code=404, detail="User not found")
+    return UserSelf(**user_data)
+
+
 @app.post('/players/{gameName}/{transaction_type}')
 async def add_transaction(
         gameName: str,
         transaction_type: str,
         transaction_data: TransactionRequest,
-        user=UserSelf,
+        user: UserSelf = Depends(get_user)
 ):
     # Verify the transaction type is valid
     if transaction_type not in ["buy", "sell"]:
@@ -76,9 +81,9 @@ async def add_transaction(
         transaction = Transaction(
             type=transaction_type,
             gameName=gameName,
-            quantity=shares,
+            shares=shares,
             price=price,
-            transaction_date = datetime.now()
+            transaction_date=datetime.now()
         )
         user.transactions.append(transaction)
 
@@ -98,7 +103,7 @@ async def add_transaction(
         transaction = Transaction(
             type=transaction_type,
             gameName=gameName,
-            quantity=shares,
+            shares=shares,
             price=price,
             transaction_date=datetime.now()
         )
@@ -129,15 +134,6 @@ async def create_user(user: UserSelf):
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Username already taken."
         )
-
-    # Hash password if it's provided
-    password = user_dict.get("password")
-    if password:
-        hashed_password = PWD_CONTEXT.hash(password.get_secret_value())
-        user_dict["password"] = hashed_password
-    else:
-        # Ensure password field is not included if not provided
-        user_dict.pop("password", None)
 
     # Insert the user into the database
     try:
