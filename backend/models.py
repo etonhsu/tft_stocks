@@ -41,7 +41,19 @@ class UserPublic(BaseModel):
 
 
 class UserSelf(UserPublic):
+    password: Optional[SecretStr] = None
     balance: float = 100_000.0
+
+
+class LeaderboardEntry(BaseModel):
+    gameName: str
+    value: float  # This could be LP, delta, or total portfolio value
+    rank: int
+
+
+class LeaderboardResponse(BaseModel):
+    leaderboard_type: str  # LP, delta, portfolio
+    entries: list[LeaderboardEntry]
 
 
 
