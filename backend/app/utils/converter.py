@@ -1,5 +1,5 @@
 import requests
-from config import RIOT_API_KEY
+from backend.app.core.config import RIOT_API_KEY
 from time import sleep
 
 summoner_url = 'https://na1.api.riotgames.com/tft/summoner/v1/summoners/'

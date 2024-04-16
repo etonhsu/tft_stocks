@@ -1,4 +1,4 @@
-from database import connect_lp
+from app.db.database import connect_lp
 from time import sleep
 
 

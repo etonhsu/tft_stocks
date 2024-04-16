@@ -3,6 +3,10 @@ from typing import List, Optional, Dict
 from datetime import datetime
 
 
+class TokenData(BaseModel):
+    username: Optional[str] = None
+
+
 class BasePlayer(BaseModel):
     name: str
     price: int
@@ -40,9 +44,12 @@ class UserPublic(BaseModel):
     transactions: List[Transaction] = []
 
 
+class UserProfile(UserPublic):
+    balance: float = 100_000.0
+
+
 class UserSelf(UserPublic):
     password: Optional[SecretStr] = None
-    balance: float = 100_000.0
 
 
 class LeaderboardEntry(BaseModel):
@@ -54,6 +61,9 @@ class LeaderboardEntry(BaseModel):
 class LeaderboardResponse(BaseModel):
     leaderboard_type: str  # LP, delta, portfolio
     entries: list[LeaderboardEntry]
+
+
+
 
 
 

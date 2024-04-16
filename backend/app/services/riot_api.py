@@ -4,9 +4,9 @@ import json
 
 import requests
 
-from config import RIOT_API_KEY
-from database import connect_lp, connect_player_Id
-from converter import convert
+from backend.app.core.config import RIOT_API_KEY
+from backend.app.db.database import connect_lp, connect_player_Id
+from backend.app.utils.converter import convert
 
 
 # Two databases use
