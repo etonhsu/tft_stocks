@@ -1,7 +1,10 @@
 from datetime import datetime
-from fastapi import HTTPException, Depends, APIRouter
+from typing import Annotated
+
+from fastapi import HTTPException, Depends, APIRouter, Cookie
+
+from app.core.session_backend import get_user_from_session
 from app.models.models import TransactionRequest, UserSelf, Player, Transaction
-from app.api.deps import get_current_user
 from app.db.database import connect_lp, connect_user
 
 router = APIRouter()
@@ -14,11 +17,15 @@ async def add_transaction(
         gameName: str,
         transaction_type: str,
         transaction_data: TransactionRequest,
-        user: UserSelf = Depends(get_current_user)
+        session_id: Annotated[str | None, Cookie()] = None
 ):
+    user = get_user_from_session(session_id)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
     # Verify the transaction type is valid
-    if transaction_type not in ["buy", "sell"]:
-        raise HTTPException(status_code=400, detail="Invalid transaction type")
+    if transaction_type not in ['buy', 'sell']:
+        raise HTTPException(status_code=400, detail='Invalid transaction type')
 
     # Set transaction details
     shares = transaction_data.shares
@@ -29,7 +36,7 @@ async def add_transaction(
     # Buying a player
     if transaction_type == 'buy':
         if user.balance < total:  # Check sufficient balance for transaction
-            raise HTTPException(status_code=400, detail="Insufficient Balance")
+            raise HTTPException(status_code=400, detail='Insufficient Balance')
 
         user.balance -= total
         if gameName in user.portfolio.players:
@@ -48,10 +55,10 @@ async def add_transaction(
     # Selling a player
     if transaction_type == 'sell':
         if gameName not in user.portfolio.players:
-            raise HTTPException(status_code=400, detail="Player not found in portfolio")
+            raise HTTPException(status_code=400, detail='Player not found in portfolio')
 
         if user.portfolio.players[gameName].shares < shares:
-            raise HTTPException(status_code=400, detail="Insufficient Shares")
+            raise HTTPException(status_code=400, detail='Insufficient Shares')
 
         user.balance += total
         if user.portfolio.players[gameName].shares - shares == 0:
@@ -78,5 +85,5 @@ async def add_transaction(
     )
 
     if update_db.modified_count == 0:
-        raise HTTPException(status_code=500, detail="Failed to update user data in the database.")
+        raise HTTPException(status_code=500, detail='Failed to update user data in the database.')
 

@@ -1,10 +1,7 @@
-from fastapi import FastAPI, Response
+from fastapi import FastAPI
 from app.api.endpoints import user, leaderboard, transaction, player, dashboard, login
-from app.core.config import SECRET_KEY
-from starlette.middleware.sessions import SessionMiddleware
 
-app = FastAPI(title="TFT Stocks API", version="1.0", description="API for a TFT stock market simulation")
-app.add_middleware(SessionMiddleware, secret_key=SECRET_KEY)  # type: ignore
+app = FastAPI(title='TFT Stocks API', version='1.0', description='API for a TFT stock market simulation')
 
 # Include routers
 app.include_router(user.router)
@@ -16,11 +13,11 @@ app.include_router(login.router)
 
 
 # Optional: Add any global middleware, event handlers, or exception handlers
-@app.on_event("startup")
+@app.on_event('startup')
 async def startup_event():
-    print("Starting up...")
+    print('Starting up...')
 
 
-@app.on_event("shutdown")
+@app.on_event('shutdown')
 async def shutdown_event():
-    print("Shutting down...")
+    print('Shutting down...')
