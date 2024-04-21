@@ -3,9 +3,9 @@ from typing import Annotated
 
 from fastapi import HTTPException, Depends, APIRouter, Cookie
 
-from app.core.session_backend import get_user_from_session
-from app.models.models import TransactionRequest, UserSelf, Player, Transaction
+from app.models.models import TransactionRequest, Player, Transaction, UserProfile
 from app.db.database import connect_lp, connect_user
+from app.core.token import get_user_from_token
 
 router = APIRouter()
 lp_collection = connect_lp()
@@ -17,9 +17,9 @@ async def add_transaction(
         gameName: str,
         transaction_type: str,
         transaction_data: TransactionRequest,
-        session_id: Annotated[str | None, Cookie()] = None
+        user: UserProfile = Depends(get_user_from_token)
 ):
-    user = get_user_from_session(session_id)
+
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 

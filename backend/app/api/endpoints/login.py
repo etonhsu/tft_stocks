@@ -1,50 +1,19 @@
-from typing import Annotated
+from datetime import timedelta
 
-from fastapi import APIRouter, HTTPException, Response, Cookie
-import logging
-import json
+from fastapi import APIRouter, Form
 
-from app.core.session_backend import create_session
-from app.db.database import connect_user
+from app.core.token import create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES
 
 router = APIRouter()
-user_collection = connect_user()
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 @router.post('/login')
-async def login(username='testuser'):
-    with open('login_data.json', 'w') as file:
-        json.dump({'username': username}, file)
+async def login(username: str = Form(...)):
+    # You might want to add user validation here to check if the user exists and is valid
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(data={"sub": username}, expires_delta=access_token_expires)
+    return {"access_token": access_token, "token_type": "bearer"}
 
-    return {'message': 'Username stored, proceed to create session'}
-
-
-@router.get('/new_session')
-async def new_session(response: Response):
-    try:
-        with open('login_data.json', 'r') as file:
-            data = json.load(file)
-            username = data['username']
-    except FileNotFoundError:
-        raise HTTPException(status_code=404, detail='Login data not found')
-
-    session_id = create_session(username)
-    response.set_cookie(key='session_id', value=session_id)
-    return {'message': 'Session created', 'session_id': session_id}
-
-
-@router.get('/logout')
-async def logout(response: Response, session_id: Annotated[str | None, Cookie()] = None):
-    if not session_id:
-        # If no session cookie exists, return an error indicating the user is not logged in
-        raise HTTPException(status_code=404, detail='Session not found or already logged out')
-
-    # If a session cookie exists, proceed to clear it
-    response.delete_cookie('session_id')
-
-    return {'message': 'Logged out successfully'}
 
 
 

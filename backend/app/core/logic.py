@@ -1,9 +1,9 @@
-from typing import List, Annotated
+from typing import List
 
-from fastapi import HTTPException, status, Cookie
+from fastapi import HTTPException, status, Depends
 
-from app.core.session_backend import get_user_from_session
-from app.models.models import LeaderboardEntry, Transaction
+from app.core.token import get_user_from_token
+from app.models.models import LeaderboardEntry, Transaction, UserProfile
 from app.db.database import connect_user, connect_lp
 
 user_collection = connect_user()
@@ -74,9 +74,7 @@ def fetch_leaderboard_entries(lead_type: str, limit: int = 100) -> List[Leaderbo
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f'Failed to fetch leaderboard data: {str(e)}')
 
 
-def fetch_recent_transactions(session_id: Annotated[str | None, Cookie()] = None) -> List[Transaction]:
-    user = get_user_from_session(session_id)
-
+def fetch_recent_transactions(user: UserProfile = Depends(get_user_from_token)) -> List[Transaction]:
     if not user or 'transactions' not in user:
         return []  # Return an empty list if no transactions or user is found
 
