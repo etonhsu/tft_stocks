@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import PlayerLink from './PlayerLink'
 
 
 const RecentTransactions = ({ transactions }) => {
@@ -13,7 +14,7 @@ const RecentTransactions = ({ transactions }) => {
         {transactions.slice(0, 5).reverse().map((transaction, index) => (
           <li key={index}>
             Type: {transaction.type},
-            Game: {transaction.gameName},
+            Name: <PlayerLink gameName={transaction.gameName} />,
             Shares: {transaction.shares},
             Price: ${transaction.price.toFixed(2)},
             Date: {new Date(transaction.transaction_date).toLocaleDateString()}

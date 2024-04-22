@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import Player from './Player'; // Ensure this import is correct
+import PlayerLink from './PlayerLink'
 
 const Portfolio = ({ players }) => {
     // Check if players is defined and is an object containing keys
@@ -15,12 +15,11 @@ const Portfolio = ({ players }) => {
         <div>
             <h3>Portfolio</h3>
             {Object.entries(players).map(([key, player]) => (
-                <Player
-                    key={key}
-                    name={key}
-                    shares={player.shares}
-                    price={player.price}
-                />
+                <div key={key}>
+                    <PlayerLink gameName={key}/>: {/* Wrap game name with PlayerLink */}
+                    Shares: {player.shares},
+                    Price: ${player.price.toFixed(2)}
+                </div>
             ))}
             <h4>Total Portfolio Value: ${totalPortfolioValue.toFixed(2)}</h4>
         </div>

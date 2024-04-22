@@ -21,7 +21,7 @@ app.include_router(user.router)
 app.include_router(player.router)
 app.include_router(transaction.router)
 app.include_router(leaderboard.router)
-# app.include_router(dashboard.router)
+app.include_router(dashboard.router)
 app.include_router(login.router)
 
 

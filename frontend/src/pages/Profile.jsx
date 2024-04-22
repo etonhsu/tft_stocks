@@ -48,11 +48,11 @@ function Profile() {
 
   // Ensuring each component has the necessary data to render properly
   return (
-    <div>
-      {user.username && user.balance && <UserInfo username={user.username} balance={user.balance} />}
-      {user.portfolio?.players && <Portfolio players={user.portfolio.players} />}
-      {user.transactions && <RecentTransactions transactions={user.transactions} />}
-    </div>
+      <div>
+        {user.username && user.password && user.balance && <UserInfo username={user.username} password={user.password} balance={user.balance} />}
+        {user.portfolio?.players && <Portfolio players={user.portfolio.players} />}
+        {user.transactions && <RecentTransactions transactions={user.transactions} />}
+      </div>
   );
 }
 
