@@ -9,10 +9,11 @@ class TokenData(BaseModel):
 
 class BasePlayer(BaseModel):
     name: str
-    price: int
+    current_price: int
 
 
 class Player(BasePlayer):
+    purchase_price: int
     shares: int
 
     def total(self) -> int:
@@ -21,9 +22,6 @@ class Player(BasePlayer):
 
 class Portfolio(BaseModel):
     players: dict[str, Player] = {}
-
-    def total(self) -> int:
-        return sum(p.total() for p in self.players.values())
 
 
 class Transaction(BaseModel):
@@ -67,7 +65,6 @@ class DashboardData(BaseModel):
     user_summary: UserPublic
     top_leaderboard_entries: List[LeaderboardEntry]
     recent_transactions: List[Transaction]
-
 
 
 class SessionData(BaseModel):

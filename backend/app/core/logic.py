@@ -75,15 +75,13 @@ def fetch_leaderboard_entries(lead_type: str, limit: int = 100) -> List[Leaderbo
 
 
 def fetch_recent_transactions(user: UserPublic = Depends(get_user_from_token)) -> List[Transaction]:
-    if not user or 'transactions' not in user:
-        return []  # Return an empty list if no transactions or user is found
+    user_data = user_collection.find_one({'username': user.username})
 
-    # Sort transactions by 'transaction_date' and limit to the most recent five entries
-    recent_transactions = sorted(
-        user['transactions'],
-        key=lambda x: x['transaction_date'],
-        reverse=True
-    )[:5]
+    transactions = [Transaction(**t) for t in user_data['transactions']]
 
-    # Convert to Pydantic Transaction model instances
-    return [Transaction(**trans) for trans in recent_transactions]
+    # Reversing the list of transactions
+    list_transactions = list(transactions)
+    return list_transactions
+
+
+

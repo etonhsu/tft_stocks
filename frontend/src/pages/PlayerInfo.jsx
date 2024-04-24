@@ -1,45 +1,42 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import TransactionComponent from '../components/TransactionComponent'; // Ensure this is correctly imported
 
 function PlayerInfo() {
-  const { gameName } = useParams();  // Destructuring to get gameName from the route params
+  const { gameName } = useParams();
   const [playerData, setPlayerData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const fetchPlayerData = async () => {
-      try {
-        const response = await fetch(`http://localhost:8000/players/${gameName}`);
-        const data = await response.json();
-        if (response.ok) {
-          setPlayerData(data);
-        } else {
-          throw new Error(data.error || 'Error fetching data');
-        }
-      } catch (err) {
-        setError('Failed to load player data: ' + err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchPlayerData();
   }, [gameName]);
 
-  // Check for loading or error state
+  const fetchPlayerData = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const response = await fetch(`http://localhost:8000/players/${gameName}`);
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || 'Error fetching player data');
+      }
+      setPlayerData(data);
+    } catch (err) {
+      setError('Failed to load player data: ' + err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUserDataUpdate = (updatedData) => {
+    // This can be modified depending on what data you expect to update
+    fetchPlayerData(); // Simply re-fetch player data for now
+  };
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
-  if (!playerData) return <p>No data available.</p>; // Handle case where no data is returned
-
-  // Destructure data for easier access
-  const { name, price} = playerData;
-
-  // Conditional rendering based on data integrity
-  if (!name || typeof price[price.length - 1] !== 'number') {
-    console.error('Invalid props:', { name, price });
-    return <p>Error: Data for player is incomplete or still loading...</p>;
-  }
+  if (!playerData) return <p>No data available.</p>;
 
   return (
     <div>
@@ -49,6 +46,8 @@ function PlayerInfo() {
       <p>8 Hour Change: {playerData['8 Hour Change']}</p>
       <p>24 Hour Change: {playerData['24 Hour Change']}</p>
       <p>3 Day Change: {playerData['3 Day Change']}</p>
+      {/* Transaction component with props */}
+      <TransactionComponent gameName={gameName} updateUserData={handleUserDataUpdate} />
     </div>
   );
 }

@@ -20,7 +20,7 @@ function Login() {
       if (response.ok) {
         const data = await response.json(); // Parse the JSON from the response
         localStorage.setItem('token', data.access_token); // Save the token to local storage or session storage as preferred
-        navigate('/profile'); // Redirect to the profile page
+        navigate('/dashboard'); // Redirect to the profile page
       } else {
         throw new Error('Failed to log in');
       }

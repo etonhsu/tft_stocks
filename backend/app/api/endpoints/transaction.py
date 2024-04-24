@@ -31,7 +31,7 @@ async def add_transaction(
     shares = transaction_data.shares
     price = lp_collection.find_one({'gameName': gameName})['leaguePoints'][-1]
     total = shares * price
-    player = Player(name=gameName, shares=shares, price=price)
+    player = Player(name=gameName, shares=shares, purchase_price=price, current_price=price)
 
     # Buying a player
     if transaction_type == 'buy':

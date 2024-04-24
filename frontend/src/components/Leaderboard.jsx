@@ -7,6 +7,10 @@ const Leaderboard = ({ entries }) => {
         return <p>No leaderboard data available or still loading...</p>;
     }
 
+    if (entries.length === 0) {
+        return <p>No entries to display.</p>;
+    }
+
     return (
         <div className="leaderboard">
             <h2>Leaderboard</h2>
