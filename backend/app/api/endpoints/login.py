@@ -11,14 +11,14 @@ user_collection = connect_user()
 
 @router.post('/login')
 async def login(username: str = Form(...)):
-    user = user_collection.find_one({"username": username})
+    user = user_collection.find_one({'username': username})
     if not user:
         # Instead of redirecting, it sends a clear message to register first.
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Username not found. Please register.")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Username not found. Please register.')
 
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = create_access_token(data={"sub": username}, expires_delta=access_token_expires)
-    return {"access_token": access_token, "token_type": "bearer"}
+    access_token = create_access_token(data={'sub': username}, expires_delta=access_token_expires)
+    return {'access_token': access_token, 'token_type': 'bearer'}
 
 
 

@@ -7,12 +7,12 @@ from app.core.logic import fetch_leaderboard_entries, fetch_recent_transactions
 from app.db.database import connect_lp, connect_user
 
 router = APIRouter()
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl='login')
 lp_collection = connect_lp()  # Assuming this is where you connect to your 'lp' collection
 user_collection = connect_user()  # Assuming this is where you connect to your 'user' collection
 
 
-@router.get("/dashboard", response_model=DashboardData)
+@router.get('/dashboard', response_model=DashboardData)
 async def read_dashboard(current_user: UserPublic = Depends(get_user_from_token)):
     # Fetch user data again to get the latest state
     user_data = user_collection.find_one({'username': current_user.username})
@@ -27,6 +27,10 @@ async def read_dashboard(current_user: UserPublic = Depends(get_user_from_token)
             # Assuming 'leaguePoints' is a list of prices
             current_price = lp_data['leaguePoints'][-1]
             portfolio[player_name]['current_price'] = current_price
+            user_collection.update_one(
+                {'username': current_user.username},
+                {'$set': {f'portfolio.players.{player_name}.current_price': current_price}}
+            )
         else:
             # If no current price data is found, set to None or keep the old price
             portfolio[player_name]['current_price'] = player_info.get('current_price', player_info['price'])

@@ -95,7 +95,7 @@ function Dashboard() {
                     <RecentTransactions transactions={recentTransactions} />
                 </>
             )}
-            <Leaderboard entries={leaderboardEntries} />
+            {/*<Leaderboard entries={leaderboardEntries} />*/}
         </div>
     );
 }

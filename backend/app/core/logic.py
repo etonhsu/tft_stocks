@@ -10,55 +10,48 @@ user_collection = connect_user()
 lp_collection = connect_lp()
 
 
-def fetch_leaderboard_entries(lead_type: str, limit: int = 100) -> List[LeaderboardEntry]:
+def fetch_leaderboard_entries(lead_type: str, page: int = 0, limit: int = 100) -> List[LeaderboardEntry]:
     collection = user_collection if lead_type == 'portfolio' else lp_collection
+    skip = page * limit  # Calculate the number of documents to skip
 
     pipeline = []
+    # Append specific stages based on the lead_type
     if lead_type == 'portfolio':
-        pipeline = [
-            {'$unwind': '$portfolio.players'},
-            {'$group': {
-                '_id': '$username',
-                'total_portfolio_value': {
-                    '$sum': {'$multiply': ['$portfolio.players.price', '$portfolio.players.shares']}
-                }
+        pipeline += [
+            {'$project': {
+                'username': 1,
+                'last_portfolio_entry': {'$arrayElemAt': ['$portfolio_history', -1]}
             }},
             {'$project': {
-                'username': '$_id',
-                'value': '$total_portfolio_value'
+                'username': 1,
+                'value': '$last_portfolio_entry.value'
             }},
-            {'$sort': {'value': -1}},
-            {'$limit': limit}
         ]
     elif lead_type == 'lp':
-        pipeline = [
+        pipeline += [
             {'$project': {
                 'gameName': 1,
                 'value': {'$arrayElemAt': ['$leaguePoints', -1]}
             }},
-            {'$sort': {'value': -1}},
-            {'$limit': limit}
-        ]
-    elif 'neg_' in lead_type:
-        extract_key = lead_type.replace('neg_', 'delta_')
-        pipeline = [
-            {'$match': {extract_key: {'$exists': True}}},
-            {'$project': {
-                'gameName': 1,
-                'value': '$' + extract_key
-            }},
-            {'$sort': {'value': 1}},  # Ascending for negative deltas to find the lowest values
-            {'$limit': limit}
         ]
     else:
-        pipeline = [
-            {'$project': {
-                'gameName': 1,
-                'value': '$' + lead_type
-            }},
-            {'$sort': {'value': -1}},
-            {'$limit': limit}
+        extract_key = lead_type.replace('neg_', 'delta_')
+        match_and_project = {
+            'gameName': 1,
+            'value': '$' + extract_key
+        } if 'neg_' in lead_type else {'gameName': 1, 'value': '$' + lead_type}
+
+        pipeline += [
+            {'$match': {extract_key: {'$exists': True}}} if 'neg_' in lead_type else {},
+            {'$project': match_and_project},
         ]
+
+    # Common stages to all queries
+    pipeline += [
+        {'$sort': {'value': -1 if not 'neg_' in lead_type else 1}},
+        {'$skip': skip},
+        {'$limit': limit}
+    ]
 
     try:
         lead_data = collection.aggregate(pipeline)
@@ -66,7 +59,7 @@ def fetch_leaderboard_entries(lead_type: str, limit: int = 100) -> List[Leaderbo
             LeaderboardEntry(
                 gameName=item.get('username', item.get('gameName', 'Unknown Player')),
                 value=item.get('value', 0),
-                rank=index + 1
+                rank=index + 1 + skip
             ) for index, item in enumerate(lead_data)
         ]
         return entries

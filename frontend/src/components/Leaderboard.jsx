@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
-import PlayerLink from './PlayerLink'
+import PlayerLink from './PlayerLink';
+import UserLink from './UserLink'; // Import the UserLink component
 
-const Leaderboard = ({ entries }) => {
+const Leaderboard = ({ entries, type }) => {
     if (!entries || !Array.isArray(entries)) {
         console.log('Entries are not loaded or not an array:', entries);
         return <p>No leaderboard data available or still loading...</p>;
@@ -18,7 +19,11 @@ const Leaderboard = ({ entries }) => {
                 {entries.map((entry, index) => (
                     <li key={index}>
                         <span>{entry.rank}. </span>
-                        <PlayerLink gameName={entry.gameName} />
+                        {type === 'portfolio' ? (
+                            <UserLink gameName={entry.gameName} /> // Use UserLink for portfolio type
+                        ) : (
+                            <PlayerLink gameName={entry.gameName} /> // Use PlayerLink otherwise
+                        )}
                         <span> - <strong>{entry.value}</strong></span>
                     </li>
                 ))}

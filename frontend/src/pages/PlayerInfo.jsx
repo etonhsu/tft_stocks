@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import TransactionComponent from '../components/TransactionComponent'; // Ensure this is correctly imported
+import PlayerChart from '../components/PlayerChart'; // Import the UserStockChart component
 
 function PlayerInfo() {
   const { gameName } = useParams();
@@ -46,8 +47,9 @@ function PlayerInfo() {
       <p>8 Hour Change: {playerData['8 Hour Change']}</p>
       <p>24 Hour Change: {playerData['24 Hour Change']}</p>
       <p>3 Day Change: {playerData['3 Day Change']}</p>
-      {/* Transaction component with props */}
       <TransactionComponent gameName={gameName} updateUserData={handleUserDataUpdate} />
+      {/* Including the UserStockChart component to display the chart */}
+      <PlayerChart playerData={playerData} />
     </div>
   );
 }
