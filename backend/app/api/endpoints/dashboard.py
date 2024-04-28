@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 
-from app.models.models import DashboardData, UserPublic
+from app.models.models import UserProfile
 from app.core.token import get_user_from_token
 from app.core.logic import fetch_leaderboard_entries, fetch_recent_transactions
 from app.db.database import connect_lp, connect_user
@@ -12,8 +12,8 @@ lp_collection = connect_lp()  # Assuming this is where you connect to your 'lp' 
 user_collection = connect_user()  # Assuming this is where you connect to your 'user' collection
 
 
-@router.get('/dashboard', response_model=DashboardData)
-async def read_dashboard(current_user: UserPublic = Depends(get_user_from_token)):
+@router.get('/dashboard', response_model=UserProfile)
+async def read_dashboard(current_user: UserProfile = Depends(get_user_from_token)):
     # Fetch user data again to get the latest state
     user_data = user_collection.find_one({'username': current_user.username})
     if not user_data:
@@ -38,10 +38,6 @@ async def read_dashboard(current_user: UserPublic = Depends(get_user_from_token)
     transactions = fetch_recent_transactions(current_user)
     leaderboard = fetch_leaderboard_entries('lp', 5)
 
-    updated_user_summary = UserPublic(**user_data)  # Recreate the user summary with updated data
-    return DashboardData(
-        user_summary=updated_user_summary,
-        top_leaderboard_entries=leaderboard,
-        recent_transactions=transactions
-    )
+    updated_user_summary = UserProfile(**user_data)  # Recreate the user summary with updated data
+    return updated_user_summary
 

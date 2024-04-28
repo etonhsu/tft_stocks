@@ -61,12 +61,6 @@ class LeaderboardResponse(BaseModel):
     entries: list[LeaderboardEntry]
 
 
-class DashboardData(BaseModel):
-    user_summary: UserPublic
-    top_leaderboard_entries: List[LeaderboardEntry]
-    recent_transactions: List[Transaction]
-
-
 class SessionData(BaseModel):
     username: str
 

@@ -12,7 +12,8 @@ lp_collection = connect_lp()
 
 def fetch_leaderboard_entries(lead_type: str, page: int = 0, limit: int = 100) -> List[LeaderboardEntry]:
     collection = user_collection if lead_type == 'portfolio' else lp_collection
-    skip = page * limit  # Calculate the number of documents to skip
+    skip = page * limit
+    is_negative = ''
 
     pipeline = []
     # Append specific stages based on the lead_type
@@ -36,25 +37,25 @@ def fetch_leaderboard_entries(lead_type: str, page: int = 0, limit: int = 100) -
         ]
     else:
         extract_key = lead_type.replace('neg_', 'delta_')
-        match_and_project = {
-            'gameName': 1,
-            'value': '$' + extract_key
-        } if 'neg_' in lead_type else {'gameName': 1, 'value': '$' + lead_type}
-
+        is_negative = 'neg_' in lead_type
         pipeline += [
-            {'$match': {extract_key: {'$exists': True}}} if 'neg_' in lead_type else {},
-            {'$project': match_and_project},
+            {'$match': {extract_key: {'$exists': True}}},
+            {'$project': {
+                'gameName': 1,
+                'value': '$' + extract_key
+            }},
         ]
 
-    # Common stages to all queries
+    # Sort direction depending on whether it's a 'neg_' type or not
+    sort_direction = 1 if is_negative else -1
     pipeline += [
-        {'$sort': {'value': -1 if not 'neg_' in lead_type else 1}},
+        {'$sort': {'value': sort_direction}},
         {'$skip': skip},
         {'$limit': limit}
     ]
 
     try:
-        lead_data = collection.aggregate(pipeline)
+        lead_data = list(collection.aggregate(pipeline))
         entries = [
             LeaderboardEntry(
                 gameName=item.get('username', item.get('gameName', 'Unknown Player')),
@@ -64,7 +65,8 @@ def fetch_leaderboard_entries(lead_type: str, page: int = 0, limit: int = 100) -
         ]
         return entries
     except Exception as e:
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f'Failed to fetch leaderboard data: {str(e)}')
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                            detail=f'Failed to fetch leaderboard data: {str(e)}')
 
 
 def fetch_recent_transactions(user: UserPublic = Depends(get_user_from_token)) -> List[Transaction]:
@@ -75,6 +77,3 @@ def fetch_recent_transactions(user: UserPublic = Depends(get_user_from_token)) -
     # Reversing the list of transactions
     list_transactions = list(transactions)
     return list_transactions
-
-
-
