@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Leaderboard } from '../components/Leaderboard';
 import { fetchLeaderboardData, LeaderboardEntry } from '../services/LeaderboardAPI';
 import axios from 'axios'
-import {MainContent} from "../containers/MainContent.tsx";
+import {MainContent} from "../containers/General/MainContent.tsx";
 
 export const LeaderboardPage = () => {
     const [entries, setEntries] = useState([] as LeaderboardEntry[]);

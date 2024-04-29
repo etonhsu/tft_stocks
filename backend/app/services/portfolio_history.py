@@ -14,17 +14,18 @@ while True:
             shares = user['portfolio']['players'][player]['shares']
             value = price * shares
             portfolio += value
+        total = portfolio + user['balance']
         user_collection.update_one(
             {'_id': user['_id']},
             {'$push': {
                 'portfolio_history': {
-                    'value': portfolio,
+                    'value': total,
                     'date': datetime.now()
                 }
             }
             }
         )
-    sleep(1800)
+    sleep(300)
 
 
 

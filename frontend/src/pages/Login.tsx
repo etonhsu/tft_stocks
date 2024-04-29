@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {MainContent} from "../containers/MainContent.tsx";
+import {MainContent} from "../containers/General/MainContent.tsx";
 
 export function Login() {
   const [username, setUsername] = useState<string>('');  // Specify string type for username

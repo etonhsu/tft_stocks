@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { RecentTransactions, Transaction } from "../components/RecentTransactions";
+import {MainContent} from "../containers/General/MainContent.tsx";
 
 // TransactionPage component
 export const TransactionPage: React.FC = () => {
@@ -44,10 +45,10 @@ export const TransactionPage: React.FC = () => {
     }
 
     return (
-        <div>
+        <MainContent>
             <h2>Transaction History</h2>
             <RecentTransactions transactions={transactions} maxEntries={20} />
-        </div>
+        </MainContent>
     );
 };
 

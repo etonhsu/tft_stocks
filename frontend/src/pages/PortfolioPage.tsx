@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Portfolio, Player } from '../components/Portfolio';
 import axios from 'axios';
-import {MainContent} from "../containers/MainContent.tsx";
+import {MainContent} from "../containers/General/MainContent.tsx";
 
 interface UserPortfolio {
     players: { [key: string]: Player };

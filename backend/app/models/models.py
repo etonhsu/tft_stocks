@@ -24,6 +24,11 @@ class Portfolio(BaseModel):
     players: dict[str, Player] = {}
 
 
+class PortfolioHistory(BaseModel):
+    value: float
+    date: datetime
+
+
 class Transaction(BaseModel):
     type: str # buy or sell
     gameName: str
@@ -44,6 +49,7 @@ class UserPublic(BaseModel):
 
 class UserProfile(UserPublic):
     balance: float = 100_000.0
+    portfolio_history: List[PortfolioHistory]
 
 
 class UserSelf(UserProfile):

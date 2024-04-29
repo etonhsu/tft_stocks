@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Sidebar = styled.nav`
     position: fixed;
     z-index: 100;
-    min-width: 200px;
+    width: 13%;
     height: 100vh;
     padding-left: 20px;
     padding-right: 20px;

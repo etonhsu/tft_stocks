@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {Portfolio, Player} from '../components/Portfolio';
 import {RecentTransactions, Transaction} from '../components/RecentTransactions';
-import {MainContent} from "../containers/MainContent.tsx";
+import {MainContent} from "../containers/General/MainContent.tsx";
 
 // Define interfaces for the expected data structures
 interface User {

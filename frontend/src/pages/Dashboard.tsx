@@ -1,17 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Portfolio, Player } from '../components/Portfolio';
-import {RecentTransactions, Transaction} from "../components/RecentTransactions.tsx";
+import {Transaction} from "../components/RecentTransactions.tsx";
+import {UserAccount} from "../components/UserAccount.tsx";
 import axios from 'axios';
-import {MainContent} from "../containers/MainContent.tsx";
+import {MainContent} from "../containers/General/MainContent.tsx";
+import {
+    AccountColumn,
+    AccountDetailsContainer,
+    DashboardContainer
+} from "../containers/Dashboard/DashboardContainer.tsx";
+import {UserChart} from "../components/UserChart.tsx";
+import {ChartContainer} from "../containers/Player/ChartContainer.tsx";
+import {PortfolioContainer} from "../containers/Dashboard/PortfolioContainer.tsx";
 
-interface UserSummary {
+export interface UserSummary {
     username: string;
     portfolio: {
         players: { [key: string]: Player };
     };
     transactions: Transaction[];
     balance: number
+    portfolio_history: PortfolioHistoryData[];
+}
+
+interface PortfolioHistoryData {
+    value: number;
+    date: Date; // Ensuring it's a Date object
 }
 
 export const Dashboard: React.FC = () => {
@@ -65,12 +80,20 @@ export const Dashboard: React.FC = () => {
 
     return (
         <MainContent>
-            <div>
-                <h2>Welcome, {userSummary.username}</h2>
+            <h1>Welcome, {userSummary.username}</h1>
+            <DashboardContainer>
+                <AccountColumn>
+                    <AccountDetailsContainer label={"Overview"}>
+                        <UserAccount userSummary={userSummary} />
+                    </AccountDetailsContainer>
+                </AccountColumn>
+                <ChartContainer label={"Performance"}>
+                    <UserChart portfolioHistory={userSummary.portfolio_history} />
+                </ChartContainer>
+            </DashboardContainer>
+            <PortfolioContainer label={'Portfolio'}>
                 <Portfolio players={userSummary.portfolio.players} />
-                <h2>Balance: {userSummary.balance}</h2>
-                <RecentTransactions transactions={userSummary.transactions} maxEntries={5} />
-            </div>
+            </PortfolioContainer>
         </MainContent>
     );
 };

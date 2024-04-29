@@ -2,9 +2,14 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import {TransactionComponent} from '../components/TransactionComponent';
 import {PlayerChart} from '../components/PlayerChart';
-import {MainContent} from "../containers/MainContent.tsx";
-import {ChartContainer} from "../containers/ChartContainer.tsx";
-import {PlayerDetails, PlayerInfoContainer} from "../containers/PlayerInfoContainer.tsx";
+import {MainContent} from "../containers/General/MainContent.tsx";
+import {ChartContainer} from "../containers/Player/ChartContainer.tsx";
+import {
+    DetailsAndTransactionColumn,
+    PlayerDetailsContainer,
+    PlayerInfoContainer
+} from "../containers/Player/PlayerInfoContainer.tsx";
+import {TransactionContainer} from "../containers/Player/TransactionContainer.tsx";
 
 // Assuming you have a type definition for the player data from the backend
 interface PlayerData {
@@ -21,6 +26,7 @@ export function PlayerInfo() {
   const [playerData, setPlayerData] = useState<PlayerData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
+
 
   useEffect(() => {
     if (gameName) {
@@ -45,6 +51,17 @@ export function PlayerInfo() {
     }
   };
 
+  const formatDate = (dateString: string | number | Date) => {
+    const date = new Date(dateString);
+    return date.toLocaleString('en-US', {
+      month: 'numeric',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    });
+  };
+
   const handleUserDataUpdate = () => {
     fetchPlayerData(); // Simply re-fetch player data for now
   };
@@ -55,22 +72,27 @@ export function PlayerInfo() {
 
   return (
       <MainContent>
+          <h1>{playerData.name}</h1>
           <PlayerInfoContainer>
-              <PlayerDetails>
-                  <h2>{playerData.name}</h2>
-                  <p>Current Price: {playerData.price[playerData.price.length - 1]}</p>
-                  <p>Date: {playerData.date[playerData.date.length - 1]}</p>
-                  <p>8 Hour Change: {playerData['8 Hour Change']}</p>
-                  <p>24 Hour Change: {playerData['24 Hour Change']}</p>
-                  <p>3 Day Change: {playerData['3 Day Change']}</p>
-                  {gameName && (
-                      <TransactionComponent gameName={gameName} updateUserData={handleUserDataUpdate}/>
-                  )}
-              </PlayerDetails>
-              <ChartContainer>
+              <DetailsAndTransactionColumn>
+                  <PlayerDetailsContainer label="Overview">
+                      <p>Current Price: {playerData.price[playerData.price.length - 1]}</p>
+                      <p>Updated: {formatDate(playerData.date[playerData.date.length - 1])}</p>
+                      <p>8 Hour Change: {playerData['8 Hour Change']}</p>
+                      <p>24 Hour Change: {playerData['24 Hour Change']}</p>
+                      <p>3 Day Change: {playerData['3 Day Change']}</p>
+                  </PlayerDetailsContainer>
+                  <TransactionContainer label={"Transaction"}>
+                      {gameName && (
+                          <TransactionComponent gameName={gameName} updateUserData={handleUserDataUpdate}/>
+                      )}
+                  </TransactionContainer>
+              </DetailsAndTransactionColumn>
+              <ChartContainer label={"Performance"}>
                   <PlayerChart playerData={playerData}/>
               </ChartContainer>
           </PlayerInfoContainer>
+
       </MainContent>
   );
 }

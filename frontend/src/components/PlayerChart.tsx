@@ -12,6 +12,8 @@ interface PlayerChartProps {
   playerData: PlayerData;
 }
 
+
+
 const formatDate = (date: Date): string => {
   return date.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' });
 };
@@ -31,7 +33,7 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps) => {
             fontSize: '16px' // Optional, adjust font size for better readability
           }}>
           <p>
-            <strong>${payload[0].value.toFixed(2)}</strong><br/>
+            <strong>Price: ${payload[0].value.toFixed(2)}</strong><br/>
             {formatDate(new Date(label as string))}
           </p>
         </div>

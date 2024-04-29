@@ -35,9 +35,6 @@ async def read_dashboard(current_user: UserProfile = Depends(get_user_from_token
             # If no current price data is found, set to None or keep the old price
             portfolio[player_name]['current_price'] = player_info.get('current_price', player_info['price'])
 
-    transactions = fetch_recent_transactions(current_user)
-    leaderboard = fetch_leaderboard_entries('lp', 5)
-
     updated_user_summary = UserProfile(**user_data)  # Recreate the user summary with updated data
     return updated_user_summary
 
