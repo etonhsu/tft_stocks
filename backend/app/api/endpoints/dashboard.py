@@ -5,6 +5,7 @@ from app.models.models import UserProfile
 from app.core.token import get_user_from_token
 from app.core.logic import fetch_leaderboard_entries, fetch_recent_transactions
 from app.db.database import connect_lp, connect_user
+from app.models.pricing_model import price_model
 
 router = APIRouter()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='login')
@@ -34,6 +35,10 @@ async def read_dashboard(current_user: UserProfile = Depends(get_user_from_token
         else:
             # If no current price data is found, set to None or keep the old price
             portfolio[player_name]['current_price'] = player_info.get('current_price', player_info['price'])
+
+        # Apply pricing model
+        portfolio[player_name]['current_price'] = price_model(portfolio[player_name]['current_price'])
+        portfolio[player_name]['purchase_price'] = price_model(portfolio[player_name]['purchase_price'])
 
     updated_user_summary = UserProfile(**user_data)  # Recreate the user summary with updated data
     return updated_user_summary

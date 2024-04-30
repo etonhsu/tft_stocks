@@ -2,6 +2,7 @@ import styled from "styled-components";
 import {useState} from "react";
 import {PlayerLink} from "./PlayerLink.tsx";
 
+
 export interface Player {
     shares: number;
     purchase_price: number;
@@ -19,8 +20,8 @@ const StyledTable = styled.table`
 
 const StyledHeader = styled.th`
     background-color: #222;
-    padding: 20px 10px 10px;
-
+    padding: 25px 10px 10px;
+    
     border: 1px solid #cccccc;
     text-align: left;
 `;
@@ -45,13 +46,14 @@ const IndentedLine = styled.div`
   padding-left: 8px; // Adjust this value to control the indentation
 `;
 
-const StyledLink = styled.a`
-  color: cornflowerblue;
-  text-decoration: none;
-  cursor: pointer;
-  &:hover {
-    text-decoration: underline;
-  }
+const StyledPlayerLink = styled(PlayerLink)`
+    color: cornflowerblue; // Example color
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+        color: mediumpurple; // Change color on hover
+    }
 `;
 
 const formatCurrency = (value: number) => {
@@ -83,12 +85,17 @@ export const Portfolio: React.FC<PortfolioProps> = ({ players }) => {
         let value1, value2;
         switch (sortKey) {
             case 'gain_loss':
-                value1 = (player1.current_price - player1.purchase_price) * player1.shares;
-                value2 = (player2.current_price - player2.purchase_price) * player2.shares;
+                value1 = (player1.current_price - player1.purchase_price)
+                value2 = (player2.current_price - player2.purchase_price)
                 break;
             case 'total_value':
                 value1 = player1.current_price * player1.shares;
                 value2 = player2.current_price * player2.shares;
+                break;
+            case 'current_price':
+            case 'purchase_price':
+                value1 = player1[sortKey];
+                value2 = player2[sortKey];
                 break;
             case 'name':
             default:
@@ -108,19 +115,17 @@ export const Portfolio: React.FC<PortfolioProps> = ({ players }) => {
           <tr>
               <StyledHeader onClick={() => handleSort('name')}>Name</StyledHeader>
               <StyledHeader onClick={() => handleSort('shares')}>Shares</StyledHeader>
-              <StyledHeader onClick={() => handleSort('purchase_price')}>Purchase Price</StyledHeader>
               <StyledHeader onClick={() => handleSort('current_price')}>Current Price</StyledHeader>
+              <StyledHeader onClick={() => handleSort('purchase_price')}>Purchase Price</StyledHeader>
               <StyledHeader onClick={() => handleSort('gain_loss')}>Gain/Loss</StyledHeader>
-              <StyledHeader onClick={() => handleSort('total_value')}>Total Value</StyledHeader>
+              <StyledHeader onClick={() => handleSort('total_value')}>Total Value (Gain/Loss)</StyledHeader>
           </tr>
       </thead>
         <tbody>
         {sortedPlayers.map(([name, player]) => (
             <StyledRow key={name}>
                 <StyledCell>
-                    <StyledLink>
-                        <PlayerLink gameName={name}/>
-                    </StyledLink>
+                    <StyledPlayerLink gameName={name}/>
                 </StyledCell>
                 <StyledCell>{player.shares}</StyledCell>
                 <StyledCell>${player.purchase_price.toFixed(2)}</StyledCell>
@@ -128,7 +133,7 @@ export const Portfolio: React.FC<PortfolioProps> = ({ players }) => {
                 <StyledCell>{formatCurrency(player.current_price - player.purchase_price)}</StyledCell>
                 <StyledCell>
                 <ValueCell>
-                      {formatCurrency(player.current_price * player.shares)}
+                      ${(player.current_price * player.shares).toFixed(2)}
                       <IndentedLine>
                           ({formatCurrency((player.current_price - player.purchase_price) * player.shares)})
                       </IndentedLine>

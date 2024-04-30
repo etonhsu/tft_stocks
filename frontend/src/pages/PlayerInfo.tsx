@@ -16,9 +16,9 @@ interface PlayerData {
   name: string;
   price: number[];
   date: string[];
-  '8 Hour Change'?: number;  // Optional because not all datasets might have this
-  '24 Hour Change'?: number; // Optional
-  '3 Day Change'?: number;   // Optional
+  '8 Hour Change': number;  // Optional because not all datasets might have this
+  '24 Hour Change': number; // Optional
+  '3 Day Change': number;   // Optional
 }
 
 export function PlayerInfo() {
@@ -62,6 +62,12 @@ export function PlayerInfo() {
     });
   };
 
+  const formatCurrency = (value: number) => {
+    const sign = value >= 0 ? '+' : '-';
+    const color = value >= 0 ? '#82ca9d' : '#f44336';
+    return <span style={{ color }}>{sign}${Math.abs(value).toFixed(2)}</span>;
+};
+
   const handleUserDataUpdate = () => {
     fetchPlayerData(); // Simply re-fetch player data for now
   };
@@ -76,11 +82,11 @@ export function PlayerInfo() {
           <PlayerInfoContainer>
               <DetailsAndTransactionColumn>
                   <PlayerDetailsContainer label="Overview">
-                      <p>Current Price: {playerData.price[playerData.price.length - 1]}</p>
+                      <p>Current Price: ${(playerData.price[playerData.price.length - 1]).toFixed(2)}</p>
                       <p>Updated: {formatDate(playerData.date[playerData.date.length - 1])}</p>
-                      <p>8 Hour Change: {playerData['8 Hour Change']}</p>
-                      <p>24 Hour Change: {playerData['24 Hour Change']}</p>
-                      <p>3 Day Change: {playerData['3 Day Change']}</p>
+                      <p>8 Hour Change: {formatCurrency(playerData['8 Hour Change'])}</p>
+                      <p>24 Hour Change: {formatCurrency(playerData['24 Hour Change'])}</p>
+                      <p>3 Day Change: {formatCurrency(playerData['3 Day Change'])}</p>
                   </PlayerDetailsContainer>
                   <TransactionContainer label={"Transaction"}>
                       {gameName && (

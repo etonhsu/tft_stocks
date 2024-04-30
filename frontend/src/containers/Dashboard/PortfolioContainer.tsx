@@ -8,7 +8,7 @@ interface PortfolioDetailsProps {
 
 const PortfolioDetailsWrapper = styled.div`
     position: relative; // This will allow you to absolutely position the label
-    margin-top: 5%;
+    margin-top: 3.5%;
     margin-left: 1%;
     margin-right: 3%;
     flex: 1;  // Takes up all available space
@@ -16,7 +16,7 @@ const PortfolioDetailsWrapper = styled.div`
 
 const PortfolioDetailsLabel = styled.span`
   position: absolute;
-  top: -25px; // Adjust as necessary to move the label above the container
+  top: -20px; // Adjust as necessary to move the label above the container
   left: 10px; // Adjust as necessary to align the label with the container's border
   background: #222; // Match the background of the site to cover the container's border
   padding: 0 5px;

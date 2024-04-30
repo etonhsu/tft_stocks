@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from app.db.database import connect_lp
+from app.models.pricing_model import price_model  # Assuming your pricing model is in app/models
 
 router = APIRouter()
 lp_collection = connect_lp()
@@ -13,11 +14,16 @@ async def player_info(gameName: str):
     }
     try:
         info = lp_collection.find_one({'gameName': gameName}, projection)
-        price_history = [price for price in info['leaguePoints']]
+        if not info:
+            return {"error": "Player not found"}
+
+        # Apply the pricing model to each leaguePoint to calculate the price
+        price_history = [price_model(lp) for lp in info['leaguePoints']]  # Convert league points to prices
         date_history = [str(date) for date in info['date']]
         delta_8h = info['delta_8h']
         delta_24h = info['delta_24h']
         delta_72h = info['delta_72h']
+
         return {
             'name': info['gameName'],
             'price': price_history,

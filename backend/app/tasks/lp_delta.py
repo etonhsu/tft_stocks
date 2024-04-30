@@ -1,6 +1,8 @@
 from app.db.database import connect_lp
 from time import sleep
 
+from app.models.pricing_model import price_model
+
 
 def calculate_delta():
     lp_collection = connect_lp()
@@ -16,9 +18,9 @@ def calculate_delta():
         lp_72h = doc['leaguePoints'][-630] if len(doc['leaguePoints']) > 630 else doc['leaguePoints'][0]
 
         # Calculate the delta between the lp values
-        delta_8h = current_lp - lp_8h if lp_8h is not None else None
-        delta_24h = current_lp - lp_24h if lp_24h is not None else None
-        delta_72h = current_lp - lp_72h if lp_72h is not None else None
+        delta_8h = price_model(current_lp) - price_model(lp_8h) if lp_8h is not None else None
+        delta_24h = price_model(current_lp) - price_model(lp_24h) if lp_24h is not None else None
+        delta_72h = price_model(current_lp) - price_model(lp_72h) if lp_72h is not None else None
 
         # Update the database with the newest deltas
         summoner_Id = doc['summonerId']

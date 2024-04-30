@@ -44,6 +44,7 @@ const TransactionButton = styled.button`
     cursor: pointer;
     width: 150px;
     align-items: center;
+    margin-top: 10px;
 
   &:hover {
     background-color: #535bf2;

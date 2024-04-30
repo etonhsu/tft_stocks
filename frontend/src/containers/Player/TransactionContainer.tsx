@@ -20,7 +20,7 @@ const TransactionDetailsWrapper = styled.div`
 
 const TransactionDetailsLabel = styled.span`
   position: absolute;
-  top: -25px; // Adjust as necessary to move the label above the container
+  top: -20px; // Adjust as necessary to move the label above the container
   left: 10px; // Adjust as necessary to align the label with the container's border
   background: #222; // Match the background of the site to cover the container's border
   padding: 0 5px;
@@ -30,7 +30,7 @@ const TransactionDetailsLabel = styled.span`
 
 const TransactionDetails = styled.div`
     height: 60px;
-    padding: 20px;
+    padding: 20px 20px 20px;
 `;
 
 export const TransactionContainer: React.FC<TransactionDetailsProps> = ({ label, children }) => {

@@ -9,11 +9,11 @@ class TokenData(BaseModel):
 
 class BasePlayer(BaseModel):
     name: str
-    current_price: int
+    current_price: float
 
 
 class Player(BasePlayer):
-    purchase_price: int
+    purchase_price: float
     shares: int
 
     def total(self) -> int:

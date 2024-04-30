@@ -19,7 +19,7 @@ const ChangesContainer = styled.div`
     display: flex;
     justify-content: space-between; // Adjusts the spacing between children elements
     align-items: center; // Aligns items vertically
-    padding-right: 81px;
+    padding-right: 69px;
     padding-top: 0px;
 `;
 
@@ -53,6 +53,7 @@ const AccountValue = styled.h2`
 const ChangeValue = styled.h2`
     margin: 0; // Reduces the space above the heading
     font-size: 20px; // Increase font size as needed
+    
 `;
 
 const ValueText = styled.span<{isPositive: boolean}>`
@@ -60,7 +61,6 @@ const ValueText = styled.span<{isPositive: boolean}>`
 `;
 
 export const UserAccount: React.FC<UserAccountProps> = ({ userSummary }) => {
-
     const calculateTotalPortfolioValue = (players: { [key: string]: Player }): number => {
         return Object.values(players).reduce((total, player) => {
             return total + (player.shares * player.current_price);

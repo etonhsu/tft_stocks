@@ -26,7 +26,7 @@ const PlayerDetailsWrapper = styled.div`
 
 const PlayerDetailsLabel = styled.span`
   position: absolute;
-  top: -25px; // Adjust as necessary to move the label above the container
+  top: -20px; // Adjust as necessary to move the label above the container
   left: 10px; // Adjust as necessary to align the label with the container's border
   background: #222; // Match the background of the site to cover the container's border
   padding: 0 5px;
@@ -40,6 +40,7 @@ const PlayerDetails = styled.div`
     border: 3px solid #666;
     border-radius: 10px;
     padding-left: 20px;
+    padding-top: 5px;
 `;
 
 export const PlayerDetailsContainer: React.FC<PlayerDetailsProps> = ({ label, children }) => {

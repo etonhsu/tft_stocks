@@ -27,7 +27,7 @@ const AccountDetailsWrapper = styled.div`
 
 const AccountDetailsLabel = styled.span`
   position: absolute;
-  top: -25px; // Adjust as necessary to move the label above the container
+  top: -20px; // Adjust as necessary to move the label above the container
   left: 10px; // Adjust as necessary to align the label with the container's border
   background: #222; // Match the background of the site to cover the container's border
   padding: 0 5px;
@@ -40,7 +40,7 @@ const AccountDetails = styled.div`
     min-width: 300px;
     border: 3px solid #666;
     border-radius: 10px;
-    padding-left: 20px;
+    padding-left: 25px;
 `;
 
 export const AccountDetailsContainer: React.FC<AccountDetailsProps> = ({ label, children }) => {
