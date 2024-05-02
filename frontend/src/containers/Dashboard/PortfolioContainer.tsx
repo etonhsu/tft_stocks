@@ -8,10 +8,8 @@ interface PortfolioDetailsProps {
 
 const PortfolioDetailsWrapper = styled.div`
     position: relative; // This will allow you to absolutely position the label
-    margin-top: 3.5%;
-    margin-left: 1%;
-    margin-right: 3%;
-    flex: 1;  // Takes up all available space
+    margin: 3.5% 3% 8px 1%;
+    flex: 1; // Takes up all available space
 `;
 
 const PortfolioDetailsLabel = styled.span`
@@ -21,7 +19,7 @@ const PortfolioDetailsLabel = styled.span`
   background: #222; // Match the background of the site to cover the container's border
   padding: 0 5px;
   font-size: 24px; // Adjust as necessary
-  color: #ffffff; // Label text color
+  color: #EAEAEA; // Label text color
 `;
 
 const PortfolioDetails = styled.div`

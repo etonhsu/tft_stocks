@@ -2,6 +2,7 @@ import React from 'react';
 import {
   XAxis, YAxis, CartesianGrid, ResponsiveContainer, AreaChart, Tooltip, Area, TooltipProps
 } from 'recharts';
+import {formatCurrency} from "../utils/CurrencyFormatter.tsx";
 
 interface PortfolioHistoryData {
   date: Date;
@@ -31,7 +32,7 @@ export const CustomTooltip = ({ active, payload, label }: TooltipProps) => {
           fontSize: '16px'
         }}>
         <p>
-          <strong>Value: ${payload[0].value.toFixed(2)}</strong><br/>
+          <strong>Value: {formatCurrency(payload[0].value, 2)}</strong><br/>
           {formatDate(new Date(label as string))}
         </p>
       </div>
@@ -80,7 +81,7 @@ export const UserChart: React.FC<UserChartProps> = ({ portfolioHistory }) => {
       <AreaChart data={chartData}>
         <defs>
           <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="10%" stopColor={lineColor} stopOpacity={0.8}/>
+            <stop offset="10%" stopColor={lineColor} stopOpacity={0.5}/>
             <stop offset="95%" stopColor={lineColor} stopOpacity={0}/>
           </linearGradient>
         </defs>

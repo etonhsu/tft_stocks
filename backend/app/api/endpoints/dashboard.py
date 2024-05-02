@@ -1,3 +1,7 @@
+import json
+from datetime import datetime
+
+from bson import ObjectId
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 
@@ -6,6 +10,9 @@ from app.core.token import get_user_from_token
 from app.core.logic import fetch_leaderboard_entries, fetch_recent_transactions
 from app.db.database import connect_lp, connect_user
 from app.models.pricing_model import price_model
+from app.tasks.portfolio_change import portfolio_change
+from app.tasks.portfolio_refresh import portfolio_refresh
+from app.utils.redis_utils import get_cache, set_cache
 
 router = APIRouter()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='login')
@@ -13,33 +20,31 @@ lp_collection = connect_lp()  # Assuming this is where you connect to your 'lp' 
 user_collection = connect_user()  # Assuming this is where you connect to your 'user' collection
 
 
+class CustomEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, ObjectId):
+            return str(obj)  # Convert ObjectId to string
+        if isinstance(obj, datetime):
+            return obj.isoformat()  # Convert datetime objects to ISO format
+        return json.JSONEncoder.default(self, obj)
+
+
 @router.get('/dashboard', response_model=UserProfile)
 async def read_dashboard(current_user: UserProfile = Depends(get_user_from_token)):
-    # Fetch user data again to get the latest state
-    user_data = user_collection.find_one({'username': current_user.username})
-    if not user_data:
-        raise HTTPException(status_code=404, detail='User not found')
+    # Define a cache key based on something unique, e.g., the username
+    cache_key = f"{current_user.username}_dashboard"
 
-    # Update current prices in the portfolio
-    portfolio = user_data.get('portfolio', {}).get('players', {})
-    for player_name, player_info in portfolio.items():
-        lp_data = lp_collection.find_one({'gameName': player_info['name']})
-        if lp_data and 'leaguePoints' in lp_data and lp_data['leaguePoints']:
-            # Assuming 'leaguePoints' is a list of prices
-            current_price = lp_data['leaguePoints'][-1]
-            portfolio[player_name]['current_price'] = current_price
-            user_collection.update_one(
-                {'username': current_user.username},
-                {'$set': {f'portfolio.players.{player_name}.current_price': current_price}}
-            )
-        else:
-            # If no current price data is found, set to None or keep the old price
-            portfolio[player_name]['current_price'] = player_info.get('current_price', player_info['price'])
+    # Try to get cached data first
+    cached_data = get_cache(cache_key)
+    if cached_data:
+        return UserProfile(**json.loads(cached_data))
 
-        # Apply pricing model
-        portfolio[player_name]['current_price'] = price_model(portfolio[player_name]['current_price'])
-        portfolio[player_name]['purchase_price'] = price_model(portfolio[player_name]['purchase_price'])
+    refreshed_user_data = portfolio_refresh(current_user)
+    updated_user_data = portfolio_change(refreshed_user_data)
 
-    updated_user_summary = UserProfile(**user_data)  # Recreate the user summary with updated data
-    return updated_user_summary
+    # Serialize the updated user data and cache it
+    serialized_data = json.dumps(updated_user_data, cls=CustomEncoder)  # Use the default function to handle ObjectId
+    set_cache(cache_key, serialized_data, expiration=600)  # Cache for 10 minutes
+
+    return UserProfile(**json.loads(serialized_data))
 

@@ -6,7 +6,7 @@ import requests
 
 from app.core.config import RIOT_API_KEY
 from app.db.database import connect_lp, connect_player_Id
-from app.utils.converter import convert
+from app.tasks.converter import convert
 
 
 # Two databases use

@@ -5,51 +5,45 @@ from fastapi import HTTPException, status, Depends
 from app.core.token import get_user_from_token
 from app.models.models import LeaderboardEntry, Transaction, UserPublic
 from app.db.database import connect_user, connect_lp
+from app.models.pricing_model import price_model
 
 user_collection = connect_user()
 lp_collection = connect_lp()
 
 
 def fetch_leaderboard_entries(lead_type: str, page: int = 0, limit: int = 100) -> List[LeaderboardEntry]:
-    collection = user_collection if lead_type == 'portfolio' else lp_collection
+    collection = lp_collection  # Assuming all player data resides in this collection
     skip = page * limit
-    is_negative = ''
 
-    pipeline = []
-    # Append specific stages based on the lead_type
-    if lead_type == 'portfolio':
-        pipeline += [
-            {'$project': {
-                'username': 1,
-                'last_portfolio_entry': {'$arrayElemAt': ['$portfolio_history', -1]}
-            }},
-            {'$project': {
-                'username': 1,
-                'value': '$last_portfolio_entry.value'
-            }},
-        ]
-    elif lead_type == 'lp':
-        pipeline += [
-            {'$project': {
-                'gameName': 1,
-                'value': {'$arrayElemAt': ['$leaguePoints', -1]}
-            }},
-        ]
+    A = 1.35
+    B = 0.11282
+
+    # Determine the field and sort direction based on 'neg_' prefix
+    if 'neg_' in lead_type:
+        sort_field = lead_type.replace('neg_', 'delta_')  # Remove 'neg_' prefix for correct field name
+        sort_direction = 1  # Sort ascending for 'neg_' versions
     else:
-        extract_key = lead_type.replace('neg_', 'delta_')
-        is_negative = 'neg_' in lead_type
-        pipeline += [
-            {'$match': {extract_key: {'$exists': True}}},
-            {'$project': {
-                'gameName': 1,
-                'value': '$' + extract_key
-            }},
-        ]
+        sort_field = lead_type
+        sort_direction = -1  # Sort descending for normal cases
 
-    # Sort direction depending on whether it's a 'neg_' type or not
-    sort_direction = 1 if is_negative else -1
-    pipeline += [
-        {'$sort': {'value': sort_direction}},
+    # MongoDB aggregation pipeline
+    pipeline = [
+        {'$project': {
+            'gameName': 1,
+            'lp': {'$arrayElemAt': ['$leaguePoints', -1]},
+            'delta_8h': 1,
+            'delta_24h': 1,
+            'delta_72h': 1
+        }},
+        {'$addFields': {
+            'lp': {
+                '$multiply': [
+                    {'$pow': ['$lp', A]},
+                    B
+                ]
+            }
+        }},
+        {'$sort': {sort_field: sort_direction}},
         {'$skip': skip},
         {'$limit': limit}
     ]
@@ -58,8 +52,11 @@ def fetch_leaderboard_entries(lead_type: str, page: int = 0, limit: int = 100) -
         lead_data = list(collection.aggregate(pipeline))
         entries = [
             LeaderboardEntry(
-                gameName=item.get('username', item.get('gameName', 'Unknown Player')),
-                value=item.get('value', 0),
+                gameName=item['gameName'],
+                lp=item['lp'],
+                delta_8h=item.get('delta_8h', 0),
+                delta_24h=item.get('delta_24h', 0),
+                delta_72h=item.get('delta_72h', 0),
                 rank=index + 1 + skip
             ) for index, item in enumerate(lead_data)
         ]
@@ -73,6 +70,9 @@ def fetch_recent_transactions(user: UserPublic = Depends(get_user_from_token)) -
     user_data = user_collection.find_one({'username': user.username})
 
     transactions = [Transaction(**t) for t in user_data['transactions']]
+
+    for transaction in transactions:
+        transaction.price = price_model(transaction.price)
 
     # Reversing the list of transactions
     list_transactions = list(transactions)

@@ -3,13 +3,14 @@ import { useParams } from 'react-router-dom';
 import {TransactionComponent} from '../components/TransactionComponent';
 import {PlayerChart} from '../components/PlayerChart';
 import {MainContent} from "../containers/General/MainContent.tsx";
-import {ChartContainer} from "../containers/Player/ChartContainer.tsx";
+import {ChartContainer} from "../containers/MultiUse/ChartContainer.tsx";
 import {
     DetailsAndTransactionColumn,
     PlayerDetailsContainer,
     PlayerInfoContainer
 } from "../containers/Player/PlayerInfoContainer.tsx";
 import {TransactionContainer} from "../containers/Player/TransactionContainer.tsx";
+import {formatCurrency} from "../utils/CurrencyFormatter.tsx";
 
 // Assuming you have a type definition for the player data from the backend
 interface PlayerData {
@@ -62,19 +63,13 @@ export function PlayerInfo() {
     });
   };
 
-  const formatCurrency = (value: number) => {
-    const sign = value >= 0 ? '+' : '-';
-    const color = value >= 0 ? '#82ca9d' : '#f44336';
-    return <span style={{ color }}>{sign}${Math.abs(value).toFixed(2)}</span>;
-};
-
   const handleUserDataUpdate = () => {
     fetchPlayerData(); // Simply re-fetch player data for now
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!playerData) return <p>No data available.</p>;
+  if (loading) {return (<MainContent className="mainContentContainer">Loading...</MainContent>);}
+  if (error) {return (<MainContent className="mainContentContainer">Error: No data available.</MainContent>);}
+  if (!playerData) return <MainContent className="mainContentContainer">No data available.</MainContent>;
 
   return (
       <MainContent>
@@ -84,9 +79,9 @@ export function PlayerInfo() {
                   <PlayerDetailsContainer label="Overview">
                       <p>Current Price: ${(playerData.price[playerData.price.length - 1]).toFixed(2)}</p>
                       <p>Updated: {formatDate(playerData.date[playerData.date.length - 1])}</p>
-                      <p>8 Hour Change: {formatCurrency(playerData['8 Hour Change'])}</p>
-                      <p>24 Hour Change: {formatCurrency(playerData['24 Hour Change'])}</p>
-                      <p>3 Day Change: {formatCurrency(playerData['3 Day Change'])}</p>
+                      <p>8 Hour Change: {formatCurrency(playerData['8 Hour Change'], 1)}</p>
+                      <p>24 Hour Change: {formatCurrency(playerData['24 Hour Change'], 1)}</p>
+                      <p>3 Day Change: {formatCurrency(playerData['3 Day Change'], 1)}</p>
                   </PlayerDetailsContainer>
                   <TransactionContainer label={"Transaction"}>
                       {gameName && (

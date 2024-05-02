@@ -1,24 +1,18 @@
 import styled from "styled-components";
 import {ReactNode} from "react";
 
-interface TransactionDetailsProps {
+
+interface PerformersDetailsProps {
   label: string;
   children: ReactNode; // If you only expect elements, use ReactElement instead
 }
 
-
-
-const TransactionDetailsWrapper = styled.div`
+const PerformersDetailsWrapper = styled.div`
+    margin-top: 10px;
     position: relative; // This will allow you to absolutely position the label
-    margin-top: 2%;
-    margin-right: 30%;
-    width: 330px;
-    height: 200px;
-    border: 3px solid #666;
-    border-radius: 10px;
 `;
 
-const TransactionDetailsLabel = styled.span`
+const PerformersDetailsLabel = styled.span`
   position: absolute;
   top: -20px; // Adjust as necessary to move the label above the container
   left: 10px; // Adjust as necessary to align the label with the container's border
@@ -28,16 +22,18 @@ const TransactionDetailsLabel = styled.span`
   color: #EAEAEA; // Label text color
 `;
 
-const TransactionDetails = styled.div`
-    height: 60px;
-    padding: 20px 20px 20px;
+const PerformersDetails = styled.div`
+    height: 174px;
+    min-width: 300px;
+    border: 3px solid #666;
+    border-radius: 10px;
 `;
 
-export const TransactionContainer: React.FC<TransactionDetailsProps> = ({ label, children }) => {
+export const PerformersDetailsContainer: React.FC<PerformersDetailsProps> = ({ label, children }) => {
   return (
-    <TransactionDetailsWrapper>
-      <TransactionDetailsLabel>{label}</TransactionDetailsLabel>
-      <TransactionDetails>{children}</TransactionDetails>
-    </TransactionDetailsWrapper>
+    <PerformersDetailsWrapper>
+      <PerformersDetailsLabel>{label}</PerformersDetailsLabel>
+      <PerformersDetails>{children}</PerformersDetails>
+    </PerformersDetailsWrapper>
   );
 };

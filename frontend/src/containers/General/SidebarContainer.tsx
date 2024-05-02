@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Sidebar = styled.nav`
+export const SidebarContainer = styled.nav`
     position: fixed;
     z-index: 100;
     width: 13%;

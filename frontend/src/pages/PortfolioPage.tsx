@@ -49,13 +49,8 @@ export const PortfolioPage: React.FC = () => {
         fetchData();
     }, [navigate]);
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-
-    if (!userSummary) {
-        return <div>Error: No data available.</div>;
-    }
+    if (isLoading) {return (<MainContent className="mainContentContainer">Loading...</MainContent>);}
+    if (!userSummary) {return (<MainContent className="mainContentContainer">Error: No data available.</MainContent>);}
 
     return (
         <MainContent>

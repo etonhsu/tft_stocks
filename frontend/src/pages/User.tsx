@@ -40,9 +40,9 @@ const UserProfile: React.FC = () => {
     fetchUserData();
   }, [username]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!user) return <div>No user data available.</div>;
+  if (loading) {return (<MainContent className="mainContentContainer">Loading...</MainContent>);}
+  if (error) {return (<MainContent className="mainContentContainer">Error: No data available.</MainContent>);}
+  if (!user) return <MainContent className="mainContentContainer">No user data available.</MainContent>;
 
   return (
       <MainContent>

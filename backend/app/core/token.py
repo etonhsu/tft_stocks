@@ -11,7 +11,7 @@ from app.models.models import UserProfile
 
 key = SECRET_KEY  # Use a secure, unpredictable key in production
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60  # Tokens expire after 60 minutes
+ACCESS_TOKEN_EXPIRE_MINUTES = 180
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 user_collection = connect_user()
 

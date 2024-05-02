@@ -36,17 +36,12 @@ export const TransactionPage: React.FC = () => {
         fetchData();
     }, [navigate]);
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
+    if (isLoading) {return (<MainContent className="mainContentContainer">Loading...</MainContent>);}
+    if (error) {return (<MainContent className="mainContentContainer">Error: No data available.</MainContent>);}
 
     return (
         <MainContent>
-            <h2>Transaction History</h2>
+            <h1>Transaction History</h1>
             <RecentTransactions transactions={transactions} maxEntries={20} />
         </MainContent>
     );

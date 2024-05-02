@@ -6,7 +6,7 @@ export const HeaderBar = styled.header`
     background-color: #333; /* Example background color */
     margin-left: 9%;
     padding-left: 130px;
-    color: white;
+    color: #EAEAEA;
     display: flex;
     align-items: center;
     justify-content: flex-start;

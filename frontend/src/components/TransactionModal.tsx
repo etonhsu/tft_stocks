@@ -43,10 +43,10 @@ const CloseButton = styled.button`
   background: none;
   border: none;
   font-size: 1.5em;
-    color: white;
+    color: #EAEAEA;
 `;
 
-const Modal: React.FC<ModalProps> = ({ children, onClose }) => {
+const TransactionModal: React.FC<ModalProps> = ({ children, onClose }) => {
     return (
         <Overlay>
             <ModalContent>
@@ -70,14 +70,14 @@ export const PreviewModal: React.FC<PreviewModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <Modal onClose={onClose}>
+    <TransactionModal onClose={onClose}>
         <h3>Transaction</h3>
         <p>Type: {transactionType.toUpperCase()} </p>
         <p>Player: {gameName} </p>
         <p>Shares: {shares}</p>
         <p>Price: ${price.toFixed(2)}</p>
         <p>Total: ${(price * shares).toFixed(2)}</p>
-      <button onClick={onConfirm}>Confirm</button>
-    </Modal>
+      <button onClick={onConfirm} className="buttonStyle">Confirm</button>
+    </TransactionModal>
   );
 };

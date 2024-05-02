@@ -289,3 +289,55 @@ export const TransactionIcon = (props: SVGProps<SVGSVGElement>) => (
     </g>
   </svg>
 )
+
+
+export const LeaderboardDownArrow = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={13}
+    height={13}
+    viewBox="0 0 256 370"
+    {...props}
+  >
+    <g fill="#999" strokeMiterlimit={10} strokeWidth={1}>
+      <path
+        d="M90 7.161a7 7 0 00-11.95-4.95L45 35.262 11.95 2.211a7 7 0 00-9.899 9.899l38 38a7.002 7.002 0 009.9 0l38-38A6.98 6.98 0 0090 7.161z"
+        transform="matrix(2.81 0 0 2.81 1.407 1.407)"
+      />
+      <path
+        d="M90 44.839a7 7 0 00-11.95-4.95L45 72.94 11.95 39.89a6.999 6.999 0 00-9.899 0 7.003 7.003 0 000 9.9l38 38a7.002 7.002 0 009.9 0l38-38A6.99 6.99 0 0090 44.839z"
+        transform="matrix(2.81 0 0 2.81 1.407 1.407)"
+      />
+      <path
+        d="M90 44.839a7 7 0 00-11.95-4.95L45 72.94 11.95 39.89a6.999 6.999 0 00-9.899 0 7.003 7.003 0 000 9.9l38 38a7.002 7.002 0 009.9 0l38-38A6.99 6.99 0 0090 44.839z"
+        transform="matrix(2.81 0 0 2.81 1.407 107.407)"
+      />
+    </g>
+  </svg>
+);
+
+
+export const LeaderboardUpArrow = (props: SVGProps<SVGSVGElement>) => (
+    <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={9}
+    height={15}
+    viewBox="0 0 256 1"
+    {...props}
+  >
+    <g fill="#999" strokeMiterlimit={10} strokeWidth={1}>
+      <path
+        d="M90 7.161a7 7 0 00-11.95-4.95L45 35.262 11.95 2.211a7 7 0 00-9.899 9.899l38 38a7.002 7.002 0 009.9 0l38-38A6.98 6.98 0 0090 7.161z"
+        transform="matrix(2.81 0 0 -2.81 1.407 180.593)"
+      />
+      <path
+        d="M90 44.839a7 7 0 00-11.95-4.95L45 72.94 11.95 39.89a6.999 6.999 0 00-9.899 0 7.003 7.003 0 000 9.9l38 38a7.002 7.002 0 009.9 0l38-38A6.99 6.99 0 0090 44.839z"
+        transform="matrix(2.81 0 0 -2.81 1.407 170.593)"
+      />
+      <path
+        d="M90 44.839a7 7 0 00-11.95-4.95L45 72.94 11.95 39.89a6.999 6.999 0 00-9.899 0 7.003 7.003 0 000 9.9l38 38a7.002 7.002 0 009.9 0l38-38A6.99 6.99 0 0090 44.839z"
+        transform="matrix(2.81 0 0 -2.81 1.407 56.593)"
+      />
+    </g>
+  </svg>
+);

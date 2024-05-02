@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
-import { PreviewModal } from "./Modal";
+import { PreviewModal } from "./TransactionModal.tsx";
 
 
 const TransactionForm = styled.form`
@@ -19,17 +19,16 @@ const FieldWrapper = styled.div`
 `;
 
 const TransactionSelect = styled.select`
-    padding: 10px;
-    padding-left: 4px;
-    border: 1px solid #ccc;
+    padding: 10px 10px 10px 4px;
+    border: 1px solid #EAEAEA;
     border-radius: 4px;
     width: 206px;
-    
+
 `;
 
 const TransactionInput = styled.input`
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #EAEAEA;
     border-radius: 4px;
     width: 200px;
     justify-content: end;
@@ -39,7 +38,7 @@ const TransactionButton = styled.button`
     padding: 10px 20px;
     border: none;
     background-color: #646cff;
-    color: white;
+    color: #EAEAEA;
     border-radius: 4px;
     cursor: pointer;
     width: 150px;
@@ -128,12 +127,12 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
     const handleSharesInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
 
-        // Replace the initial 0 when the user starts typing, or if they explicitly type 0
-        const sharesValue = (value === '0' || value.startsWith('0')) ? value.slice(1) : value;
+        // Remove any leading zeros if the current input is not just "0"
+        const normalizedValue = value.replace(/^0+/, '');
 
-        // If the input is not just a minus sign (from pressing the decrement button), update the state
-        if (sharesValue !== '-') {
-            setShares(sharesValue);
+        // Allow only numeric values; also allow an empty string to revert to the placeholder or default
+        if (/^\d*$/.test(normalizedValue) || normalizedValue === '') {
+            setShares(normalizedValue || '0');
         }
     };
 

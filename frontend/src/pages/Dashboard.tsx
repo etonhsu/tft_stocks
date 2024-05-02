@@ -5,14 +5,13 @@ import {Transaction} from "../components/RecentTransactions.tsx";
 import {UserAccount} from "../components/UserAccount.tsx";
 import axios from 'axios';
 import {MainContent} from "../containers/General/MainContent.tsx";
-import {
-    AccountColumn,
-    AccountDetailsContainer,
-    DashboardContainer
-} from "../containers/Dashboard/DashboardContainer.tsx";
+import {AccountColumn, AccountDetailsContainer, AccountContainer} from "../containers/Dashboard/AccountContainer.tsx";
 import {UserChart} from "../components/UserChart.tsx";
-import {ChartContainer} from "../containers/Player/ChartContainer.tsx";
+import {ChartContainer} from "../containers/MultiUse/ChartContainer.tsx";
 import {PortfolioContainer} from "../containers/Dashboard/PortfolioContainer.tsx";
+import {DashboardControls} from "../components/DashboardRefresh.tsx";
+import {PerformersDetailsContainer} from "../containers/Dashboard/PerformersContainer.tsx";
+import {TopPerformers} from "../components/TopPerformers.tsx";
 
 export interface UserSummary {
     username: string;
@@ -22,6 +21,8 @@ export interface UserSummary {
     transactions: Transaction[];
     balance: number
     portfolio_history: PortfolioHistoryData[];
+    one_day_change: number
+    three_day_change: number
 }
 
 interface PortfolioHistoryData {
@@ -33,6 +34,11 @@ export const Dashboard: React.FC = () => {
     const [userSummary, setUserSummary] = useState<UserSummary | null>(null);
     const [isLoading, setLoading] = useState(true);
     const navigate = useNavigate(); // Hook for navigation
+
+    const updateDashboardState = (newData: UserSummary) => {
+        setUserSummary(newData);
+        setLoading(false);  // Reset loading state
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -70,30 +76,29 @@ export const Dashboard: React.FC = () => {
         fetchData();
     }, [navigate]);
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-
-    if (!userSummary) {
-        return <div>Error: No data available.</div>;
-    }
+    if (isLoading) {return (<MainContent className="mainContentContainer">Loading...</MainContent>);}
+    if (!userSummary) {return (<MainContent className="mainContentContainer">Error: No data available.</MainContent>);}
 
     return (
         <MainContent>
             <h1>Welcome, {userSummary.username}</h1>
-            <DashboardContainer>
+            <AccountContainer>
                 <AccountColumn>
                     <AccountDetailsContainer label={"Overview"}>
                         <UserAccount userSummary={userSummary} />
                     </AccountDetailsContainer>
+                    <PerformersDetailsContainer label={"Top Performers"}>
+                        <TopPerformers/>
+                    </PerformersDetailsContainer>
                 </AccountColumn>
                 <ChartContainer label={"Performance"}>
                     <UserChart portfolioHistory={userSummary.portfolio_history} />
                 </ChartContainer>
-            </DashboardContainer>
+            </AccountContainer>
             <PortfolioContainer label={'Portfolio'}>
                 <Portfolio players={userSummary.portfolio.players} />
             </PortfolioContainer>
+            <DashboardControls updateDashboard={updateDashboardState} />
         </MainContent>
     );
 };

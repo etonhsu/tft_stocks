@@ -31,7 +31,7 @@ const PlayerDetailsLabel = styled.span`
   background: #222; // Match the background of the site to cover the container's border
   padding: 0 5px;
   font-size: 24px; // Adjust as necessary
-  color: #ffffff; // Label text color
+  color: #EAEAEA; // Label text color
 `;
 
 const PlayerDetails = styled.div`

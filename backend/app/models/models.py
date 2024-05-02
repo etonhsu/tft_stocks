@@ -45,6 +45,8 @@ class UserPublic(BaseModel):
     username: str
     portfolio: Portfolio = Portfolio()
     transactions: List[Transaction] = []
+    one_day_change: float = 0.0
+    three_day_change: float = 0.0
 
 
 class UserProfile(UserPublic):
@@ -58,13 +60,29 @@ class UserSelf(UserProfile):
 
 class LeaderboardEntry(BaseModel):
     gameName: str
-    value: float  # This could be LP, delta, or total portfolio value
+    lp: float  # League points
+    delta_8h: float  # Change in 8 hours
+    delta_24h: float  # Change in 24 hours
+    delta_72h: float  # Change in 72 hours
     rank: int
 
 
 class LeaderboardResponse(BaseModel):
     leaderboard_type: str  # LP, delta, portfolio
     entries: list[LeaderboardEntry]
+
+
+class TopLeaderboardEntry(BaseModel):
+    name: str
+    value: float
+
+
+class TopLeaderboard(BaseModel):
+    price: TopLeaderboardEntry
+    delta_8h: TopLeaderboardEntry
+    delta_24h: TopLeaderboardEntry
+    delta_72h: TopLeaderboardEntry
+    portfolio_value: TopLeaderboardEntry
 
 
 class SessionData(BaseModel):

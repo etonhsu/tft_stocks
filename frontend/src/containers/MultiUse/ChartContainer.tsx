@@ -21,7 +21,7 @@ const ChartDetailsLabel = styled.span`
   background: #222; // Match the background of the site to cover the container's border
   padding: 0 5px;
   font-size: 24px; // Adjust as necessary
-  color: #ffffff; // Label text color
+  color: #EAEAEA; // Label text color
 `;
 
 const ChartDetails = styled.div`
@@ -32,9 +32,10 @@ const ChartDetails = styled.div`
     background-color: #222; // Light background for the chart area
     display: flex;
     justify-content: flex-end; // Aligns the chart to the right
+    align-items: center;
     border: 3px solid #666;
     border-radius: 10px;
-    height: 417px;
+    height: 424px;
 `;
 
 export const ChartContainer: React.FC<ChartDetailsProps> = ({ label, children }) => {

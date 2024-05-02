@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import {ReactNode} from "react";
 
-export const DashboardContainer = styled.div`
+export const AccountContainer = styled.div`
   display: flex;
   align-items: flex-start;
 `;
@@ -32,7 +32,7 @@ const AccountDetailsLabel = styled.span`
   background: #222; // Match the background of the site to cover the container's border
   padding: 0 5px;
   font-size: 24px; // Adjust as necessary
-  color: #ffffff; // Label text color
+  color: #EAEAEA; // Label text color
 `;
 
 const AccountDetails = styled.div`

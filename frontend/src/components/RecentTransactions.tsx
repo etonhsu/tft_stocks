@@ -1,4 +1,6 @@
-import {PlayerLink} from "./PlayerLink.tsx";
+import {StyledCell, StyledHeader, StyledRow, StyledTable} from "../containers/MultiUse/TableStyle.tsx";
+import styled from "styled-components";
+import {StyledPlayerLink} from "../containers/MultiUse/LinkStyle.ts";
 
 // Define the structure of a transaction object
 export interface Transaction {
@@ -15,6 +17,13 @@ interface RecentTransactionsProps {
     maxEntries: number
 }
 
+const TransactionContainer = styled.div`
+    position: relative; // This will allow you to absolutely position the label
+    margin-left: 3%;
+    margin-right: 5%;
+    flex: 1;  // Takes up all available space
+`;
+
 export const RecentTransactions: React.FC<RecentTransactionsProps> = ({ transactions, maxEntries }) => {
   if (!transactions || !Array.isArray(transactions)) {
     return <p>No transactions available or still loading...</p>;
@@ -24,19 +33,29 @@ export const RecentTransactions: React.FC<RecentTransactionsProps> = ({ transact
   const reversedTransactions = [...transactions].reverse().slice(0,maxEntries);
 
   return (
-    <div>
-      <h3>Recent Transactions</h3>
-      <ul>
-        {reversedTransactions.map((transaction, index) => (
-          <li key={index}>
-            Type: {transaction.type},
-            Name: <PlayerLink gameName={transaction.gameName} />,
-            Shares: {transaction.shares},
-            Price: ${transaction.price.toFixed(2)},
-            Date: {new Date(transaction.transaction_date).toLocaleDateString()}
-          </li>
-        ))}
-      </ul>
-    </div>
+      <TransactionContainer>
+        <StyledTable>
+          <thead>
+            <tr>
+              <StyledHeader>Type</StyledHeader>
+              <StyledHeader>Name</StyledHeader>
+              <StyledHeader>Shares</StyledHeader>
+              <StyledHeader>Price</StyledHeader>
+              <StyledHeader>Date</StyledHeader>
+            </tr>
+          </thead>
+          <tbody>
+            {reversedTransactions.map((transaction, index) => (
+              <StyledRow key={index}>
+                <StyledCell>{transaction.type}</StyledCell>
+                <StyledCell><StyledPlayerLink gameName={transaction.gameName} /></StyledCell>
+                <StyledCell>{transaction.shares}</StyledCell>
+                <StyledCell>${transaction.price.toFixed(2)}</StyledCell>
+                <StyledCell>{new Date(transaction.transaction_date).toLocaleDateString()}</StyledCell>
+              </StyledRow>
+            ))}
+          </tbody>
+        </StyledTable>
+      </TransactionContainer>
   );
 };

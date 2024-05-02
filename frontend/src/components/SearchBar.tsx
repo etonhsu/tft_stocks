@@ -16,7 +16,8 @@ const SearchBarContainer = styled.div`
 const SearchSelect = styled.select`
     border: none;
     background: transparent;
-    color: white;
+    color: #EAEAEA;
+    font-family: 'Sen', sans-serif;
     margin-right: 10px;
     &:focus {
         outline: none;
@@ -27,11 +28,13 @@ const SearchInput = styled.input`
     flex: 1;
     border: none;
     background: transparent;
-    color: white;
+    color: #EAEAEA;
+    font-family: 'Sen', sans-serif;
     &:focus {
         outline: none;
     }
 `;
+
 
 export const SearchBar: React.FC = () => {
     const [searchType, setSearchType] = useState<string>('players');
@@ -54,12 +57,14 @@ export const SearchBar: React.FC = () => {
                 // Assuming data has properties like gameName or username based on searchType
                 const redirectPath = searchType === 'players' ? `/players/${data.gameName}` : `/users/${data.username}`;
                 navigate(redirectPath);
+                setQuery('');
             })
             .catch(error => {
                 console.error('Search error:', error);
                 alert(error.message);
             });
     };
+
 
     return (
         <SearchBarContainer>

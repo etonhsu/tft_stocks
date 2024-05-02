@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import {useState} from "react";
-import {PlayerLink} from "./PlayerLink.tsx";
+import {StyledRow, StyledTable} from "../containers/MultiUse/TableStyle.tsx";
+import {StyledPlayerLink} from "../containers/MultiUse/LinkStyle.ts";
+import {formatCurrency} from "../utils/CurrencyFormatter.tsx";
 
 
 export interface Player {
@@ -13,27 +15,17 @@ interface PortfolioProps {
     players: { [key: string]: Player };
 }
 
-const StyledTable = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-`;
-
-const StyledHeader = styled.th`
+export const PortfolioHeader = styled.th`
     background-color: #222;
     padding: 25px 10px 10px;
-    
     border: 1px solid #cccccc;
     text-align: left;
 `;
 
-const StyledRow = styled.tr`
-  background-color: #222
-`;
-
-const StyledCell = styled.td`
-  padding: 8px;
-  border: 1px solid #666;
-  text-align: left;
+export const PortfolioStyledCell = styled.td`
+    padding: 8px;
+    border: 1px solid #666;
+    text-align: left;
     align-items: flex-start;
 `;
 
@@ -45,22 +37,6 @@ const ValueCell = styled.div`
 const IndentedLine = styled.div`
   padding-left: 8px; // Adjust this value to control the indentation
 `;
-
-const StyledPlayerLink = styled(PlayerLink)`
-    color: cornflowerblue; // Example color
-    text-decoration: none;
-
-    &:hover {
-        text-decoration: underline;
-        color: mediumpurple; // Change color on hover
-    }
-`;
-
-const formatCurrency = (value: number) => {
-    const sign = value >= 0 ? '+' : '-';
-    const color = value >= 0 ? '#82ca9d' : '#f44336';
-    return <span style={{ color }}>{sign}${Math.abs(value).toFixed(2)}</span>;
-};
 
 export const Portfolio: React.FC<PortfolioProps> = ({ players }) => {
     const [sortKey, setSortKey] = useState<string>('name');
@@ -113,32 +89,32 @@ export const Portfolio: React.FC<PortfolioProps> = ({ players }) => {
     <StyledTable>
       <thead>
           <tr>
-              <StyledHeader onClick={() => handleSort('name')}>Name</StyledHeader>
-              <StyledHeader onClick={() => handleSort('shares')}>Shares</StyledHeader>
-              <StyledHeader onClick={() => handleSort('current_price')}>Current Price</StyledHeader>
-              <StyledHeader onClick={() => handleSort('purchase_price')}>Purchase Price</StyledHeader>
-              <StyledHeader onClick={() => handleSort('gain_loss')}>Gain/Loss</StyledHeader>
-              <StyledHeader onClick={() => handleSort('total_value')}>Total Value (Gain/Loss)</StyledHeader>
+              <PortfolioHeader onClick={() => handleSort('name')}>Name</PortfolioHeader>
+              <PortfolioHeader onClick={() => handleSort('shares')}>Shares</PortfolioHeader>
+              <PortfolioHeader onClick={() => handleSort('current_price')}>Current Price</PortfolioHeader>
+              <PortfolioHeader onClick={() => handleSort('purchase_price')}>Purchase Price</PortfolioHeader>
+              <PortfolioHeader onClick={() => handleSort('gain_loss')}>Gain/Loss</PortfolioHeader>
+              <PortfolioHeader onClick={() => handleSort('total_value')}>Total Value (Gain/Loss)</PortfolioHeader>
           </tr>
       </thead>
         <tbody>
         {sortedPlayers.map(([name, player]) => (
             <StyledRow key={name}>
-                <StyledCell>
+                <PortfolioStyledCell>
                     <StyledPlayerLink gameName={name}/>
-                </StyledCell>
-                <StyledCell>{player.shares}</StyledCell>
-                <StyledCell>${player.purchase_price.toFixed(2)}</StyledCell>
-                <StyledCell>${player.current_price.toFixed(2)}</StyledCell>
-                <StyledCell>{formatCurrency(player.current_price - player.purchase_price)}</StyledCell>
-                <StyledCell>
+                </PortfolioStyledCell>
+                <PortfolioStyledCell>{player.shares}</PortfolioStyledCell>
+                <PortfolioStyledCell>{formatCurrency(player.current_price, 2)}</PortfolioStyledCell>
+                <PortfolioStyledCell>{formatCurrency(player.purchase_price, 2)}</PortfolioStyledCell>
+                <PortfolioStyledCell>{formatCurrency(player.current_price - player.purchase_price, 1)}</PortfolioStyledCell>
+                <PortfolioStyledCell>
                 <ValueCell>
                       ${(player.current_price * player.shares).toFixed(2)}
                       <IndentedLine>
-                          ({formatCurrency((player.current_price - player.purchase_price) * player.shares)})
+                          ({formatCurrency((player.current_price - player.purchase_price) * player.shares, 1)})
                       </IndentedLine>
                   </ValueCell>
-            </StyledCell>
+            </PortfolioStyledCell>
           </StyledRow>
         ))}
       </tbody>
