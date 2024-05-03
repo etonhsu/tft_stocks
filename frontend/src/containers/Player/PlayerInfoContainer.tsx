@@ -1,6 +1,17 @@
 import styled from "styled-components";
 import {ReactNode} from "react";
 
+
+export const PlayerNameContainer = styled.div`
+  display: flex;
+  align-items: flex-start;
+`;
+
+export const FavoritesIconContainer = styled.div`
+    margin-top: 47px;
+    margin-left: 10px;
+`;
+
 export const PlayerInfoContainer = styled.div`
   display: flex;
   align-items: flex-start;

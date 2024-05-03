@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { MainContent } from "../containers/General/MainContent.tsx";
 import { useAuth } from '../utils/Authentication.tsx';
 import styled from "styled-components";
-import {ModalContent, ModalOverlay} from "./StyledComponents.tsx"; // Ensure the path is correct
+import {ModalContent, ModalOverlay} from "../components/StyledComponents.tsx"; // Ensure the path is correct
 
 
 const LoginBarContainer = styled.div`

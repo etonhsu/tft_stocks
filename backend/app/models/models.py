@@ -41,10 +41,22 @@ class TransactionRequest(BaseModel):
     shares: int
 
 
+class FavoritesEntry(BaseModel):
+    name: str
+    current_price: float
+    eight_hour_change: float = 0.0
+    one_day_change: float = 0.0
+    three_day_change: float = 0.0
+
+
+class FavoritesResponse(BaseModel):
+    favorites: list[FavoritesEntry]
+
+
 class UserPublic(BaseModel):
     username: str
     portfolio: Portfolio = Portfolio()
-    transactions: List[Transaction] = []
+    transactions: list[Transaction] = []
     one_day_change: float = 0.0
     three_day_change: float = 0.0
     rank: int = None
@@ -52,11 +64,17 @@ class UserPublic(BaseModel):
 
 class UserProfile(UserPublic):
     balance: float = 100_000.0
-    portfolio_history: List[PortfolioHistory]
+    portfolio_history: list[PortfolioHistory]
+    favorites: list[FavoritesEntry] = []
 
 
 class UserSelf(UserProfile):
     password: Optional[SecretStr] = None
+
+
+
+class ToggleFavoriteRequest(BaseModel):
+    gameName: str  # Ensuring the request model matches the expected input
 
 
 class LeaderboardEntry(BaseModel):

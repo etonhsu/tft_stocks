@@ -1,6 +1,7 @@
 import {StyledCell, StyledHeader, StyledRow, StyledTable} from "../containers/MultiUse/TableStyle.tsx";
 import styled from "styled-components";
 import {StyledPlayerLink} from "../containers/MultiUse/LinkStyle.ts";
+import {formatCurrency} from "../utils/CurrencyFormatter.tsx";
 
 // Define the structure of a transaction object
 export interface Transaction {
@@ -50,7 +51,7 @@ export const RecentTransactions: React.FC<RecentTransactionsProps> = ({ transact
                 <StyledCell>{transaction.type}</StyledCell>
                 <StyledCell><StyledPlayerLink gameName={transaction.gameName} /></StyledCell>
                 <StyledCell>{transaction.shares}</StyledCell>
-                <StyledCell>${transaction.price.toFixed(2)}</StyledCell>
+                <StyledCell>{formatCurrency(transaction.price, 2)}</StyledCell>
                 <StyledCell>{new Date(transaction.transaction_date).toLocaleDateString()}</StyledCell>
               </StyledRow>
             ))}

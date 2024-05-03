@@ -24,7 +24,7 @@ export const PortfolioPage: React.FC = () => {
             }
 
             try {
-                const response = await axios.get('http://localhost:8000/portfolio', {
+                const response = await axios.post('http://localhost:8000/portfolio', {
                     headers: {
                         Authorization: `Bearer ${token}` // Use the token for authorization
                     }

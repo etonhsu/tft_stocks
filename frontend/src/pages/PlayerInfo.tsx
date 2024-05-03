@@ -5,15 +5,16 @@ import {PlayerChart} from '../components/PlayerChart';
 import {MainContent} from "../containers/General/MainContent.tsx";
 import {ChartContainer} from "../containers/MultiUse/ChartContainer.tsx";
 import {
-    DetailsAndTransactionColumn,
+    DetailsAndTransactionColumn, FavoritesIconContainer,
     PlayerDetailsContainer,
-    PlayerInfoContainer
+    PlayerInfoContainer, PlayerNameContainer
 } from "../containers/Player/PlayerInfoContainer.tsx";
 import {TransactionContainer} from "../containers/Player/TransactionContainer.tsx";
 import {formatCurrency} from "../utils/CurrencyFormatter.tsx";
+import {FavoriteIcon} from "../components/FavoritesIcon.tsx";
 
 // Assuming you have a type definition for the player data from the backend
-interface PlayerData {
+export interface PlayerData {
   name: string;
   price: number[];
   date: string[];
@@ -73,7 +74,12 @@ export function PlayerInfo() {
 
   return (
       <MainContent>
-          <h1>{playerData.name}</h1>
+          <PlayerNameContainer>
+            <h1>{playerData.name}</h1>
+              <FavoritesIconContainer>
+                  <FavoriteIcon gameName={gameName}/>
+              </FavoritesIconContainer>
+          </PlayerNameContainer>
           <PlayerInfoContainer>
               <DetailsAndTransactionColumn>
                   <PlayerDetailsContainer label="Overview">

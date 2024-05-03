@@ -1,11 +1,14 @@
-import React, { useState, FormEvent } from 'react';
+import React, {useState, FormEvent} from 'react';
 import { useNavigate } from 'react-router-dom';
+import {useAuth} from "../utils/Authentication.tsx";
 
 export const Register: React.FC = () => {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
     const navigate = useNavigate();
+    const { setToken } = useAuth(); // Using context to manage global state
+
 
     const handleRegister = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -26,6 +29,7 @@ export const Register: React.FC = () => {
                 throw new Error(data.detail || 'Failed to register');
             }
             localStorage.setItem('token', data.access_token); // Store the token in localStorage
+            setToken(data.access_token);
             navigate('/dashboard'); // Redirect to the dashboard
         } catch (error: any) {
             setError(error.message);

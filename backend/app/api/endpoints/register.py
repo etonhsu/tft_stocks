@@ -29,7 +29,8 @@ async def register(form_data: OAuth2PasswordRequestForm = Depends()):
         'transactions': [],
         'portfolio_history': [],
         'date_registered': datetime.now(),
-        'rank': 0
+        'rank': 0,
+        'favorites': []
     }
     user_collection.insert_one(new_user)
 
