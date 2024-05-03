@@ -12,6 +12,8 @@ import {PortfolioContainer} from "../containers/Dashboard/PortfolioContainer.tsx
 import {DashboardControls} from "../components/DashboardRefresh.tsx";
 import {PerformersDetailsContainer} from "../containers/Dashboard/PerformersContainer.tsx";
 import {TopPerformers} from "../components/TopPerformers.tsx";
+import {Text} from "../containers/Dashboard/TextStyle.tsx";
+import styled from "styled-components";
 
 export interface UserSummary {
     username: string;
@@ -23,12 +25,18 @@ export interface UserSummary {
     portfolio_history: PortfolioHistoryData[];
     one_day_change: number
     three_day_change: number
+    rank: number
 }
 
 interface PortfolioHistoryData {
     value: number;
     date: Date; // Ensuring it's a Date object
 }
+
+const TextContainer = styled.div`
+  display: flex;
+  flex-direction: column; // Aligns children vertically
+`;
 
 export const Dashboard: React.FC = () => {
     const [userSummary, setUserSummary] = useState<UserSummary | null>(null);
@@ -81,7 +89,14 @@ export const Dashboard: React.FC = () => {
 
     return (
         <MainContent>
-            <h1>Welcome, {userSummary.username}</h1>
+            <TextContainer>
+                <Text size="52px" weight="bold" color='#EAEAEA' padding='10px 5px 0 5px'>
+                    {userSummary.username}
+                </Text>
+                <Text size="22px" weight="bold" color='#EAEAEA' padding='0 0 10px 20px'>
+                  {userSummary.rank === 0 ? 'Rank n/a' : `Rank #${userSummary.rank}`}
+                </Text>
+            </TextContainer>
             <AccountContainer>
                 <AccountColumn>
                     <AccountDetailsContainer label={"Overview"}>

@@ -47,6 +47,7 @@ class UserPublic(BaseModel):
     transactions: List[Transaction] = []
     one_day_change: float = 0.0
     three_day_change: float = 0.0
+    rank: int = None
 
 
 class UserProfile(UserPublic):

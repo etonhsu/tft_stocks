@@ -1,11 +1,9 @@
 from fastapi import APIRouter, HTTPException, Depends, status
 from fastapi.security import OAuth2PasswordRequestForm
-from datetime import timedelta
+from datetime import timedelta, datetime
 from app.core.token import create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES
 from app.db.database import connect_user
 from passlib.context import CryptContext
-
-from app.models.models import Portfolio
 
 router = APIRouter()
 user_collection = connect_user()
@@ -28,7 +26,10 @@ async def register(form_data: OAuth2PasswordRequestForm = Depends()):
         'password': hashed_password,  # Store the hashed password
         'balance': 100000,
         'portfolio': {'players': {}},
-        'transactions': []
+        'transactions': [],
+        'portfolio_history': [],
+        'date_registered': datetime.now(),
+        'rank': 0
     }
     user_collection.insert_one(new_user)
 

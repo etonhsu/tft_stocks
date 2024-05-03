@@ -7,11 +7,9 @@ from fastapi.security import OAuth2PasswordBearer
 
 from app.models.models import UserProfile
 from app.core.token import get_user_from_token
-from app.core.logic import fetch_leaderboard_entries, fetch_recent_transactions
 from app.db.database import connect_lp, connect_user
-from app.models.pricing_model import price_model
 from app.tasks.portfolio_change import portfolio_change
-from app.tasks.portfolio_refresh import portfolio_refresh
+from app.tasks.dashboard_refresh import dashboard_refresh
 from app.utils.redis_utils import get_cache, set_cache
 
 router = APIRouter()
@@ -39,7 +37,7 @@ async def read_dashboard(current_user: UserProfile = Depends(get_user_from_token
     if cached_data:
         return UserProfile(**json.loads(cached_data))
 
-    refreshed_user_data = portfolio_refresh(current_user)
+    refreshed_user_data = dashboard_refresh(current_user)
     updated_user_data = portfolio_change(refreshed_user_data)
 
     # Serialize the updated user data and cache it

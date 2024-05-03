@@ -6,8 +6,8 @@ client = MongoClient(MONGO_URI, server_api=ServerApi('1'))
 
 
 def connect_lp():
-    db = client['test']
-    collection = db['test_lp']
+    db = client['TFT_Stocks']
+    collection = db['player_lp']
     return collection
 
 

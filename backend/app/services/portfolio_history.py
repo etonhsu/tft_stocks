@@ -1,13 +1,12 @@
 from time import sleep
-
-from app.db.database import connect_user
 from datetime import datetime
 
+from app.db.database import connect_user
 from app.models.pricing_model import price_model
 
-user_collection = connect_user()
 
-while True:
+def update_portfolio_history():
+    user_collection = connect_user()
     users = user_collection.find()
     for user in users:
         portfolio = 0
@@ -17,18 +16,25 @@ while True:
             value = price * shares
             portfolio += value
         total = portfolio + user['balance']
-        user_collection.update_one(
-            {'_id': user['_id']},
-            {'$push': {
-                'portfolio_history': {
-                    'value': total,
-                    'date': datetime.now()
-                }
-            }
-            }
-        )
-    sleep(300)
+
+        # Retrieve the last portfolio history entry
+        last_entry = user.get('portfolio_history', [])[-1] if user.get('portfolio_history') else None
+
+        # Check if there is a last entry and if the total value has changed
+        if not last_entry or last_entry['value'] != total:
+            # Only update if there's no last entry or if the total value has changed
+            user_collection.update_one(
+                {'_id': user['_id']},
+                {'$push': {
+                    'portfolio_history': {
+                        'value': total,
+                        'date': datetime.now()
+                    }
+                }}
+            )
 
 
-
-
+if __name__ == "__main__":
+    while True:
+        update_portfolio_history()
+        sleep(300)  # Sleep for 5 minutes before checking again

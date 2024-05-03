@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends
 from app.api.endpoints.dashboard import CustomEncoder
 from app.models.models import UserProfile
 from app.core.token import get_user_from_token
-from app.tasks.portfolio_refresh import portfolio_refresh
+from app.tasks.dashboard_refresh import dashboard_refresh
 from app.utils.redis_utils import set_cache, clear_cache  # Assuming clear_cache is implemented
 from app.db.database import connect_user, connect_lp
 
@@ -22,7 +22,7 @@ async def refresh_dashboard(current_user: UserProfile = Depends(get_user_from_to
     clear_cache(cache_key)
 
     # Fetch fresh data and handle it similarly as in your GET endpoint
-    user_data = portfolio_refresh(current_user)
+    user_data = dashboard_refresh(current_user)
 
     # Serialize and recache the data
     serialized_data = json.dumps(user_data, cls=CustomEncoder)

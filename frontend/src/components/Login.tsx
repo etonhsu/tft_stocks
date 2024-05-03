@@ -11,11 +11,11 @@ const LoginBarContainer = styled.div`
     border-radius: 20px; // Rounded corners
     display: flex;
     align-items: center;
-  margin-bottom: 10px;
+    margin-bottom: 15px;
     padding: 5px 15px;
     height: 40px;
     width: 350px; // Max width of the search bar
-  margin-top: 10px;
+    margin-top: 10px;
 `;
 
 const StyledInput = styled.input`
@@ -24,9 +24,15 @@ const StyledInput = styled.input`
     background: transparent;
     color: #EAEAEA;
     font-family: 'Sen', sans-serif;
+    font-size: 14px;
     &:focus {
         outline: none;
     }
+`;
+
+const StyledLabel = styled.label`
+  font-size: 18px; // Adjust this value as needed
+  color: #EAEAEA; // Example color
 `;
 
 const LoginContainer = styled.div`
@@ -42,7 +48,7 @@ const ButtonContainer = styled.div`
 
 export function Login() {
   const [username, setUsername] = useState<string>('');
-  // const [password, setPassword] = useState<string>(''); // State for password
+  const [password, setPassword] = useState<string>(''); // State for password
   const [loading, setLoading] = useState<boolean>(false); // Loading state
   const { setToken, isModalOpen, setModalOpen } = useAuth();
   const navigate = useNavigate();
@@ -53,19 +59,19 @@ export function Login() {
     setLoading(true);
     const formData = new URLSearchParams();
     formData.append('username', username);
-    // formData.append('password', password);
+    formData.append('password', password);
 
     try {
       const response = await fetch('http://localhost:8000/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: formData
+        body: formData.toString()
       });
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem('token', data.access_token); // Optionally you might remove this if token is managed solely through context
-        setToken(data.access_token); // Update the global token state
+        localStorage.setItem('token', data.access_token);
+        setToken(data.access_token); //update token global state
         setModalOpen(false);
         navigate('/dashboard');
       } else {
@@ -79,8 +85,8 @@ export function Login() {
         alert('Login failed: An unknown error occurred.');
       }
     }
+    setPassword('');
     setLoading(false); // Stop loading regardless of the outcome
-    setModalOpen(false); // Close modal on successful or failed login
   };
 
   if (!isModalOpen) return null;
@@ -92,7 +98,7 @@ export function Login() {
             <ModalContent onClick={e => e.stopPropagation()}> {/* Prevent clicks from closing modal */}
               <form onSubmit={handleSubmit}>
                 <LoginContainer>
-                  Username:
+                  <StyledLabel>Username:</StyledLabel>
                   <LoginBarContainer>
                       <StyledInput
                           type="text"
@@ -102,12 +108,12 @@ export function Login() {
                           required
                       />
                   </LoginBarContainer>
-                  Password:
+                  <StyledLabel>Password:</StyledLabel>
                   <LoginBarContainer>
                     <StyledInput
                         type="password"
-                        // value={password}
-                        // onChange={(e) => setPassword(e.target.value)}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                         placeholder="Enter Password"
                     />
                 </LoginBarContainer>

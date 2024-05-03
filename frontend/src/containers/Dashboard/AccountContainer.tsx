@@ -4,6 +4,7 @@ import {ReactNode} from "react";
 export const AccountContainer = styled.div`
   display: flex;
   align-items: flex-start;
+    padding-bottom: 8px;
 `;
 
 

@@ -8,7 +8,7 @@ user_collection = connect_user()
 lp_collection = connect_lp()
 
 
-def portfolio_refresh(user: UserProfile):
+def dashboard_refresh(user: UserProfile):
     user_data = user_collection.find_one({'username': user.username})
     if not user_data:
         raise HTTPException(status_code=404, detail='User not found')
