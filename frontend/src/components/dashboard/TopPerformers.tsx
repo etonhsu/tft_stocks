@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import {PlayerLink} from "../player/PlayerLink.tsx";
 import {formatCurrency} from "../../utils/CurrencyFormatter.tsx";
+import {UserLink} from "../user/UserLink.tsx";
 
 interface LeaderboardEntry {
     name: string;
@@ -59,6 +60,17 @@ const StyledPlayerLink = styled(PlayerLink)`
     }
 `;
 
+const StyledUserLink = styled(UserLink)`
+    color: cornflowerblue; // Example color
+    font-size: 36px;
+    font-weight: bold;
+    text-decoration: none;
+
+    &:hover {
+        color: #646cff; // Change color on hover
+    }
+`;
+
 const PriceLabel = styled.p`
     width: 100%;
     text-align: center; 
@@ -96,8 +108,6 @@ const StyledButton = styled.button`
       border-color: #222
   }
 `;
-
-
 
 export const TopPerformers: React.FC = () => {
     const [leaderboardData, setLeaderboardData] = useState<TopLeaderboard | null>(null);
@@ -188,7 +198,11 @@ export const TopPerformers: React.FC = () => {
                     >
                         <PerformersDetails>
                             <LinkContainer>
-                                <StyledPlayerLink gameName={currentData.name}/>
+                                {currentType === 'portfolio_value' ? (
+                                    <StyledUserLink gameName={currentData.name}/>
+                                ) : (
+                                    <StyledPlayerLink gameName={currentData.name}/>
+                                )}
                             </LinkContainer>
                             <PriceLabel>{displayType}:</PriceLabel>
                             <PriceContainer>{formatCurrency(currentData.value, currencyType)}</PriceContainer>

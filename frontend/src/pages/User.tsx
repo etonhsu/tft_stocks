@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import {Portfolio, Player} from '../components/portfolio/Portfolio.tsx';
+import {Portfolio, Player} from '../components/dashboard/Portfolio.tsx';
 import {Transaction} from '../components/transactions/RecentTransactions.tsx';
 import {UserTransactionsContainer} from "../containers/user/UserTransactionsContainer.tsx";
 import {MainContent} from "../containers/general/MainContent.tsx";

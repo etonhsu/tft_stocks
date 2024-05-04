@@ -87,9 +87,20 @@ class LeaderboardEntry(BaseModel):
     rank: int
 
 
+class PortfolioLeaderboardEntry(BaseModel):
+    username: str
+    value: float
+    rank: int
+
+
 class LeaderboardResponse(BaseModel):
     leaderboard_type: str  # LP, delta, portfolio
     entries: list[LeaderboardEntry]
+
+
+class PortfolioLeaderboardResponse(BaseModel):
+    leaderboard_type: str
+    entries: list[PortfolioLeaderboardEntry]
 
 
 class TopLeaderboardEntry(BaseModel):

@@ -9,7 +9,7 @@ export const LogoutButton: React.FC = () => {
         localStorage.removeItem('token'); // Optionally you might remove this if token is managed solely through context
         localStorage.removeItem('dashboardData');
         setToken(null); // Update the global token state to null
-        navigate('/login');
+        navigate('/');
     };
 
     return (

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Portfolio, Player } from '../components/portfolio/Portfolio.tsx';
+import { Portfolio, Player } from '../components/dashboard/Portfolio.tsx';
 import axios from 'axios';
 import {MainContent} from "../containers/general/MainContent.tsx";
 

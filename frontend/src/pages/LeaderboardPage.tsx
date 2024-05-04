@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Leaderboard } from '../components/leaderboard/Leaderboard.tsx';
-import { fetchLeaderboardData, LeaderboardEntry } from '../services/LeaderboardAPI';
+import {fetchLeaderboardData, LeaderboardEntry, PortfolioLeaderboardEntry} from '../services/LeaderboardAPI';
 import { MainContent } from "../containers/general/MainContent";
 import {
     LeaderboardButtonContainer,
@@ -8,6 +8,8 @@ import {
     PrevButtonContainer
 } from "../containers/leaderboard/LeaderboardContainer.tsx";
 import styled from "styled-components";
+import {PortfolioLeaderboard} from "../components/leaderboard/PortfolioLeaderboard.tsx";
+import {Text} from "../containers/dashboard/TextStyle.tsx";
 
 export const StyledButton = styled.button`
     display: flex;
@@ -46,12 +48,20 @@ export const StyledButton = styled.button`
     }
 `;
 
+export const SwitchStyledButton = styled(StyledButton)`
+    width: 18%;
+    padding: 8px 2px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+`;
+
+
 export const LeaderboardPage = () => {
-    const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
-    const [leadType, setLeadType] = useState('lp');
+    const [entries, setEntries] = useState<Array<LeaderboardEntry | PortfolioLeaderboardEntry>>([]);
+    const [leadType, setLeadType] = useState<string>('lp');
     const [error, setError] = useState<string | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [page, setPage] = useState(0);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [page, setPage] = useState<number>(0);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -77,20 +87,38 @@ export const LeaderboardPage = () => {
         }
     };
 
-    if (isLoading) {return (<MainContent className="mainContentContainer">Loading...</MainContent>);}
-    if (error) {return (<MainContent className="mainContentContainer">Error: No data available.</MainContent>);}
+    const toggleLeadType = () => {
+        setLeadType(leadType === 'lp' ? 'portfolio' : 'lp');
+        setPage(0); // Optionally reset the page when toggling
+    };
+
+    if (isLoading) {
+        return (<MainContent className="mainContentContainer">Loading...</MainContent>);
+    }
+    if (error) {
+        return (<MainContent className="mainContentContainer">Error: {error}</MainContent>);
+    }
+
+    const isPortfolio = leadType === 'portfolio';
 
     return (
         <MainContent>
             <div>
-                <h1>Leaderboard</h1>
-                <Leaderboard entries={entries} type={leadType} onSortChange={handleSortChange} />
+                <Text size='48px' weight='bold' padding='0px 0px 0px 0px'>{isPortfolio ? 'Portfolio Leaderboard' : 'Leaderboard'}</Text>
+                    <SwitchStyledButton onClick={toggleLeadType}>
+                        {leadType === 'portfolio' ? 'Standard' : 'Portfolio'} Leaderboard
+                    </SwitchStyledButton>
+                {isPortfolio ? (
+                    <PortfolioLeaderboard entries={entries as PortfolioLeaderboardEntry[]} type={leadType} onSortChange={handleSortChange} />
+                ) : (
+                    <Leaderboard entries={entries as LeaderboardEntry[]} type={leadType} onSortChange={handleSortChange} />
+                )}
                 <LeaderboardButtonContainer>
                     <PrevButtonContainer>
-                        <StyledButton disabled={page === 0} onClick={() => setPage(page - 1)} className="buttonStyle">Previous</StyledButton>
+                        <StyledButton disabled={page === 0} onClick={() => setPage(page - 1)}>Previous</StyledButton>
                     </PrevButtonContainer>
                     <NextButtonContainer>
-                        <StyledButton onClick={() => setPage(page + 1)} className="buttonStyle">Next</StyledButton>
+                        <StyledButton onClick={() => setPage(page + 1)}>Next</StyledButton>
                     </NextButtonContainer>
                 </LeaderboardButtonContainer>
             </div>

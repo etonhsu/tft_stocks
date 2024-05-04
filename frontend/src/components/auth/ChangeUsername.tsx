@@ -87,7 +87,7 @@ export const ChangeUsername: React.FC<ChangeUsernameProps> = ({ onClose }) => {
     useEffect(() => {
         // Redirect if not logged in
         if (!isLoggedIn) {
-            navigate('/login');
+            navigate('/');
         }
     }, [isLoggedIn, navigate]);
 
@@ -109,7 +109,7 @@ export const ChangeUsername: React.FC<ChangeUsernameProps> = ({ onClose }) => {
             console.log('Username changed successfully:', response.data);
             setToken(null); // Clear token to log out user
             onClose(); // Close the modal
-            navigate('/login'); // Redirect to login page
+            navigate('/'); // Redirect to login page
         } catch (err) {
             if (axios.isAxiosError(err) && err.response) {
                 setError('Failed to change username');

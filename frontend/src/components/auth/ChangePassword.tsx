@@ -112,7 +112,7 @@ export const ChangePassword: React.FC<ChangePasswordProps> = ({ onClose }) => {
             });
             console.log('Password changed successfully:', response.data);
             setToken(null); // Clear token to log out user
-            navigate('/login'); // Redirect to login page
+            navigate('/'); // Redirect to login page
             onClose(); // Close the modal
         } catch (err) {
             if (axios.isAxiosError(err) && err.response) {

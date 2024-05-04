@@ -11,7 +11,7 @@ import {
 } from "../containers/player/PlayerInfoContainer.tsx";
 import {TransactionContainer} from "../containers/player/TransactionContainer.tsx";
 import {formatCurrency} from "../utils/CurrencyFormatter.tsx";
-import {FavoriteIcon} from "../components/common/FavoritesIcon.tsx";
+import {FavoriteIcon} from "../components/player/FavoritesIcon.tsx";
 import {formatDate} from "../utils/DateFormatter.tsx";
 
 // Assuming you have a type definition for the player data from the backend

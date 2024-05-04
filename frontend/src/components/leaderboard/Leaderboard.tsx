@@ -2,10 +2,10 @@ import React from 'react';
 import { UserLink } from '../user/UserLink.tsx';
 import { LeaderboardEntry } from '../../services/LeaderboardAPI.ts';
 import { StyledPlayerLink } from "../../containers/multiUse/LinkStyle.ts";
-import { StyledCell, StyledHeader, StyledRow, StyledTable } from "../../containers/multiUse/TableStyle.tsx";
+import {ClickStyledHeader, StyledCell, StyledHeader, StyledRow, StyledTable } from "../../containers/multiUse/TableStyle.tsx";
 import styled from "styled-components";
-import {LeaderboardDownArrow, LeaderboardUpArrow} from "../../assets/Icons.tsx";
 import {formatCurrency} from "../../utils/CurrencyFormatter.tsx";
+import {FaSort, FaSortDown, FaSortUp} from "react-icons/fa";
 
 interface LeaderboardProps {
     entries: LeaderboardEntry[];
@@ -58,11 +58,17 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ entries, type, onSortC
         // Extract the base attribute by removing any prefix
         const baseAttribute = attribute.replace('delta_', '').replace('neg_', '');
 
-        // Check the current type state to decide which icon to render
-        const isNegative = type.includes(`neg_${baseAttribute}`);
+        // Determine if the current column is the one being sorted
+        const currentSortBase = type.replace('delta_', '').replace('neg_', '');
 
-        // Render the appropriate arrow icon based on whether the sort is negative
-        return isNegative ? <LeaderboardUpArrow /> : <LeaderboardDownArrow />;
+        if (currentSortBase === baseAttribute) {
+            // Check the current type state to decide which icon to render
+            const isNegative = type.startsWith('neg_');
+            return isNegative ? <FaSortUp /> : <FaSortDown />;
+        }
+
+        // Default to unsorted icon
+        return <FaSort />;
     };
 
     return (
@@ -73,38 +79,38 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ entries, type, onSortC
                         <tr>
                             <StyledHeader>Rank</StyledHeader>
                             <StyledHeader>Player</StyledHeader>
-                            <StyledHeader onClick={() => handleHeaderClick('lp')}>
+                            <ClickStyledHeader onClick={() => handleHeaderClick('lp')}>
                                 <DeltaHeader>
                                 Price
                                     <IconContainer>
-                                        <LeaderboardDownArrow/>
+                                        <FaSortDown/>
                                     </IconContainer>
                                 </DeltaHeader>
-                            </StyledHeader>
-                            <StyledHeader onClick={() => handleHeaderClick('delta_8h')}>
+                            </ClickStyledHeader>
+                            <ClickStyledHeader onClick={() => handleHeaderClick('delta_8h')}>
                                 <DeltaHeader>
                                 8-Hour Change
                                     <IconContainer>
                                         {renderArrowIcon('8h')}
                                     </IconContainer>
                                 </DeltaHeader>
-                            </StyledHeader>
-                            <StyledHeader onClick={() => handleHeaderClick('delta_24h')}>
+                            </ClickStyledHeader>
+                            <ClickStyledHeader onClick={() => handleHeaderClick('delta_24h')}>
                                 <DeltaHeader>
                                 1-Day Change
                                     <IconContainer>
                                         {renderArrowIcon('24h')}
                                     </IconContainer>
                                 </DeltaHeader>
-                            </StyledHeader>
-                            <StyledHeader onClick={() => handleHeaderClick('delta_72h')}>
+                            </ClickStyledHeader>
+                            <ClickStyledHeader onClick={() => handleHeaderClick('delta_72h')}>
                                 <DeltaHeader>
                                 3-Day Change
                                     <IconContainer>
                                         {renderArrowIcon('72h')}
                                     </IconContainer>
                                 </DeltaHeader>
-                            </StyledHeader>
+                            </ClickStyledHeader>
                         </tr>
                     </thead>
                     <tbody>

@@ -1,6 +1,6 @@
 import React from 'react';
 import {UserSummary} from "../../pages/Dashboard.tsx";
-import {Player} from "../portfolio/Portfolio.tsx";
+import {Player} from "../dashboard/Portfolio.tsx";
 import styled from "styled-components";
 import {formatCurrency} from "../../utils/CurrencyFormatter.tsx";
 

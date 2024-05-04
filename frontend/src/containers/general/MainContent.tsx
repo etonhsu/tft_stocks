@@ -7,4 +7,5 @@ export const MainContent = styled.div`
     padding-bottom: 10px;
     overflow-y: auto; // Allows for scrolling within the main content area
     background-color: #222; // Background color for the main content
+    height: 100vh;
 `;

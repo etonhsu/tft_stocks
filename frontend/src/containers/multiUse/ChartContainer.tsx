@@ -35,7 +35,7 @@ const ChartDetails = styled.div`
     align-items: center;
     border: 3px solid #666;
     border-radius: 10px;
-    height: 424px;
+    height: 439px;
 `;
 
 export const ChartContainer: React.FC<ChartDetailsProps> = ({ label, children }) => {

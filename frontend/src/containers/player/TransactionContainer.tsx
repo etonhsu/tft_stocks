@@ -13,7 +13,7 @@ const TransactionDetailsWrapper = styled.div`
     margin-top: 2%;
     margin-right: 30%;
     width: 330px;
-    height: 200px;
+    height: 230px;
     border: 3px solid #666;
     border-radius: 10px;
 `;
@@ -30,7 +30,9 @@ const TransactionDetailsLabel = styled.span`
 
 const TransactionDetails = styled.div`
     height: 60px;
-    padding: 20px 20px 20px;
+    padding: 25px 20px 20px;
+    justify-content: center;
+    justify-items: center;
 `;
 
 export const TransactionContainer: React.FC<TransactionDetailsProps> = ({ label, children }) => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Portfolio, Player } from '../components/portfolio/Portfolio.tsx';
+import { Portfolio, Player } from '../components/dashboard/Portfolio.tsx';
 import {Transaction} from "../components/transactions/RecentTransactions.tsx";
 import {UserAccount} from "../components/user/UserAccount.tsx";
 import axios from 'axios';
@@ -9,9 +9,9 @@ import {AccountColumn, AccountDetailsContainer, AccountContainer} from "../conta
 import {UserChart} from "../components/user/UserChart.tsx";
 import {ChartContainer} from "../containers/multiUse/ChartContainer.tsx";
 import {PortfolioContainer} from "../containers/dashboard/PortfolioContainer.tsx";
-import {DashboardControls} from "../components/misc/DashboardRefresh.tsx";
+import {DashboardControls} from "../components/dashboard/DashboardRefresh.tsx";
 import {PerformersDetailsContainer} from "../containers/dashboard/PerformersContainer.tsx";
-import {TopPerformers} from "../components/misc/TopPerformers.tsx";
+import {TopPerformers} from "../components/dashboard/TopPerformers.tsx";
 import {Text} from "../containers/dashboard/TextStyle.tsx";
 import styled from "styled-components";
 

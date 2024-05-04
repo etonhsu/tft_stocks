@@ -16,7 +16,7 @@ def find_closest_lp(target_time, date_times, league_points):
     # Find the index of the closest time that is less than or equal to the target time within the valid range
     try:
         closest_index = min(
-            (i for i in valid_indices if date_times[i] <= target_time),
+            (i for i in valid_indices if date_times[i] >= target_time),
             key=lambda i: abs(date_times[i] - target_time)
         )
     except ValueError:

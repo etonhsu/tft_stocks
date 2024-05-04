@@ -1,39 +1,61 @@
 const API_URL: string = 'http://localhost:8000/leaderboard';
 
+// Standard leaderboard entry
 export interface LeaderboardEntry {
   gameName: string;
-  lp: number; // League points
-  delta_8h: number; // Change in 8 hours
-  delta_24h: number; // Change in 24 hours
-  delta_72h: number; // Change in 72 hours
+  lp: number;
+  delta_8h: number;
+  delta_24h: number;
+  delta_72h: number;
   rank: number;
 }
 
+// Portfolio leaderboard entry
+export interface PortfolioLeaderboardEntry {
+  username: string;
+  value: number;
+  rank: number;
+}
+
+// Generic response interface
 interface LeaderboardResponse {
-  entries: LeaderboardEntry[];
+  entries: Array<LeaderboardEntry | PortfolioLeaderboardEntry>;
   totalEntries: number;
 }
 
+// Function to fetch leaderboard data
 export async function fetchLeaderboardData(leadType: string, page: number = 0, limit: number = 100): Promise<LeaderboardResponse> {
-  const url: string = `${API_URL}/${leadType}?limit=${limit}&page=${page}`; // Use leadType to specify sorting by specific attribute
+  const url: string = `${API_URL}/${leadType}?limit=${limit}&page=${page}`;
   try {
     const response: Response = await fetch(url);
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
     const data = await response.json();
-    // Transform the data if necessary, e.g., combine fields or adapt names
-    return {
-      entries: data.entries.map((entry: LeaderboardEntry) => ({
-        gameName: entry.gameName,
-        lp: entry.lp,
-        delta_8h: entry.delta_8h,
-        delta_24h: entry.delta_24h,
-        delta_72h: entry.delta_72h,
-        rank: entry.rank
-      })),
-      totalEntries: data.totalEntries
-    };
+    if (leadType === 'portfolio') {
+      // Assuming the API returns items in the format expected for portfolio entries
+      return {
+        entries: data.entries.map((entry: PortfolioLeaderboardEntry) => ({
+          username: entry.username,
+          value: entry.value,
+          rank: entry.rank
+        })),
+        totalEntries: data.totalEntries
+      } as LeaderboardResponse;
+    } else {
+      // Transform the data for standard leaderboard entries
+      return {
+        entries: data.entries.map((entry: LeaderboardEntry) => ({
+          gameName: entry.gameName,
+          lp: entry.lp,
+          delta_8h: entry.delta_8h,
+          delta_24h: entry.delta_24h,
+          delta_72h: entry.delta_72h,
+          rank: entry.rank
+        })),
+        totalEntries: data.totalEntries
+      } as LeaderboardResponse;
+    }
   } catch (error) {
     console.error("Failed to fetch leaderboard data:", error);
     throw error;

@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import {useState} from "react";
+import React, {useState} from "react";
 import {StyledRow, StyledTable} from "../../containers/multiUse/TableStyle.tsx";
 import {StyledPlayerLink} from "../../containers/multiUse/LinkStyle.ts";
 import {formatCurrency} from "../../utils/CurrencyFormatter.tsx";
+import {FaSort, FaSortDown, FaSortUp} from "react-icons/fa";
 
 
 export interface Player {
@@ -20,6 +21,9 @@ export const PortfolioHeader = styled.th`
     padding: 25px 10px 10px;
     border: 1px solid #cccccc;
     text-align: left;
+    cursor: pointer;  // Make it obvious it's clickable
+    justify-content: space-between;  // Aligns content and icon
+    align-items: center;
 `;
 
 export const PortfolioStyledCell = styled.td`
@@ -56,6 +60,11 @@ export const Portfolio: React.FC<PortfolioProps> = ({ players }) => {
         }
     };
 
+    const renderSortIcon = (column: string) => {
+        if (sortKey !== column) return <FaSort />;  // No icon if not the current sorted column
+        return isAscending ? <FaSortDown /> : <FaSortUp />;
+    };
+
   // Function to sort data
   const sortedPlayers = Object.entries(players).sort(([name1, player1], [name2, player2]) => {
         let value1, value2;
@@ -89,12 +98,24 @@ export const Portfolio: React.FC<PortfolioProps> = ({ players }) => {
     <StyledTable>
       <thead>
           <tr>
-              <PortfolioHeader onClick={() => handleSort('name')}>Name</PortfolioHeader>
-              <PortfolioHeader onClick={() => handleSort('shares')}>Shares</PortfolioHeader>
-              <PortfolioHeader onClick={() => handleSort('current_price')}>Current Price</PortfolioHeader>
-              <PortfolioHeader onClick={() => handleSort('purchase_price')}>Purchase Price</PortfolioHeader>
-              <PortfolioHeader onClick={() => handleSort('gain_loss')}>Gain/Loss</PortfolioHeader>
-              <PortfolioHeader onClick={() => handleSort('total_value')}>Total Value (Gain/Loss)</PortfolioHeader>
+              <PortfolioHeader onClick={() => handleSort('name')}>
+                  Name {renderSortIcon('name')}
+              </PortfolioHeader>
+              <PortfolioHeader onClick={() => handleSort('shares')}>
+                  Shares {renderSortIcon('shares')}
+              </PortfolioHeader>
+              <PortfolioHeader onClick={() => handleSort('current_price')}>
+                  Current Price {renderSortIcon('current_price')}
+              </PortfolioHeader>
+              <PortfolioHeader onClick={() => handleSort('purchase_price')}>
+                  Purchase Price {renderSortIcon('purchase_price')}
+              </PortfolioHeader>
+              <PortfolioHeader onClick={() => handleSort('gain_loss')}>
+                  Gain/Loss {renderSortIcon('gain_loss')}
+              </PortfolioHeader>
+              <PortfolioHeader onClick={() => handleSort('total_value')}>
+                  Total Value (Gain/Loss) {renderSortIcon('total_value')}
+              </PortfolioHeader>
           </tr>
       </thead>
         <tbody>

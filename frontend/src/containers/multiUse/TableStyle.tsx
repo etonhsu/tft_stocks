@@ -5,7 +5,15 @@ export const StyledTable = styled.table`
   border-collapse: collapse;
 `;
 
-export const StyledHeader = styled.th`
+export const ClickStyledHeader = styled.th`
+    background-color: #222;
+    padding: 12px;
+    border: 1px solid #EAEAEA;
+    text-align: left;
+    cursor: pointer;  // Make it obvious it's clickable
+`;
+
+export const StyledHeader= styled.th`
     background-color: #222;
     padding: 12px;
     border: 1px solid #EAEAEA;

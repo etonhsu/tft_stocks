@@ -38,7 +38,7 @@ export const Settings: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (!token) {
-        navigate('/login');
+        navigate('/');
         return;
       }
 
@@ -51,11 +51,11 @@ export const Settings: React.FC = () => {
         setSettingsData(response.data);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching misc data:', error);
+        console.error('Error fetching sidebar data:', error);
         setLoading(false);
-        setError('Failed to fetch misc');
+        setError('Failed to fetch sidebar');
         if (axios.isAxiosError(error) && error.response?.status === 401) {
-          navigate('/login');
+          navigate('/');
         }
       }
     };
