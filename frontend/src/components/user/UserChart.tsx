@@ -2,7 +2,7 @@ import React from 'react';
 import {
   XAxis, YAxis, CartesianGrid, ResponsiveContainer, AreaChart, Tooltip, Area, TooltipProps
 } from 'recharts';
-import {formatCurrency} from "../utils/CurrencyFormatter.tsx";
+import {formatCurrency} from "../../utils/CurrencyFormatter.tsx";
 
 interface PortfolioHistoryData {
   date: Date;

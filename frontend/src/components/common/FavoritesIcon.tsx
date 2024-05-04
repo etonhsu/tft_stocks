@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useAuth } from '../utils/Authentication';
-import { ClickedFavoritesIcon, FavoritesIcon } from "../assets/Icons.tsx";
+import { useAuth } from '../../utils/Authentication.tsx';
+import { ClickedFavoritesIcon, FavoritesIcon } from "../../assets/Icons.tsx";
 import styled from "styled-components";
 
 export const FavoriteButton = styled.button`

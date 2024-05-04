@@ -4,8 +4,14 @@ import { jwtDecode } from 'jwt-decode';
 interface AuthContextType {
   token: string | null;
   setToken: (token: string | null) => void;
-  isModalOpen: boolean;
-  setModalOpen: (isOpen: boolean) => void;
+  isLoggedIn: boolean;
+  setIsLoggedIn: (isLoggedIn: boolean) => void;
+  isLoginModalOpen: boolean;
+  setLoginModalOpen: (isOpen: boolean) => void;
+  isRegisterModalOpen: boolean;
+  setRegisterModalOpen: (isOpen: boolean) => void;
+  isSettingsModalOpen: boolean;
+  setSettingsModalOpen: (isOpen: boolean) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -15,7 +21,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const storedToken = localStorage.getItem('token');
     return storedToken && isTokenExpired(storedToken) ? null : storedToken;
   });
-  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!!token);
+  const [isLoginModalOpen, setLoginModalOpen] = useState<boolean>(false);
+  const [isRegisterModalOpen, setRegisterModalOpen] = useState<boolean>(false);
+  const [isSettingsModalOpen, setSettingsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (token) {
@@ -35,7 +44,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => clearInterval(interval); // Cleanup on unmount
   }, [token]);
 
-  const value = { token, setToken, isModalOpen, setModalOpen };
+  const value = {
+    token,
+    setToken,
+    isLoggedIn,
+    setIsLoggedIn,
+    isLoginModalOpen,
+    setLoginModalOpen,
+    isRegisterModalOpen,
+    setRegisterModalOpen,
+    isSettingsModalOpen,
+    setSettingsModalOpen,
+  };
 
   return (
     <AuthContext.Provider value={value}>

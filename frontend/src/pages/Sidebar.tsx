@@ -1,10 +1,12 @@
 import {useAuth} from "../utils/Authentication.tsx";
-import {ActionSection, NavSection, SidebarContainer} from "../containers/General/SidebarContainer.tsx";
-import {StyledLink} from "../containers/General/SidebarLink.tsx";
-import {DashboardIcon, FavoritesIcon, LeaderboardIcon, SettingsIcon, TransactionIcon} from "../assets/Icons.tsx";
-import {LogoutButton} from "../components/Logout.tsx";
+import {ActionSection, NavSection, SidebarContainer} from "../containers/general/SidebarContainer.tsx";
+import {StyledLink} from "../containers/general/SidebarLink.tsx";
+import {DashboardIcon, FavoritesIcon, LeaderboardIcon, TransactionIcon} from "../assets/Icons.tsx";
+import {LogoutButton} from "../components/auth/Logout.tsx";
 import styled from "styled-components";
-import {LoginButton} from "../components/LoginButton.tsx";
+import {LoginButton} from "../components/auth/LoginButton.tsx";
+import {RegisterButton} from "../components/auth/RegisterButton.tsx";
+import {SettingsButton} from "../components/misc/SettingsButton.tsx";
 
 const TitleContainer = styled.div`
     width: 100%;
@@ -36,14 +38,12 @@ export function SidebarComponent() {
                     <StyledLink to="/transaction_history">
                         <TransactionIcon />Transactions
                     </StyledLink>
-                    <StyledLink to="/transaction_history">
-                        <SettingsIcon />Settings
-                    </StyledLink>
+                    <SettingsButton/>
                 </>
                 ) : (
                 <>
                     <LoginButton/>
-                    <StyledLink to="/register">Register</StyledLink>
+                    <RegisterButton/>
                     <StyledLink to="/leaderboard">
                     <LeaderboardIcon />Leaderboard
                     </StyledLink>

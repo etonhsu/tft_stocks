@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {PlayerLink} from "../../components/PlayerLink.tsx";
+import {PlayerLink} from "../../components/player/PlayerLink.tsx";
 
 export const StyledPlayerLink = styled(PlayerLink)`
     color: cornflowerblue; // Example color

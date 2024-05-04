@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { RecentTransactions, Transaction } from "../components/RecentTransactions";
-import {MainContent} from "../containers/General/MainContent.tsx";
+import { RecentTransactions, Transaction } from "../components/transactions/RecentTransactions.tsx";
+import {MainContent} from "../containers/general/MainContent.tsx";
 
 // TransactionPage component
 export const TransactionPage: React.FC = () => {

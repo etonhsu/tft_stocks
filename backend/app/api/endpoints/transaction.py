@@ -55,7 +55,7 @@ async def add_transaction(
     # Selling a player
     if transaction_type == 'sell':
         if gameName not in user.portfolio.players:
-            raise HTTPException(status_code=400, detail='Player not found in portfolio')
+            raise HTTPException(status_code=400, detail='player not found in portfolio')
 
         if user.portfolio.players[gameName].shares < shares:
             raise HTTPException(status_code=400, detail='Insufficient Shares')

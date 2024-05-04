@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MainContent } from "../containers/General/MainContent.tsx";
+import { MainContent } from "../containers/general/MainContent.tsx";
 import { useAuth } from '../utils/Authentication.tsx';
 import styled from "styled-components";
-import {ModalContent, ModalOverlay} from "../components/StyledComponents.tsx"; // Ensure the path is correct
+import {ModalContent, ModalOverlay} from "../components/common/StyledComponents.tsx"; // Ensure the path is correct
 
 
-const LoginBarContainer = styled.div`
+export const LoginBarContainer = styled.div`
     background: #333; // Dark background color
     border-radius: 20px; // Rounded corners
     display: flex;
@@ -18,7 +18,7 @@ const LoginBarContainer = styled.div`
     margin-top: 10px;
 `;
 
-const StyledInput = styled.input`
+export const StyledInput = styled.input`
     flex: 1;
     border: none;
     background: transparent;
@@ -30,17 +30,17 @@ const StyledInput = styled.input`
     }
 `;
 
-const StyledLabel = styled.label`
+export const StyledLabel = styled.label`
   font-size: 18px; // Adjust this value as needed
   color: #EAEAEA; // Example color
 `;
 
-const LoginContainer = styled.div`
+export const LoginContainer = styled.div`
     padding: 25px;
     margin-left: 40px;
 `;
 
-const ButtonContainer = styled.div`
+export const ButtonContainer = styled.div`
   width: 100%; // Take full width to center the button inside
   display: flex;
   justify-content: center; // Center the button horizontally
@@ -50,7 +50,7 @@ export function Login() {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>(''); // State for password
   const [loading, setLoading] = useState<boolean>(false); // Loading state
-  const { setToken, isModalOpen, setModalOpen } = useAuth();
+  const { setToken, isLoginModalOpen, setLoginModalOpen } = useAuth();
   const navigate = useNavigate();
 
 
@@ -72,7 +72,7 @@ export function Login() {
         const data = await response.json();
         localStorage.setItem('token', data.access_token);
         setToken(data.access_token); //update token global state
-        setModalOpen(false);
+        setLoginModalOpen(false);
         navigate('/dashboard');
       } else {
         throw new Error('Failed to log in');
@@ -89,12 +89,12 @@ export function Login() {
     setLoading(false); // Stop loading regardless of the outcome
   };
 
-  if (!isModalOpen) return null;
+  if (!isLoginModalOpen) return null;
 
   return (
       <MainContent>
-        {isModalOpen && (
-          <ModalOverlay onClick={() => setModalOpen(false)}> {/* Click on overlay to close modal */}
+        {isLoginModalOpen && (
+          <ModalOverlay onClick={() => setLoginModalOpen(false)}> {/* Click on overlay to close modal */}
             <ModalContent onClick={e => e.stopPropagation()}> {/* Prevent clicks from closing modal */}
               <form onSubmit={handleSubmit}>
                 <LoginContainer>

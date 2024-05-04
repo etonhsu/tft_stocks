@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { StyledCell, StyledHeader, StyledRow, StyledTable } from "../containers/MultiUse/TableStyle.tsx";
+import { StyledCell, StyledHeader, StyledRow, StyledTable } from "../containers/multiUse/TableStyle.tsx";
 import {formatCurrency} from "../utils/CurrencyFormatter.tsx";
-import {MainContent} from "../containers/General/MainContent.tsx";
-import {StyledPlayerLink} from "../containers/MultiUse/LinkStyle.ts";
+import {MainContent} from "../containers/general/MainContent.tsx";
+import {StyledPlayerLink} from "../containers/multiUse/LinkStyle.ts";
 import styled from "styled-components";
 
 interface FavoriteData {

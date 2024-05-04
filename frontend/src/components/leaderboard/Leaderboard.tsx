@@ -1,11 +1,11 @@
 import React from 'react';
-import { UserLink } from './UserLink';
-import { LeaderboardEntry } from '../services/LeaderboardAPI';
-import { StyledPlayerLink } from "../containers/MultiUse/LinkStyle.ts";
-import { StyledCell, StyledHeader, StyledRow, StyledTable } from "../containers/MultiUse/TableStyle.tsx";
+import { UserLink } from '../user/UserLink.tsx';
+import { LeaderboardEntry } from '../../services/LeaderboardAPI.ts';
+import { StyledPlayerLink } from "../../containers/multiUse/LinkStyle.ts";
+import { StyledCell, StyledHeader, StyledRow, StyledTable } from "../../containers/multiUse/TableStyle.tsx";
 import styled from "styled-components";
-import {LeaderboardDownArrow, LeaderboardUpArrow} from "../assets/Icons.tsx";
-import {formatCurrency} from "../utils/CurrencyFormatter.tsx";
+import {LeaderboardDownArrow, LeaderboardUpArrow} from "../../assets/Icons.tsx";
+import {formatCurrency} from "../../utils/CurrencyFormatter.tsx";
 
 interface LeaderboardProps {
     entries: LeaderboardEntry[];

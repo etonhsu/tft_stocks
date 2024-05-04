@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../utils/Authentication.tsx'; // Ensure the path is correct
+import { useAuth } from '../../utils/Authentication.tsx'; // Ensure the path is correct
 
 export const LogoutButton: React.FC = () => {
     const navigate = useNavigate();

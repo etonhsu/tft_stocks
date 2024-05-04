@@ -3,8 +3,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import {PlayerLink} from "./PlayerLink.tsx";
-import {formatCurrency} from "../utils/CurrencyFormatter.tsx";
+import {PlayerLink} from "../player/PlayerLink.tsx";
+import {formatCurrency} from "../../utils/CurrencyFormatter.tsx";
 
 interface LeaderboardEntry {
     name: string;

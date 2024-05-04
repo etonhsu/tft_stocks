@@ -1,6 +1,6 @@
 // DashboardControls.js
 import { useState } from 'react';
-import {UserSummary} from "../pages/Dashboard.tsx";
+import {UserSummary} from "../../pages/Dashboard.tsx";
 import axios from 'axios';
 import {useNavigate} from "react-router-dom";
 
@@ -30,7 +30,7 @@ export function DashboardControls({ updateDashboard }: DashboardControlsProps) {
                     Authorization: `Bearer ${token}`
                 }
             });
-            setMessage('Dashboard data updated successfully.');
+            setMessage('dashboard data updated successfully.');
             if (response.data) {
                 updateDashboard(response.data as UserSummary); // Casting to UserSummary to ensure type safety
             }
@@ -44,7 +44,7 @@ export function DashboardControls({ updateDashboard }: DashboardControlsProps) {
     return (
         <div>
             <button onClick={refreshDashboard} disabled={isLoading} className="buttonStyle">
-                {isLoading ? 'Updating...' : 'Update Dashboard'}
+                {isLoading ? 'Updating...' : 'Update dashboard'}
             </button>
             {message && <p>{message}</p>}
         </div>

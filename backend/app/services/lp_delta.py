@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from time import sleep
 from app.models.pricing_model import price_model
 
+
 def find_closest_lp(target_time, date_times, league_points):
     # Determine the valid length for index operations
     valid_length = min(len(date_times), len(league_points))
@@ -16,14 +17,14 @@ def find_closest_lp(target_time, date_times, league_points):
     try:
         closest_index = min(
             (i for i in valid_indices if date_times[i] <= target_time),
-            key=lambda i: abs(date_times[i] - target_time),
-            default=0  # Use the oldest available entry as a default
+            key=lambda i: abs(date_times[i] - target_time)
         )
     except ValueError:
-        # If no valid indices are found, default to the oldest in the valid range
-        closest_index = 0
+        # If no valid indices are found, return None as no valid data points are before the target time
+        return None
 
     return league_points[closest_index]
+
 
 def calculate_delta():
     lp_collection = connect_lp()
@@ -54,9 +55,9 @@ def calculate_delta():
         lp_72h = find_closest_lp(time_72h, date_times, doc['leaguePoints'])
 
         # Calculate deltas
-        delta_8h = price_model(current_lp) - price_model(lp_8h) if lp_8h else None
-        delta_24h = price_model(current_lp) - price_model(lp_24h) if lp_24h else None
-        delta_72h = price_model(current_lp) - price_model(lp_72h) if lp_72h else None
+        delta_8h = price_model(current_lp) - price_model(lp_8h) if lp_8h else 0
+        delta_24h = price_model(current_lp) - price_model(lp_24h) if lp_24h else 0
+        delta_72h = price_model(current_lp) - price_model(lp_72h) if lp_72h else 0
 
         # Update the database with the newest deltas
         summoner_Id = doc['summonerId']
@@ -74,4 +75,4 @@ def calculate_delta():
 if __name__ == "__main__":
     while True:
         calculate_delta()
-        sleep(300)  # Run every hour, adjust as necessary
+        sleep(300)

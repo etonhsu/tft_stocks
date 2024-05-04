@@ -11,7 +11,7 @@ async def search_players(query: str):
     query_lower = query.lower()
     lp_data = lp_collection.find_one({'gameName_lower': query_lower})
     if not lp_data:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Player not found')
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='player not found')
     return {'gameName': lp_data['gameName']}
 
 

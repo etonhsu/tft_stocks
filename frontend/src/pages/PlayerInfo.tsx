@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import {TransactionComponent} from '../components/TransactionComponent';
-import {PlayerChart} from '../components/PlayerChart';
-import {MainContent} from "../containers/General/MainContent.tsx";
-import {ChartContainer} from "../containers/MultiUse/ChartContainer.tsx";
+import {TransactionComponent} from '../components/transactions/TransactionComponent.tsx';
+import {PlayerChart} from '../components/player/PlayerChart.tsx';
+import {MainContent} from "../containers/general/MainContent.tsx";
+import {ChartContainer} from "../containers/multiUse/ChartContainer.tsx";
 import {
     DetailsAndTransactionColumn, FavoritesIconContainer,
     PlayerDetailsContainer,
     PlayerInfoContainer, PlayerNameContainer
-} from "../containers/Player/PlayerInfoContainer.tsx";
-import {TransactionContainer} from "../containers/Player/TransactionContainer.tsx";
+} from "../containers/player/PlayerInfoContainer.tsx";
+import {TransactionContainer} from "../containers/player/TransactionContainer.tsx";
 import {formatCurrency} from "../utils/CurrencyFormatter.tsx";
-import {FavoriteIcon} from "../components/FavoritesIcon.tsx";
+import {FavoriteIcon} from "../components/common/FavoritesIcon.tsx";
+import {formatDate} from "../utils/DateFormatter.tsx";
 
 // Assuming you have a type definition for the player data from the backend
 export interface PlayerData {
@@ -51,17 +52,6 @@ export function PlayerInfo() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const formatDate = (dateString: string | number | Date) => {
-    const date = new Date(dateString);
-    return date.toLocaleString('en-US', {
-      month: 'numeric',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true
-    });
   };
 
   const handleUserDataUpdate = () => {

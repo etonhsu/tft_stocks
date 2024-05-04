@@ -15,7 +15,7 @@ async def player_info(gameName: str):
     try:
         info = lp_collection.find_one({'gameName': gameName}, projection)
         if not info:
-            return {"error": "Player not found"}
+            return {"error": "player not found"}
 
         # Apply the pricing model to each leaguePoint to calculate the price
         price_history = [price_model(lp) for lp in info['leaguePoints']]  # Convert league points to prices

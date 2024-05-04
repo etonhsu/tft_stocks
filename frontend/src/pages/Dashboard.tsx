@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Portfolio, Player } from '../components/Portfolio';
-import {Transaction} from "../components/RecentTransactions.tsx";
-import {UserAccount} from "../components/UserAccount.tsx";
+import { Portfolio, Player } from '../components/portfolio/Portfolio.tsx';
+import {Transaction} from "../components/transactions/RecentTransactions.tsx";
+import {UserAccount} from "../components/user/UserAccount.tsx";
 import axios from 'axios';
-import {MainContent} from "../containers/General/MainContent.tsx";
-import {AccountColumn, AccountDetailsContainer, AccountContainer} from "../containers/Dashboard/AccountContainer.tsx";
-import {UserChart} from "../components/UserChart.tsx";
-import {ChartContainer} from "../containers/MultiUse/ChartContainer.tsx";
-import {PortfolioContainer} from "../containers/Dashboard/PortfolioContainer.tsx";
-import {DashboardControls} from "../components/DashboardRefresh.tsx";
-import {PerformersDetailsContainer} from "../containers/Dashboard/PerformersContainer.tsx";
-import {TopPerformers} from "../components/TopPerformers.tsx";
-import {Text} from "../containers/Dashboard/TextStyle.tsx";
+import {MainContent} from "../containers/general/MainContent.tsx";
+import {AccountColumn, AccountDetailsContainer, AccountContainer} from "../containers/dashboard/AccountContainer.tsx";
+import {UserChart} from "../components/user/UserChart.tsx";
+import {ChartContainer} from "../containers/multiUse/ChartContainer.tsx";
+import {PortfolioContainer} from "../containers/dashboard/PortfolioContainer.tsx";
+import {DashboardControls} from "../components/misc/DashboardRefresh.tsx";
+import {PerformersDetailsContainer} from "../containers/dashboard/PerformersContainer.tsx";
+import {TopPerformers} from "../components/misc/TopPerformers.tsx";
+import {Text} from "../containers/dashboard/TextStyle.tsx";
 import styled from "styled-components";
 
 export interface UserSummary {
@@ -28,7 +28,7 @@ export interface UserSummary {
     rank: number
 }
 
-interface PortfolioHistoryData {
+export interface PortfolioHistoryData {
     value: number;
     date: Date; // Ensuring it's a Date object
 }
@@ -90,10 +90,10 @@ export const Dashboard: React.FC = () => {
     return (
         <MainContent>
             <TextContainer>
-                <Text size="52px" weight="bold" color='#EAEAEA' padding='10px 5px 0 5px'>
+                <Text size="52px" weight="bold" color='#EAEAEA' padding='10px 5px 0px 5px'>
                     {userSummary.username}
                 </Text>
-                <Text size="22px" weight="bold" color='#EAEAEA' padding='0 0 10px 20px'>
+                <Text size="22px" weight="bold" color='#EAEAEA' padding='0 0 10px 7px'>
                   {userSummary.rank === 0 ? 'Rank n/a' : `Rank #${userSummary.rank}`}
                 </Text>
             </TextContainer>

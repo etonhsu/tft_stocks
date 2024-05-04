@@ -12,19 +12,19 @@ lp_collection = connect_lp()
 
 
 def fetch_leaderboard_entries(lead_type: str, page: int = 0, limit: int = 100) -> List[LeaderboardEntry]:
-    collection = lp_collection  # Assuming all player data resides in this collection
+    collection = lp_collection
     skip = page * limit
 
     A = 1.35
     B = 0.11282
 
-    # Determine the field and sort direction based on 'neg_' prefix
+    # Determine the field and sort direction
     if 'neg_' in lead_type:
-        sort_field = lead_type.replace('neg_', 'delta_')  # Remove 'neg_' prefix for correct field name
-        sort_direction = 1  # Sort ascending for 'neg_' versions
+        sort_field = lead_type.replace('neg_', 'delta_')
+        sort_direction = 1
     else:
         sort_field = lead_type
-        sort_direction = -1  # Sort descending for normal cases
+        sort_direction = -1
 
     # MongoDB aggregation pipeline
     pipeline = [
@@ -50,15 +50,18 @@ def fetch_leaderboard_entries(lead_type: str, page: int = 0, limit: int = 100) -
 
     try:
         lead_data = list(collection.aggregate(pipeline))
+        filtered_data = [item for item in lead_data if item.get('delta_8h') is not None and item.get('delta_24h') is not None and item.get('delta_72h') is not None]
+
+        # Recalculate ranks for the remaining entries
         entries = [
             LeaderboardEntry(
                 gameName=item['gameName'],
                 lp=item['lp'],
-                delta_8h=item.get('delta_8h', 0),
-                delta_24h=item.get('delta_24h', 0),
-                delta_72h=item.get('delta_72h', 0),
-                rank=index + 1 + skip
-            ) for index, item in enumerate(lead_data)
+                delta_8h=item['delta_8h'],
+                delta_24h=item['delta_24h'],
+                delta_72h=item['delta_72h'],
+                rank=index + 1 + skip  # Rank starts at 1 plus any offset from pagination
+            ) for index, item in enumerate(filtered_data)
         ]
         return entries
     except Exception as e:

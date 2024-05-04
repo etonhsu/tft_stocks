@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import {useState} from "react";
-import {StyledRow, StyledTable} from "../containers/MultiUse/TableStyle.tsx";
-import {StyledPlayerLink} from "../containers/MultiUse/LinkStyle.ts";
-import {formatCurrency} from "../utils/CurrencyFormatter.tsx";
+import {StyledRow, StyledTable} from "../../containers/multiUse/TableStyle.tsx";
+import {StyledPlayerLink} from "../../containers/multiUse/LinkStyle.ts";
+import {formatCurrency} from "../../utils/CurrencyFormatter.tsx";
 
 
 export interface Player {

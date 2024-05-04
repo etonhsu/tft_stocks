@@ -60,12 +60,13 @@ class UserPublic(BaseModel):
     one_day_change: float = 0.0
     three_day_change: float = 0.0
     rank: int = None
+    portfolio_history: list[PortfolioHistory]
 
 
 class UserProfile(UserPublic):
     balance: float = 100_000.0
-    portfolio_history: list[PortfolioHistory]
     favorites: list[FavoritesEntry] = []
+    date_registered: datetime
 
 
 class UserSelf(UserProfile):
@@ -106,6 +107,15 @@ class TopLeaderboard(BaseModel):
 
 class SessionData(BaseModel):
     username: str
+
+
+class UsernameChangeRequest(BaseModel):
+    newUsername: str
+
+
+class PasswordUpdateModel(BaseModel):
+    oldPassword: str
+    newPassword: str
 
 
 
