@@ -8,6 +8,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       external: ['recharts'],
+      input: './src/main.tsx'
   }}
 })
 
