@@ -1,1 +1,3 @@
 /*    /index.html   200
+/path/to/scripts/*.js
+  Content-Type: application/javascript
