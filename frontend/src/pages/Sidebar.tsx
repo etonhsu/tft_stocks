@@ -13,7 +13,7 @@ const TitleContainer = styled.div`
     position: relative;
     font-size: 2vw;
     font-weight: bold;
-    margin-top: 2vh;
+    padding-top: 2vh;
     margin-bottom: 12%;
 `;
 
