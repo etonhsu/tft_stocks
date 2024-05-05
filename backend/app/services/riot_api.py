@@ -4,12 +4,9 @@ import requests
 
 from app.db.database import connect_lp, connect_player_Id
 from app.tasks.converter import convert
-from dotenv import load_dotenv
-import os
+from app.utils.get_secret import get_secret
 
-load_dotenv()
-
-RIOT_API_KEY = os.getenv('RIOT_API_KEY')
+RIOT_API_KEY = get_secret('riot_api_key')
 
 
 def riot_api():

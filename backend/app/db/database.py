@@ -1,15 +1,9 @@
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
-from dotenv import load_dotenv
-import os
-import logging
 
-load_dotenv()
+from app.utils.get_secret import get_secret
 
-logging.basicConfig(level=logging.DEBUG)
-MONGO_URI = os.getenv("MONGO_URI")
-logging.debug(f"MONGO_URI: {MONGO_URI}")
-
+MONGO_URI = get_secret('mongo_uri')
 client = MongoClient(MONGO_URI, server_api=ServerApi('1'))
 
 
