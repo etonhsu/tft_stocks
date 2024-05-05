@@ -1,12 +1,12 @@
 steps:
   # Build the Docker image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/tftstocks:$COMMIT_SHA', '.']
+    args: ['build', '-t', 'gcr.io/${PROJECT_ID}/tftstocks:${COMMIT_SHA}', '.']
     dir: 'backend'
 
   # Push the Docker image to Google Container Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/tftstocks:$COMMIT_SHA']
+    args: ['push', 'gcr.io/${PROJECT_ID}/tftstocks:${COMMIT_SHA}']
 
   # Deploy the image to Google Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -16,7 +16,7 @@ steps:
     - 'deploy'
     - 'tftstocks'
     - '--image'
-    - 'gcr.io/$PROJECT_ID/tftstocks:$COMMIT_SHA'
+    - 'gcr.io/${PROJECT_ID}/tftstocks:${COMMIT_SHA}'
     - '--region'
     - 'us-central1'
     - '--platform'
@@ -26,4 +26,4 @@ steps:
     - 'MONGO_URI=mongo_uri:latest,RIOT_API_KEY=riot_api_key:latest,SECRET_KEY=secret_key:latest'
 
 images:
-  - 'gcr.io/$PROJECT_ID/tftstocks:$COMMIT_SHA'
+  - 'gcr.io/${PROJECT_ID}/tftstocks:${COMMIT_SHA}'
