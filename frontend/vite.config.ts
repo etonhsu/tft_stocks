@@ -6,6 +6,7 @@ export default defineConfig({
   base: './',
   plugins: [react()],
   build: {
+    outDir: 'dist',
     rollupOptions: {
       external: ['recharts'],
       input: './src/main.tsx'
