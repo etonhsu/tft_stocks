@@ -9,7 +9,6 @@ export default defineConfig({
     outDir: 'dist',
     rollupOptions: {
       external: ['recharts'],
-      input: './src/main.tsx'
   }}
 })
 
