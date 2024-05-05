@@ -1,6 +1,11 @@
 import requests
-from backend.app.core.config import RIOT_API_KEY
 from time import sleep
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+RIOT_API_KEY = os.getenv('RIOT_API_KEY')
 
 summoner_url = 'https://na1.api.riotgames.com/tft/summoner/v1/summoners/'
 puuid_url = 'https://americas.api.riotgames.com/riot/account/v1/accounts/by-puuid/'

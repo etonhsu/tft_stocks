@@ -1,15 +1,17 @@
 import jwt
 from datetime import datetime, timedelta, timezone
+from dotenv import load_dotenv
+import os
 
 from fastapi import HTTPException, Depends
 from fastapi.security import OAuth2PasswordBearer
 from jwt import DecodeError, ExpiredSignatureError
 
-from app.core.config import SECRET_KEY
 from app.db.database import connect_user
 from app.models.models import UserProfile
 
-key = SECRET_KEY  # Use a secure, unpredictable key in production
+load_dotenv()
+key = os.getenv('SECRET_KEY')  # Use a secure, unpredictable key in production
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 180
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")

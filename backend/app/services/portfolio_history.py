@@ -1,4 +1,3 @@
-from time import sleep
 from datetime import datetime
 
 from app.db.database import connect_user
@@ -32,9 +31,3 @@ def update_portfolio_history():
                     }
                 }}
             )
-
-
-if __name__ == "__main__":
-    while True:
-        update_portfolio_history()
-        sleep(300)  # Sleep for 5 minutes before checking again

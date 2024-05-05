@@ -1,4 +1,3 @@
-from time import sleep
 from pymongo import DESCENDING
 
 from app.db.database import connect_user
@@ -23,7 +22,3 @@ def rank_update():
         )
 
 
-if __name__ == "__main__":
-    while True:
-        rank_update()
-        sleep(300)

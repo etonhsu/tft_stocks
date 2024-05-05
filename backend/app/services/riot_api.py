@@ -1,12 +1,15 @@
-from time import sleep
 from datetime import datetime
-import json
 
 import requests
 
-from app.core.config import RIOT_API_KEY
 from app.db.database import connect_lp, connect_player_Id
 from app.tasks.converter import convert
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+RIOT_API_KEY = os.getenv('RIOT_API_KEY')
 
 
 def riot_api():
@@ -72,9 +75,3 @@ def riot_api():
     if need_conversion:
         converted = convert(need_conversion)
         Id_collection.insert_many(converted)
-
-
-if __name__ == "__main__":
-    while True:
-        riot_api()
-        sleep(300)  # Sleep for 5 minutes before checking again

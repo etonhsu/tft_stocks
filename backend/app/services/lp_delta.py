@@ -1,6 +1,5 @@
 from app.db.database import connect_lp
 from datetime import datetime, timedelta
-from time import sleep
 from app.models.pricing_model import price_model
 
 
@@ -71,8 +70,3 @@ def calculate_delta():
 
         if update_data['$set']:
             lp_collection.update_one({'summonerId': summoner_Id}, update_data)
-
-if __name__ == "__main__":
-    while True:
-        calculate_delta()
-        sleep(300)

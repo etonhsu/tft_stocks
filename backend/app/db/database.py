@@ -1,6 +1,14 @@
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
-from app.core.config import MONGO_URI
+from dotenv import load_dotenv
+import os
+import logging
+
+load_dotenv()
+
+logging.basicConfig(level=logging.DEBUG)
+MONGO_URI = os.getenv("MONGO_URI")
+logging.debug(f"MONGO_URI: {MONGO_URI}")
 
 client = MongoClient(MONGO_URI, server_api=ServerApi('1'))
 
