@@ -13,6 +13,7 @@ export const SidebarContainer = styled.nav`
     align-items: flex-start;
     background: #333; // Use the color from your design
     border-right: 1px solid #444;
+    top: 0
 `;
 
 export const NavSection = styled.div`
