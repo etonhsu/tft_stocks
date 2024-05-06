@@ -10,9 +10,11 @@ app = FastAPI(title='TFT Stocks API', version='1.0', description='API for a TFT 
 app.add_middleware(
     CORSMiddleware,  # type: ignore
     allow_origins=[
-        "http://localhost:5173",  # Allow your frontend URL
+        "http://localhost:5173",
         "https://tftstocks.com",
-        "https://tftstocks-dsc3fryjtq-uc.a.run.app/"
+        "https://tftstocks-dsc3fryjtq-uc.a.run.app/",
+        "https://tftstocksite.netlify.app",
+        "https://www.tftstocks.com",
     ],
     allow_credentials=True,
     allow_methods=["*"],  # Allowing all methods
