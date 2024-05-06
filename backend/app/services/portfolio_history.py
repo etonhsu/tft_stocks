@@ -31,3 +31,5 @@ def update_portfolio_history():
                     }
                 }}
             )
+
+        print(f'Updated portfolio history for user {user["username"]}')
