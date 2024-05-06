@@ -29,6 +29,7 @@ export function PlayerInfo() {
   const [playerData, setPlayerData] = useState<PlayerData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 
   useEffect(() => {
@@ -41,7 +42,7 @@ export function PlayerInfo() {
     setLoading(true);
     setError('');
     try {
-      const response = await fetch(`http://localhost:8000/players/${gameName}`);
+      const response = await fetch(`${backendUrl}/players/${gameName}`);
       const data = await response.json();
       if (!response.ok) {
         throw new Error(data.error || 'Error fetching player data');

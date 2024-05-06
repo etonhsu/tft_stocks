@@ -8,7 +8,7 @@ interface PlayerProps {
 }
 
 export const Player: React.FC<PlayerProps> = ({ name, shares, price }) => {
-    if (!name || typeof shares !== 'number' || typeof price !== 'number') {
+    if (!name) {
         console.error('Invalid props:', { name, shares, price });
         return <p>Error: Data for player is incomplete or still loading...</p>;
     }

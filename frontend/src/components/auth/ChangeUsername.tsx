@@ -83,6 +83,7 @@ export const ChangeUsername: React.FC<ChangeUsernameProps> = ({ onClose }) => {
     const [error, setError] = useState<string>('');
     const navigate = useNavigate();
     const { token, setToken, isLoggedIn } = useAuth();
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
     useEffect(() => {
         // Redirect if not logged in
@@ -99,7 +100,7 @@ export const ChangeUsername: React.FC<ChangeUsernameProps> = ({ onClose }) => {
         }
 
         try {
-            const response = await axios.post('http://localhost:8000/change_username', { newUsername }, {
+            const response = await axios.post(`${backendUrl}/change_username`, { newUsername }, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json'

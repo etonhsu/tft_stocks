@@ -10,11 +10,12 @@ export const TransactionPage: React.FC = () => {
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get<Transaction[]>('http://localhost:8000/transaction_history', {
+                const response = await axios.get<Transaction[]>(`${backendUrl}/transaction_history`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
                 });
                 if (response.data) {
@@ -34,7 +35,7 @@ export const TransactionPage: React.FC = () => {
         };
 
         fetchData();
-    }, [navigate]);
+    }, [backendUrl, navigate]);
 
     if (isLoading) {return (<MainContent className="mainContentContainer">Loading...</MainContent>);}
     if (error) {return (<MainContent className="mainContentContainer">Error: No data available.</MainContent>);}

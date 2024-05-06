@@ -86,6 +86,7 @@ export const ChangePassword: React.FC<ChangePasswordProps> = ({ onClose }) => {
     const [error, setError] = useState<string>('');
     const navigate = useNavigate();
     const { token, setToken, isLoggedIn } = useAuth();
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault();
@@ -101,7 +102,7 @@ export const ChangePassword: React.FC<ChangePasswordProps> = ({ onClose }) => {
         }
 
         try {
-            const response = await axios.post('http://localhost:8000/change_password', {
+            const response = await axios.post(`${backendUrl}/change_password`, {
                 oldPassword,
                 newPassword
             }, {

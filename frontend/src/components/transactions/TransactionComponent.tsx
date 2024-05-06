@@ -74,12 +74,13 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
     const [transactionType, setTransactionType] = useState<string>('');
     const [error, setError] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
     useEffect(() => {
         const fetchPrice = async () => {
             if (gameName) {
                 try {
-                    const response = await fetch(`http://localhost:8000/players/${gameName}/`);
+                    const response = await fetch(`${backendUrl}/players/${gameName}/`);
                     const data = await response.json();
                     if (response.ok) {
                         setPrice(data.price[data.price.length - 1]);  // Assuming the endpoint sends back an object with a price field
@@ -93,7 +94,7 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
         };
 
         fetchPrice();
-    }, [gameName]);
+    }, [backendUrl, gameName]);
 
     const handleTransaction = async () => {
         setIsModalOpen(false);

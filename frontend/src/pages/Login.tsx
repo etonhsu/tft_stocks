@@ -46,12 +46,14 @@ export const ButtonContainer = styled.div`
   justify-content: center; // Center the button horizontally
 `;
 
+
 export function Login() {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>(''); // State for password
   const [loading, setLoading] = useState<boolean>(false); // Loading state
   const { setToken, isLoginModalOpen, setLoginModalOpen } = useAuth();
   const navigate = useNavigate();
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -62,7 +64,7 @@ export function Login() {
     formData.append('password', password);
 
     try {
-      const response = await fetch('http://localhost:8000/login', {
+      const response = await fetch(`${backendUrl}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: formData.toString()

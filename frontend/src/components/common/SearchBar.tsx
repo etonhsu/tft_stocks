@@ -40,11 +40,12 @@ export const SearchBar: React.FC = () => {
     const [searchType, setSearchType] = useState<string>('players');
     const [query, setQuery] = useState<string>('');
     const navigate = useNavigate();
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const searchQuery = query.trim().toLowerCase(); // Trim and convert to lowercase
-        const url = `http://localhost:8000/search/${searchType}/${encodeURIComponent(searchQuery)}`;
+        const url = `${backendUrl}/search/${searchType}/${encodeURIComponent(searchQuery)}`;
 
         fetch(url)
             .then(response => {

@@ -13,6 +13,7 @@ export const Register: React.FC = () => {
     const [error, setError] = useState<string>('');
     const navigate = useNavigate();
     const { setToken, isRegisterModalOpen, setRegisterModalOpen } = useAuth();
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
     const handleRegister = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -30,7 +31,7 @@ export const Register: React.FC = () => {
         formData.append('password', password);
 
         try {
-            const response = await fetch('http://localhost:8000/register', {
+            const response = await fetch(`${backendUrl}/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: formData.toString()
@@ -43,7 +44,7 @@ export const Register: React.FC = () => {
             setToken(data.access_token);
             setRegisterModalOpen(false);
             navigate('/dashboard');
-        } catch (error: any) {
+        } catch (error) {
             setError('Could not register');
         } finally {
             setLoading(false);

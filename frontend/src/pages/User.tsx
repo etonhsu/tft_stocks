@@ -52,11 +52,12 @@ export const UserProfile: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
     async function fetchUserData() {
       try {
-        const response = await fetch(`http://localhost:8000/users/${username}`);
+        const response = await fetch(`${backendUrl}/users/${username}`);
         const data = await response.json();
         if (response.ok) {
           setUser(data);
@@ -71,7 +72,7 @@ export const UserProfile: React.FC = () => {
     }
 
     fetchUserData();
-  }, [username]);
+  }, [backendUrl, username]);
 
    const total = user && user.portfolio_history.length > 0 ? user.portfolio_history[user.portfolio_history.length - 1].value : undefined;
 

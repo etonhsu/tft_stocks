@@ -12,6 +12,7 @@ export function DashboardControls({ updateDashboard }: DashboardControlsProps) {
     const [isLoading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
     const navigate = useNavigate(); // Hook for navigation
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
     const refreshDashboard = async () => {
         setLoading(true);
@@ -25,7 +26,7 @@ export function DashboardControls({ updateDashboard }: DashboardControlsProps) {
         }
 
         try {
-            const response = await axios.post('http://localhost:8000/refresh_dashboard', {}, {
+            const response = await axios.post(`${backendUrl}/refresh_dashboard`, {}, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

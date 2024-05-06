@@ -114,6 +114,7 @@ export const TopPerformers: React.FC = () => {
     const [isLoading, setLoading] = useState(true);
     const [currentType, setCurrentType] = useState('price');
     const navigate = useNavigate();
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -123,7 +124,7 @@ export const TopPerformers: React.FC = () => {
                 return;
             }
             try {
-                const response = await axios.get('http://localhost:8000/top_leaderboard', {
+                const response = await axios.get(`${backendUrl}/top_leaderboard`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setLeaderboardData(response.data);
@@ -137,7 +138,7 @@ export const TopPerformers: React.FC = () => {
             }
         };
         fetchData();
-    }, [navigate]);
+    }, [backendUrl, navigate]);
 
     const types = ['price', 'delta_8h', 'delta_24h', 'delta_72h', 'portfolio_value'];
     const currentIndex = types.indexOf(currentType);

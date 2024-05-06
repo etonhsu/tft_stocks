@@ -18,6 +18,7 @@ export const FavoriteButton = styled.button`
 export const FavoriteIcon: React.FC<{ gameName?: string }> = ({ gameName }) => {
   const [isFavorited, setIsFavorited] = useState<boolean | null>(null);
   const { token } = useAuth();
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
     async function fetchFavoriteStatus() {
@@ -26,7 +27,7 @@ export const FavoriteIcon: React.FC<{ gameName?: string }> = ({ gameName }) => {
         return;
       }
       try {
-        const response = await axios.get(`http://localhost:8000/favorite_status/${gameName}`, {
+        const response = await axios.get(`${backendUrl}/favorite_status/${gameName}`, {
                     headers: {
                         Authorization: `Bearer ${token}` // Use the token for authorization
                     }
@@ -39,7 +40,7 @@ export const FavoriteIcon: React.FC<{ gameName?: string }> = ({ gameName }) => {
     }
 
     fetchFavoriteStatus();
-  }, [gameName, token]);  // Dependency array ensures re-fetching on gameName or token change.
+  }, [backendUrl, gameName, token]);  // Dependency array ensures re-fetching on gameName or token change.
 
   const toggleFavorite = async () => {
     if (isFavorited === null || !token) return;

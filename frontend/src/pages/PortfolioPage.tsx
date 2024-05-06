@@ -12,6 +12,7 @@ export const PortfolioPage: React.FC = () => {
     const [userSummary, setUserSummary] = useState<UserPortfolio | null>(null);
     const [isLoading, setLoading] = useState(true);
     const navigate = useNavigate(); // Hook for navigation
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -24,7 +25,7 @@ export const PortfolioPage: React.FC = () => {
             }
 
             try {
-                const response = await axios.post('http://localhost:8000/portfolio', {
+                const response = await axios.post(`${backendUrl}/portfolio`, {
                     headers: {
                         Authorization: `Bearer ${token}` // Use the token for authorization
                     }
@@ -47,7 +48,7 @@ export const PortfolioPage: React.FC = () => {
         };
 
         fetchData();
-    }, [navigate]);
+    }, [backendUrl, navigate]);
 
     if (isLoading) {return (<MainContent className="mainContentContainer">Loading...</MainContent>);}
     if (!userSummary) {return (<MainContent className="mainContentContainer">Error: No data available.</MainContent>);}

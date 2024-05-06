@@ -34,6 +34,7 @@ export const Settings: React.FC = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { isSettingsModalOpen, setSettingsModalOpen, token } = useAuth();
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,7 +44,7 @@ export const Settings: React.FC = () => {
       }
 
       try {
-        const response = await axios.get('http://localhost:8000/settings', {
+        const response = await axios.get(`${backendUrl}}/settings`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -61,7 +62,7 @@ export const Settings: React.FC = () => {
     };
 
     fetchData();
-  }, [navigate, token]);
+  }, [backendUrl, navigate, token]);
 
   if (!isSettingsModalOpen) return null;
 
