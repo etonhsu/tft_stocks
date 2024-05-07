@@ -6,7 +6,7 @@ import {UserAccount} from "../components/user/UserAccount.tsx";
 import axios from 'axios';
 import {MainContent} from "../containers/general/MainContent.tsx";
 import {AccountColumn, AccountDetailsContainer, AccountContainer} from "../containers/dashboard/AccountContainer.tsx";
-// import {UserChart} from "../components/user/UserChart.tsx";
+import {UserChart} from "../components/user/UserChart.tsx";
 import {ChartContainer} from "../containers/multiUse/ChartContainer.tsx";
 import {PortfolioContainer} from "../containers/dashboard/PortfolioContainer.tsx";
 import {DashboardControls} from "../components/dashboard/DashboardRefresh.tsx";
@@ -110,7 +110,7 @@ export const Dashboard: React.FC = () => {
                     </PerformersDetailsContainer>
                 </AccountColumn>
                 <ChartContainer label={"Performance"}>
-                    {/*<UserChart portfolioHistory={userSummary.portfolio_history} />*/}
+                    <UserChart portfolioHistory={userSummary.portfolio_history} />
                     hello
                 </ChartContainer>
             </AccountContainer>
