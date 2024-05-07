@@ -72,6 +72,8 @@ const SlideText = styled(Text)`
     margin-bottom: 0;
 `;
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+console.log('Backend URL:', backendUrl); // This will log the URL to the console
 
 
 export const Slideshow = () => {
