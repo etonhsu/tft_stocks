@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 const Login = lazy(() => import('./pages/Login.tsx').then(module => ({ default: module.Login })));
 const Dashboard = lazy(() => import('./pages/Dashboard').then(module => ({ default: module.Dashboard })));
 const PlayerInfo = lazy(() => import('./pages/PlayerInfo').then(module => ({ default: module.PlayerInfo })));
-const LeaderboardPage = lazy(() => import('./pages/LeaderboardPage').then(module => ({ default: module.LeaderboardPage })));
+import { LeaderboardPage } from './pages/LeaderboardPage';
 const Register = lazy(() => import('./pages/Register').then(module => ({ default: module.Register })));
 const SearchBar = lazy(() => import('./components/common/SearchBar.tsx').then(module => ({ default: module.SearchBar })));
 const UserProfile = lazy(() => import('./pages/User').then(module => ({ default: module.default })));  // Assuming UserProfile is a default export

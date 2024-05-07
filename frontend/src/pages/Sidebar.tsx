@@ -58,7 +58,7 @@ export function SidebarComponent() {
                 <>
                     <LoginButton/>
                     <RegisterButton/>
-                    <StyledLink to="/leaderboard">
+                    <StyledLink to="/leaderboard" onClick={() => console.log("Leaderboard link clicked")}>
                         <LeaderboardIcon />Leaderboard
                     </StyledLink>
                 </>
