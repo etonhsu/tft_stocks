@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   XAxis, YAxis, CartesianGrid, ResponsiveContainer, AreaChart, Tooltip, Area, TooltipProps
-} from 'recharts';
+} from '../../../node_modules/recharts';
 import {formatCurrency} from "../../utils/CurrencyFormatter.tsx";
 
 interface PortfolioHistoryData {
