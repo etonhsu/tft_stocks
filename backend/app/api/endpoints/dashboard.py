@@ -30,13 +30,13 @@ class CustomEncoder(json.JSONEncoder):
 @router.get('/dashboard', response_model=UserProfile)
 async def read_dashboard(current_user: UserProfile = Depends(get_user_from_token)):
     # # Define a cache key based on something unique, e.g., the username
-    # cache_key = f"{current_user.username}_dashboard"
-    #
+    cache_key = f"{current_user.username}_dashboard"
+
     # # Try to get cached data first
     # cached_data = get_cache(cache_key)
     # if cached_data:
     #     return UserProfile(**json.loads(cached_data))
-    #
+
     try:
         refreshed_user_data = dashboard_refresh(current_user)
         updated_user_data = portfolio_change(refreshed_user_data)
@@ -44,9 +44,9 @@ async def read_dashboard(current_user: UserProfile = Depends(get_user_from_token
         print(f"Error processing dashboard data: {e}")
         raise HTTPException(status_code=500, detail="Error processing dashboard data")
 
-    # # Serialize the updated user data and cache it
-    # serialized_data = json.dumps(updated_user_data, cls=CustomEncoder)  # Use the default function to handle ObjectId
-    # set_cache(cache_key, serialized_data, expiration=600)  # Cache for 10 minutes
+    # Serialize the updated user data and cache it
+    serialized_data = json.dumps(updated_user_data, cls=CustomEncoder)  # Use the default function to handle ObjectId
+    set_cache(cache_key, serialized_data, expiration=600)  # Cache for 10 minutes
 
     return UserProfile(**updated_user_data)
 
