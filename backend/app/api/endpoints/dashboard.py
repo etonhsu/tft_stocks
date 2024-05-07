@@ -37,8 +37,12 @@ async def read_dashboard(current_user: UserProfile = Depends(get_user_from_token
     if cached_data:
         return UserProfile(**json.loads(cached_data))
 
-    refreshed_user_data = dashboard_refresh(current_user)
-    updated_user_data = portfolio_change(refreshed_user_data)
+    try:
+        refreshed_user_data = dashboard_refresh(current_user)
+        updated_user_data = portfolio_change(refreshed_user_data)
+    except Exception as e:
+        print(f"Error processing dashboard data: {e}")
+        raise HTTPException(status_code=500, detail="Error processing dashboard data")
 
     # Serialize the updated user data and cache it
     serialized_data = json.dumps(updated_user_data, cls=CustomEncoder)  # Use the default function to handle ObjectId
