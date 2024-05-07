@@ -13,7 +13,7 @@ export const Register: React.FC = () => {
     const [error, setError] = useState<string>('');
     const navigate = useNavigate();
     const { setToken, isRegisterModalOpen, setRegisterModalOpen } = useAuth();
-    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     const handleRegister = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();

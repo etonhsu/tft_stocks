@@ -12,7 +12,7 @@ export function DashboardControls({ updateDashboard }: DashboardControlsProps) {
     const [isLoading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
     const navigate = useNavigate(); // Hook for navigation
-    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     const refreshDashboard = async () => {
         setLoading(true);

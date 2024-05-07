@@ -10,7 +10,7 @@ export const TransactionPage: React.FC = () => {
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     useEffect(() => {
         const fetchData = async () => {

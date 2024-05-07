@@ -40,7 +40,7 @@ export const SearchBar: React.FC = () => {
     const [searchType, setSearchType] = useState<string>('players');
     const [query, setQuery] = useState<string>('');
     const navigate = useNavigate();
-    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();

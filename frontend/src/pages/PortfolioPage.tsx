@@ -12,7 +12,7 @@ export const PortfolioPage: React.FC = () => {
     const [userSummary, setUserSummary] = useState<UserPortfolio | null>(null);
     const [isLoading, setLoading] = useState(true);
     const navigate = useNavigate(); // Hook for navigation
-    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     useEffect(() => {
         const fetchData = async () => {

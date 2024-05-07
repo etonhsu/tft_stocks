@@ -26,6 +26,7 @@ export const Favorites: React.FC = () => {
     const [favoritesSummary, setFavoritesSummary] = useState<FavoriteData[]>([]);
     const [isLoading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -36,7 +37,7 @@ export const Favorites: React.FC = () => {
             }
 
             try {
-                const response = await axios.get('http://localhost:8000/favorites', {
+                const response = await axios.get(`${backendUrl}/favorites`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }

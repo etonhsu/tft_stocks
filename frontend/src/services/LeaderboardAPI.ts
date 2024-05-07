@@ -1,4 +1,4 @@
-const backendUrl = process.env.REACT_APP_BACKEND_URL;
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 // Standard leaderboard entry
 export interface LeaderboardEntry {

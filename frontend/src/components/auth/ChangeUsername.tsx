@@ -83,7 +83,7 @@ export const ChangeUsername: React.FC<ChangeUsernameProps> = ({ onClose }) => {
     const [error, setError] = useState<string>('');
     const navigate = useNavigate();
     const { token, setToken, isLoggedIn } = useAuth();
-    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     useEffect(() => {
         // Redirect if not logged in

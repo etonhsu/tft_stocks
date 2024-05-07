@@ -74,7 +74,7 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
     const [transactionType, setTransactionType] = useState<string>('');
     const [error, setError] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
-    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     useEffect(() => {
         const fetchPrice = async () => {

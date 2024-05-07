@@ -86,7 +86,7 @@ export const ChangePassword: React.FC<ChangePasswordProps> = ({ onClose }) => {
     const [error, setError] = useState<string>('');
     const navigate = useNavigate();
     const { token, setToken, isLoggedIn } = useAuth();
-    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault();

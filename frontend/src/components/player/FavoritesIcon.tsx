@@ -18,7 +18,7 @@ export const FavoriteButton = styled.button`
 export const FavoriteIcon: React.FC<{ gameName?: string }> = ({ gameName }) => {
   const [isFavorited, setIsFavorited] = useState<boolean | null>(null);
   const { token } = useAuth();
-  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     async function fetchFavoriteStatus() {

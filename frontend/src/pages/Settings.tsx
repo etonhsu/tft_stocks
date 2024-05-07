@@ -34,7 +34,7 @@ export const Settings: React.FC = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { isSettingsModalOpen, setSettingsModalOpen, token } = useAuth();
-  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const fetchData = async () => {
