@@ -74,7 +74,7 @@ export function PlayerInfo() {
           <PlayerInfoContainer>
               <DetailsAndTransactionColumn>
                   <PlayerDetailsContainer label="Overview">
-                      <p>Current Price: ${(playerData.price[playerData.price.length - 1]).toFixed(2)}</p>
+                      <p>Current Price: {formatCurrency(playerData.price[playerData.price.length - 1], 2)}</p>
                       <p>Updated: {formatDate(playerData.date[playerData.date.length - 1])}</p>
                       <p>8 Hour Change: {formatCurrency(playerData['8 Hour Change'], 1)}</p>
                       <p>24 Hour Change: {formatCurrency(playerData['24 Hour Change'], 1)}</p>
@@ -82,7 +82,7 @@ export function PlayerInfo() {
                   </PlayerDetailsContainer>
                   <TransactionContainer label={"Transaction"}>
                       {gameName && (
-                          <TransactionComponent gameName={gameName} updateUserData={handleUserDataUpdate}/>
+                          <TransactionComponent gameName={gameName} price={playerData.price[playerData.price.length - 1]} updateUserData={handleUserDataUpdate}/>
                       )}
                   </TransactionContainer>
               </DetailsAndTransactionColumn>
