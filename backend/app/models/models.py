@@ -4,17 +4,17 @@ from datetime import datetime
 
 
 class TokenData(BaseModel):
-    username: Optional[str] = None
+    username: Optional[str]
 
 
 class BasePlayer(BaseModel):
     name: str
-    current_price: float = Field(default=None)
+    current_price: float
 
 
 class Player(BasePlayer):
-    purchase_price: float = Field(default=None)
-    shares: Field(default=0)
+    purchase_price: float
+    shares: int
 
     def total(self) -> int:
         return self.shares * self.price
