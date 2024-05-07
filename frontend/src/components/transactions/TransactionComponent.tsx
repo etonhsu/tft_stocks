@@ -101,7 +101,7 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
         setLoading(true);
         const token = localStorage.getItem('token');
         try {
-            const response = await fetch(`http://localhost:8000/players/${gameName}/${transactionType}`, {
+            const response = await fetch(`${backendUrl}/players/${gameName}/${transactionType}`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
