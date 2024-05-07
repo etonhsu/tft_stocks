@@ -73,7 +73,6 @@ class UserSelf(UserProfile):
     password: Optional[SecretStr] = None
 
 
-
 class ToggleFavoriteRequest(BaseModel):
     gameName: str  # Ensuring the request model matches the expected input
 
