@@ -13,7 +13,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5173",
         "https://tftstocks.com",
-        "https://tftstocks-dsc3fryjtq-uc.a.run.app/",
+        "https://tftstocks-dsc3fryjtq-uc.a.run.app",
         "https://tftstocksite.netlify.app",
         "https://www.tftstocks.com",
     ],
