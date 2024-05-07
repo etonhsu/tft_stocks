@@ -1,4 +1,4 @@
-from pydantic import BaseModel, SecretStr
+from pydantic import BaseModel, SecretStr, Field
 from typing import List, Optional
 from datetime import datetime
 
@@ -9,12 +9,12 @@ class TokenData(BaseModel):
 
 class BasePlayer(BaseModel):
     name: str
-    current_price: float
+    current_price: float = Field(default=None)
 
 
 class Player(BasePlayer):
-    purchase_price: float
-    shares: int
+    purchase_price: float = Field(default=None)
+    shares: Field(default=0)
 
     def total(self) -> int:
         return self.shares * self.price
