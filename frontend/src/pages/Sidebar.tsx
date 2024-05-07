@@ -59,7 +59,7 @@ export function SidebarComponent() {
                     <LoginButton/>
                     <RegisterButton/>
                     <StyledLink to="/leaderboard">
-                    <LeaderboardIcon />Leaderboard
+                        <LeaderboardIcon />Leaderboard
                     </StyledLink>
                 </>
                 )}
