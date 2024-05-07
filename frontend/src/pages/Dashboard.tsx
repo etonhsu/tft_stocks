@@ -71,19 +71,21 @@ export const Dashboard: React.FC = () => {
                 console.error('Error fetching data: ', error);
                 setLoading(false);
 
-                // If the server responds with a 401 Unauthorized status, handle it
-                if (axios.isAxiosError(error)) {
-                    console.error('Axios error status:', error.response?.status);
-                    // Now you can safely access the response property if it exists
-                    if (error.response?.status === 401) {
+                if (axios.isAxiosError(error) && error.response) {
+                    console.error('Detailed Error:', error.response.data);
+                    console.error('Status code:', error.response.status);
+                    if (error.response.status === 401) {
                         navigate('/login');
+                    } else if (error.response.status === 500) {
+                        // Consider a custom error message or handling strategy for server errors
+                        console.error('Server error, please try again later.');
                     }
                 }
             }
         };
 
         fetchData();
-    }, [navigate]);
+    }, [backendUrl, navigate]);
 
     if (isLoading) {return (<MainContent className="mainContentContainer">Loading...</MainContent>);}
     if (!userSummary) {return (<MainContent className="mainContentContainer">Error: No data available.</MainContent>);}
