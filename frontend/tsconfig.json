@@ -8,6 +8,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "types": ["node"],
+    "typeRoots": ["./node_modules/@types", "./types"],
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -23,7 +24,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src/**/*", "src/types/**/*.d.ts"],
+  "include": ["src/**/*", "types/**/*.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }],
 
 }
