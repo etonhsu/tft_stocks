@@ -111,7 +111,6 @@ export const Dashboard: React.FC = () => {
                 </AccountColumn>
                 <ChartContainer label={"Performance"}>
                     <UserChart portfolioHistory={userSummary.portfolio_history} />
-                    hello
                 </ChartContainer>
             </AccountContainer>
             <PortfolioContainer label={'Portfolio'}>
