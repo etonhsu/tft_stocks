@@ -18,7 +18,7 @@ const formatDate = (date: Date): string => {
 };
 
 
-export const CustomTooltip = ({ active, payload, label }: TooltipProps) => {
+export const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
   if (active && payload && payload.length && typeof payload[0].value === 'number') {
     return (
       <div style={{

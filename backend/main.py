@@ -16,6 +16,7 @@ app.add_middleware(
         "https://tftstocks-dsc3fryjtq-uc.a.run.app",
         "https://tftstocksite.netlify.app",
         "https://www.tftstocks.com",
+        "https://main--tftstocksite.netlify.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],  # Allowing all methods
