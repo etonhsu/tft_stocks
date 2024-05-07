@@ -6,6 +6,7 @@ import { ModalContent, ModalOverlay } from '../components/common/StyledComponent
 import {ChangeUsername} from "../components/auth/ChangeUsername.tsx";
 import {ChangePassword} from "../components/auth/ChangePassword.tsx";
 import {Text} from "../containers/dashboard/TextStyle.tsx";
+import {useAuth} from "../utils/Authentication.tsx";
 
 interface UserSelf {
   username: string;
@@ -34,10 +35,10 @@ export const Settings: React.FC = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();const { isSettingsOpen, setSettingsModalOpen } = useModals();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const { token } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
-      const token = localStorage.getItem('token'); // Retrieve the token from localStorage
       if (!token) {
         navigate('/');
         return;
@@ -63,7 +64,7 @@ export const Settings: React.FC = () => {
     };
 
     fetchData();
-  }, [backendUrl, navigate]);
+  }, [backendUrl, navigate, token]);
 
   if (!isSettingsOpen) return null;
 

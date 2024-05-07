@@ -9,6 +9,7 @@ import {AccountColumn, AccountDetailsContainer, AccountContainer} from "../conta
 import {UserChart} from "../components/user/UserChart.tsx";
 import {ChartContainer} from "../containers/multiUse/ChartContainer.tsx";
 import {PortfolioContainer} from "../containers/dashboard/PortfolioContainer.tsx";
+import { useAuth } from '../utils/Authentication.tsx';
 // import {DashboardControls} from "../components/dashboard/DashboardRefresh.tsx";
 import {PerformersDetailsContainer} from "../containers/dashboard/PerformersContainer.tsx";
 import {TopPerformers} from "../components/dashboard/TopPerformers.tsx";
@@ -42,6 +43,7 @@ const TextContainer = styled.div`
 export const Dashboard: React.FC = () => {
     const [userSummary, setUserSummary] = useState<UserSummary | null>(null);
     const [isLoading, setLoading] = useState(true);
+    const { token, isLoggedIn } = useAuth();
     const navigate = useNavigate(); // Hook for navigation
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -52,10 +54,7 @@ export const Dashboard: React.FC = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const token = localStorage.getItem('token'); // Retrieve the token from localStorage
-
-            if (!token) {
-                // No token found, redirect to login page or handle accordingly
+            if (!isLoggedIn) {
                 navigate('/login');
                 return;
             }
@@ -86,7 +85,7 @@ export const Dashboard: React.FC = () => {
         };
 
         fetchData();
-    }, [backendUrl, navigate]);
+    }, [backendUrl, isLoggedIn, navigate, token]);
 
     if (isLoading) {return (<MainContent className="mainContentContainer">Loading...</MainContent>);}
     if (!userSummary) {return (<MainContent className="mainContentContainer">Error: No data available.</MainContent>);}

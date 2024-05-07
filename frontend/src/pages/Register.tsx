@@ -1,7 +1,7 @@
 import React, { useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../utils/Authentication.tsx";
-import { useModals } from '../components/auth/ModalContext.tsx'
+import { useModals } from '../components/auth/ModalContext.tsx';
 import { ModalContent, ModalOverlay } from "../components/common/StyledComponents.tsx";
 import { MainContent } from "../containers/general/MainContent.tsx";
 import { ButtonContainer, LoginBarContainer, LoginContainer, StyledInput, StyledLabel } from "./Login.tsx";
@@ -9,11 +9,11 @@ import { ButtonContainer, LoginBarContainer, LoginContainer, StyledInput, Styled
 export const Register: React.FC = () => {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const [confirmPassword, setConfirmPassword] = useState<string>(''); // State for confirming password
+    const [confirmPassword, setConfirmPassword] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
     const navigate = useNavigate();
-    const { setToken} = useAuth();
+    const { setToken } = useAuth();
     const { isRegisterOpen, setRegisterOpen } = useModals();
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -42,12 +42,15 @@ export const Register: React.FC = () => {
             if (!response.ok) {
                 throw new Error(data.detail || 'Failed to register');
             }
-            localStorage.setItem('token', data.access_token);
-            setToken(data.access_token);
+            setToken(data.access_token); // Use context to manage token
             setRegisterOpen(false);
             navigate('/dashboard');
         } catch (error) {
-            setError('Could not register');
+            if (error instanceof Error) {
+                setError(error.message);
+            } else {
+                setError('Could not register');
+            }
         } finally {
             setLoading(false);
         }

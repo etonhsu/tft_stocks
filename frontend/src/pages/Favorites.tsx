@@ -6,6 +6,7 @@ import {formatCurrency} from "../utils/CurrencyFormatter.tsx";
 import {MainContent} from "../containers/general/MainContent.tsx";
 import {StyledPlayerLink} from "../containers/multiUse/LinkStyle.ts";
 import styled from "styled-components";
+import {useAuth} from "../utils/Authentication.tsx";
 
 interface FavoriteData {
     name: string;
@@ -27,10 +28,10 @@ export const Favorites: React.FC = () => {
     const [isLoading, setLoading] = useState(true);
     const navigate = useNavigate();
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    const { token } = useAuth();
 
     useEffect(() => {
         const fetchData = async () => {
-            const token = localStorage.getItem('token');
             if (!token) {
                 navigate('/login');
                 return;
@@ -54,7 +55,7 @@ export const Favorites: React.FC = () => {
         };
 
         fetchData();
-    }, [navigate]);
+    }, [backendUrl, navigate, token]);
 
     if (isLoading) {
         return <div>Loading...</div>;

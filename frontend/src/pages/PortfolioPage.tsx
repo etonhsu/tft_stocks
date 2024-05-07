@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Portfolio, Player } from '../components/dashboard/Portfolio.tsx';
 import axios from 'axios';
 import {MainContent} from "../containers/general/MainContent.tsx";
+import {useAuth} from "../utils/Authentication.tsx";
 
 interface UserPortfolio {
     players: { [key: string]: Player };
@@ -13,11 +14,10 @@ export const PortfolioPage: React.FC = () => {
     const [isLoading, setLoading] = useState(true);
     const navigate = useNavigate(); // Hook for navigation
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    const { token } = useAuth();
 
     useEffect(() => {
         const fetchData = async () => {
-            const token = localStorage.getItem('token'); // Retrieve the token from localStorage
-
             if (!token) {
                 // No token found, redirect to login page or handle accordingly
                 navigate('/login');

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import {UserSummary} from "../../pages/Dashboard.tsx";
 import axios from 'axios';
 import {useNavigate} from "react-router-dom";
+import {useAuth} from "../../utils/Authentication.tsx";
 
 interface DashboardControlsProps {
     updateDashboard: (newData: UserSummary) => void;
@@ -13,11 +14,11 @@ export function DashboardControls({ updateDashboard }: DashboardControlsProps) {
     const [message, setMessage] = useState('');
     const navigate = useNavigate(); // Hook for navigation
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    const { token } = useAuth();
 
     const refreshDashboard = async () => {
         setLoading(true);
         setMessage('');
-        const token = localStorage.getItem('token');
 
         if (!token) {
             // No token found, redirect to login page or handle accordingly

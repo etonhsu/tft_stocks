@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { RecentTransactions, Transaction } from "../components/transactions/RecentTransactions.tsx";
 import {MainContent} from "../containers/general/MainContent.tsx";
+import {useAuth} from "../utils/Authentication.tsx";
 
 // TransactionPage component
 export const TransactionPage: React.FC = () => {
@@ -11,12 +12,13 @@ export const TransactionPage: React.FC = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    const { token } = useAuth();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get<Transaction[]>(`${backendUrl}/transaction_history`, {
-                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+                    headers: { Authorization: `Bearer ${token}` }
                 });
                 if (response.data) {
                     setTransactions(response.data);
@@ -35,7 +37,7 @@ export const TransactionPage: React.FC = () => {
         };
 
         fetchData();
-    }, [backendUrl, navigate]);
+    }, [backendUrl, navigate, token]);
 
     if (isLoading) {return (<MainContent className="mainContentContainer">Loading...</MainContent>);}
     if (error) {return (<MainContent className="mainContentContainer">Error: No data available.</MainContent>);}

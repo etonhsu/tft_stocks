@@ -74,8 +74,7 @@ export function Login() {
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem('token', data.access_token);
-        setToken(data.access_token); //update token global state
+        setToken(data.access_token); // Update the context (and localStorage via useEffect)
         setLoginOpen(false);
         navigate('/dashboard');
       } else {

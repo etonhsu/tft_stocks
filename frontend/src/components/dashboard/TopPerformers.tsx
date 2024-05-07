@@ -6,6 +6,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import {PlayerLink} from "../player/PlayerLink.tsx";
 import {formatCurrency} from "../../utils/CurrencyFormatter.tsx";
 import {UserLink} from "../user/UserLink.tsx";
+import {useAuth} from "../../utils/Authentication.tsx";
 
 interface LeaderboardEntry {
     name: string;
@@ -115,10 +116,10 @@ export const TopPerformers: React.FC = () => {
     const [currentType, setCurrentType] = useState('price');
     const navigate = useNavigate();
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    const { token } = useAuth();
 
     useEffect(() => {
         const fetchData = async () => {
-            const token = localStorage.getItem('token');
             if (!token) {
                 navigate('/login');
                 return;
@@ -138,7 +139,7 @@ export const TopPerformers: React.FC = () => {
             }
         };
         fetchData();
-    }, [backendUrl, navigate]);
+    }, [backendUrl, navigate, token]);
 
     const types = ['price', 'delta_8h', 'delta_24h', 'delta_72h', 'portfolio_value'];
     const currentIndex = types.indexOf(currentType);

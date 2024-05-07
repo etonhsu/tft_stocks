@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import styled from "styled-components";
 import { PreviewModal } from "./TransactionModal.tsx";
+import {useAuth} from "../../utils/Authentication.tsx";
 
 
 const TransactionForm = styled.form`
@@ -74,17 +75,17 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
     const [transactionType, setTransactionType] = useState<string>('');
     const [error, setError] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
+    const { token } = useAuth();  // Use token from the auth context
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     const handleTransaction = async () => {
         setIsModalOpen(false);
         setLoading(true);
-        const token = localStorage.getItem('token');
         try {
             const response = await fetch(`${backendUrl}/players/${gameName}/${transactionType}`, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': `Bearer ${token}`,  // Use the token from auth context
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ shares })
