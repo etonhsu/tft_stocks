@@ -42,6 +42,7 @@ export const Dashboard: React.FC = () => {
     const [userSummary, setUserSummary] = useState<UserSummary | null>(null);
     const [isLoading, setLoading] = useState(true);
     const navigate = useNavigate(); // Hook for navigation
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     const updateDashboardState = (newData: UserSummary) => {
         setUserSummary(newData);
@@ -59,7 +60,7 @@ export const Dashboard: React.FC = () => {
             }
 
             try {
-                const response = await axios.get('http://localhost:8000/dashboard', {
+                const response = await axios.get(`${backendUrl}/dashboard`, {
                     headers: {
                         Authorization: `Bearer ${token}` // Use the token for authorization
                     }
