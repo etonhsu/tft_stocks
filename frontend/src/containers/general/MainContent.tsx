@@ -5,7 +5,7 @@ export const MainContent = styled.div`
     flex: 1; // Takes the remaining space in a flex container
     padding-top: 35px;
     padding-bottom: 10px;
-    overflow-y: auto; // Allows for scrolling within the main content area
     background-color: #222; // Background color for the main content
-    height: 100vh;
+    height: 100%;
+    position: relative;
 `;

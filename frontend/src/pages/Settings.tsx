@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../utils/Authentication.tsx';
+import { useModals } from '../components/auth/ModalContext.tsx'
 import { ModalContent, ModalOverlay } from '../components/common/StyledComponents.tsx';
 import {ChangeUsername} from "../components/auth/ChangeUsername.tsx";
 import {ChangePassword} from "../components/auth/ChangePassword.tsx";
@@ -32,16 +32,17 @@ export const Settings: React.FC = () => {
   const [settingsData, setSettingsData] = useState<UserSelf | null>(null);
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const navigate = useNavigate();
-  const { isSettingsModalOpen, setSettingsModalOpen, token } = useAuth();
+  const navigate = useNavigate();const { isSettingsOpen, setSettingsModalOpen } = useModals();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const fetchData = async () => {
+      const token = localStorage.getItem('token'); // Retrieve the token from localStorage
       if (!token) {
         navigate('/');
         return;
       }
+
 
       try {
         const response = await axios.get(`${backendUrl}/settings`, {
@@ -62,9 +63,9 @@ export const Settings: React.FC = () => {
     };
 
     fetchData();
-  }, [backendUrl, navigate, token]);
+  }, [backendUrl, navigate]);
 
-  if (!isSettingsModalOpen) return null;
+  if (!isSettingsOpen) return null;
 
   if (isLoading) {
     return <ModalOverlay><ModalContent>Loading settings...</ModalContent></ModalOverlay>;

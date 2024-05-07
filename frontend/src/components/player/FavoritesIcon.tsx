@@ -46,7 +46,7 @@ export const FavoriteIcon: React.FC<{ gameName?: string }> = ({ gameName }) => {
     if (isFavorited === null || !token) return;
     try {
       const response = await axios.post<boolean>(
-        'http://localhost:8000/toggle_favorites',
+        `${backendUrl}/toggle_favorites`,
         { gameName },
         { headers: { Authorization: `Bearer ${token}` } }
       );

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MainContent } from "../containers/general/MainContent.tsx";
 import { useAuth } from '../utils/Authentication.tsx';
+import { useModals } from '../components/auth/ModalContext.tsx'; // Update the import path as necessary
 import styled from "styled-components";
 import {ModalContent, ModalOverlay} from "../components/common/StyledComponents.tsx"; // Ensure the path is correct
 
@@ -51,7 +52,8 @@ export function Login() {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>(''); // State for password
   const [loading, setLoading] = useState<boolean>(false); // Loading state
-  const { setToken, isLoginModalOpen, setLoginModalOpen } = useAuth();
+  const { setToken} = useAuth();
+  const { isLoginOpen, setLoginOpen } = useModals();
   const navigate = useNavigate();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -74,7 +76,7 @@ export function Login() {
         const data = await response.json();
         localStorage.setItem('token', data.access_token);
         setToken(data.access_token); //update token global state
-        setLoginModalOpen(false);
+        setLoginOpen(false);
         navigate('/dashboard');
       } else {
         throw new Error('Failed to log in');
@@ -91,12 +93,12 @@ export function Login() {
     setLoading(false); // Stop loading regardless of the outcome
   };
 
-  if (!isLoginModalOpen) return null;
+  if (!isLoginOpen) return null;
 
   return (
       <MainContent>
-        {isLoginModalOpen && (
-          <ModalOverlay onClick={() => setLoginModalOpen(false)}> {/* Click on overlay to close modal */}
+        {isLoginOpen && (
+          <ModalOverlay onClick={() => setLoginOpen(false)}> {/* Click on overlay to close modal */}
             <ModalContent onClick={e => e.stopPropagation()}> {/* Prevent clicks from closing modal */}
               <form onSubmit={handleSubmit}>
                 <LoginContainer>

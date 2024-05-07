@@ -1,6 +1,7 @@
 import React, { useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../utils/Authentication.tsx";
+import { useModals } from '../components/auth/ModalContext.tsx'
 import { ModalContent, ModalOverlay } from "../components/common/StyledComponents.tsx";
 import { MainContent } from "../containers/general/MainContent.tsx";
 import { ButtonContainer, LoginBarContainer, LoginContainer, StyledInput, StyledLabel } from "./Login.tsx";
@@ -12,7 +13,8 @@ export const Register: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
     const navigate = useNavigate();
-    const { setToken, isRegisterModalOpen, setRegisterModalOpen } = useAuth();
+    const { setToken} = useAuth();
+    const { isRegisterOpen, setRegisterOpen } = useModals();
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     const handleRegister = async (event: FormEvent<HTMLFormElement>) => {
@@ -42,7 +44,7 @@ export const Register: React.FC = () => {
             }
             localStorage.setItem('token', data.access_token);
             setToken(data.access_token);
-            setRegisterModalOpen(false);
+            setRegisterOpen(false);
             navigate('/dashboard');
         } catch (error) {
             setError('Could not register');
@@ -51,11 +53,11 @@ export const Register: React.FC = () => {
         }
     };
 
-    if (!isRegisterModalOpen) return null;
+    if (!isRegisterOpen) return null;
 
     return (
         <MainContent>
-            <ModalOverlay onClick={() => setRegisterModalOpen(false)}>
+            <ModalOverlay onClick={() => setRegisterOpen(false)}>
                 <ModalContent onClick={e => e.stopPropagation()}>
                     <form onSubmit={handleRegister}>
                         <LoginContainer>

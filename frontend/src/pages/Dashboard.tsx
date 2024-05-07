@@ -9,11 +9,12 @@ import {AccountColumn, AccountDetailsContainer, AccountContainer} from "../conta
 import {UserChart} from "../components/user/UserChart.tsx";
 import {ChartContainer} from "../containers/multiUse/ChartContainer.tsx";
 import {PortfolioContainer} from "../containers/dashboard/PortfolioContainer.tsx";
-import {DashboardControls} from "../components/dashboard/DashboardRefresh.tsx";
+// import {DashboardControls} from "../components/dashboard/DashboardRefresh.tsx";
 import {PerformersDetailsContainer} from "../containers/dashboard/PerformersContainer.tsx";
 import {TopPerformers} from "../components/dashboard/TopPerformers.tsx";
 import {Text} from "../containers/dashboard/TextStyle.tsx";
 import styled from "styled-components";
+// import {ButtonContainer} from "../containers/dashboard/ButtonContainer.tsx";
 
 export interface UserSummary {
     username: string;
@@ -44,10 +45,10 @@ export const Dashboard: React.FC = () => {
     const navigate = useNavigate(); // Hook for navigation
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-    const updateDashboardState = (newData: UserSummary) => {
-        setUserSummary(newData);
-        setLoading(false);  // Reset loading state
-    };
+    // const updateDashboardState = (newData: UserSummary) => {
+    //     setUserSummary(newData);
+    //     setLoading(false);  // Reset loading state
+    // };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -116,7 +117,9 @@ export const Dashboard: React.FC = () => {
             <PortfolioContainer label={'Portfolio'}>
                 <Portfolio players={userSummary.portfolio.players} />
             </PortfolioContainer>
-            <DashboardControls updateDashboard={updateDashboardState} />
+            {/*<ButtonContainer>*/}
+            {/*    <DashboardControls updateDashboard={updateDashboardState} />*/}
+            {/*</ButtonContainer>*/}
         </MainContent>
     );
 };

@@ -9,7 +9,6 @@ import {
 } from "../containers/leaderboard/LeaderboardContainer.tsx";
 import styled from "styled-components";
 import {PortfolioLeaderboard} from "../components/leaderboard/PortfolioLeaderboard.tsx";
-import {Text} from "../containers/dashboard/TextStyle.tsx";
 
 export const StyledButton = styled.button`
     display: flex;
@@ -104,7 +103,7 @@ export const LeaderboardPage = () => {
     return (
         <MainContent>
             <div>
-                <Text size='48px' weight='bold' padding='0px 0px 0px 0px'>{isPortfolio ? 'Portfolio Leaderboard' : 'Leaderboard'}</Text>
+                <h1>{isPortfolio ? 'Portfolio Leaderboard' : 'Leaderboard'}</h1>
                     <SwitchStyledButton onClick={toggleLeadType}>
                         {leadType === 'portfolio' ? 'Standard' : 'Portfolio'} Leaderboard
                     </SwitchStyledButton>

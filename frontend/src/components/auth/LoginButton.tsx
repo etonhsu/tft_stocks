@@ -1,17 +1,17 @@
-import { useAuth } from '../../utils/Authentication.tsx';
 import {StyledButton} from "../../containers/general/SidebarButton.tsx";
+import {useModals} from "./ModalContext.tsx";
 
 export const LoginButton = () => {
-  const { isLoginModalOpen, setLoginModalOpen } = useAuth();
+  const { isLoginOpen, setLoginOpen } = useModals();
 
   const handleLogin = () => {
     // Toggle modal open/close based on current state
-    setLoginModalOpen(!isLoginModalOpen);
+    setLoginOpen(!isLoginOpen);
   };
 
   return (
     <StyledButton onClick={handleLogin}>
-      {isLoginModalOpen ? 'Login' : 'Login'}
+      {isLoginOpen ? 'Login' : 'Login'}
     </StyledButton>
   );
 };

@@ -7,6 +7,7 @@ import styled from "styled-components";
 import {LoginButton} from "../components/auth/LoginButton.tsx";
 import {RegisterButton} from "../components/auth/RegisterButton.tsx";
 import {SettingsButton} from "../components/sidebar/SettingsButton.tsx";
+import {Settings} from "./Settings.tsx";
 
 const TitleContainer = styled.div`
     width: 100%;
@@ -52,6 +53,7 @@ export function SidebarComponent() {
                     <StyledLink to="/transaction_history">
                         <TransactionIcon />Transactions
                     </StyledLink>
+                    <Settings />
                     <SettingsButton/>
                 </>
                 ) : (

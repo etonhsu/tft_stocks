@@ -1,18 +1,18 @@
 // RegisterButton.tsx
 import React from 'react';
-import { useAuth } from '../../utils/Authentication.tsx';
-import { StyledButton } from '../../containers/general/SidebarButton.tsx';  // Make sure the path is correct
+import { StyledButton } from '../../containers/general/SidebarButton.tsx';
+import {useModals} from "./ModalContext.tsx";  // Make sure the path is correct
 
 export const RegisterButton: React.FC = () => {
-    const { isRegisterModalOpen, setRegisterModalOpen } = useAuth();
+    const { isRegisterOpen, setRegisterOpen } = useModals();
 
     const handleRegisterClick = () => {
-        setRegisterModalOpen(!isRegisterModalOpen);
+        setRegisterOpen(!isRegisterOpen);
     };
 
     return (
         <StyledButton onClick={handleRegisterClick}>
-            {isRegisterModalOpen ? 'Register' : 'Register'}
+            {isRegisterOpen ? 'Register' : 'Register'}
         </StyledButton>
     );
 };
