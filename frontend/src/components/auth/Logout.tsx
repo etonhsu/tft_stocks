@@ -1,15 +1,21 @@
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../utils/Authentication.tsx'; // Ensure the path is correct
-import '../../index.css'
+import '../../index.css';
 
 export const LogoutButton: React.FC = () => {
     const navigate = useNavigate();
-    const { setToken } = useAuth(); // Use the useAuth hook to get the setToken method
+    const { setToken, setIsLoggedIn } = useAuth(); // Use the useAuth hook to get the setToken method and setIsLoggedIn
 
     const handleLogout = () => {
-        localStorage.removeItem('token'); // Optionally you might remove this if token is managed solely through context
+        // Clear the token and logged-in status using the auth context
+        setToken(null);
+        setIsLoggedIn(false); // Explicitly setting logged-in status to false
+
+        // Optionally remove other local storage items that are not managed by AuthContext
         localStorage.removeItem('dashboardData');
-        setToken(null); // Update the global token state to null
+
+        // Redirect user to the home page or login page
         navigate('/');
     };
 

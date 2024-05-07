@@ -59,38 +59,35 @@ export function Login() {
 
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setLoading(true);
-    const formData = new URLSearchParams();
-    formData.append('username', username);
-    formData.append('password', password);
+  event.preventDefault();
+  setLoading(true);
+  const formData = new URLSearchParams();
+  formData.append('username', username);
+  formData.append('password', password);
 
-    try {
-      const response = await fetch(`${backendUrl}/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: formData.toString()
-      });
+  try {
+    const response = await fetch(`${backendUrl}/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: formData.toString()
+    });
 
-      if (response.ok) {
-        const data = await response.json();
-        setToken(data.access_token); // Update the context (and localStorage via useEffect)
-        setLoginOpen(false);
-        navigate('/dashboard');
-      } else {
-        throw new Error('Failed to log in');
-      }
-    } catch (error) {
-      console.error('Login error:', error);
-      if (error instanceof Error) {
-        alert('Login failed: ' + error.message);
-      } else {
-        alert('Login failed: An unknown error occurred.');
-      }
+    if (response.ok) {
+      const data = await response.json();
+      setToken(data.access_token); // This will also update isLoggedIn via AuthProvider
+      setLoginOpen(false);
+      navigate('/dashboard');
+    } else {
+      throw new Error('Failed to log in');
     }
-    setPassword('');
-    setLoading(false); // Stop loading regardless of the outcome
-  };
+  } catch (error) {
+    console.error('Login error:', error);
+    alert(`Login failed: 'An unknown error occurred.'}`);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   if (!isLoginOpen) return null;
 
