@@ -44,7 +44,7 @@ export const Settings: React.FC = () => {
       }
 
       try {
-        const response = await axios.get(`${backendUrl}}/settings`, {
+        const response = await axios.get(`${backendUrl}/settings`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
