@@ -48,5 +48,5 @@ async def read_dashboard(current_user: UserProfile = Depends(get_user_from_token
     serialized_data = json.dumps(updated_user_data, cls=CustomEncoder)  # Use the default function to handle ObjectId
     set_cache(cache_key, serialized_data, expiration=600)  # Cache for 10 minutes
 
-    return UserProfile(**updated_user_data)
+    return UserProfile(**json.loads(serialized_data))
 
