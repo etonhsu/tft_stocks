@@ -20,6 +20,9 @@ const TitleLink = styled(Link)`
     text-decoration: none;  // Removes underline from the link
     color: inherit;  // Inherits text color from parent or can set to specific color
     display: block;  // Makes it behave like a div for layout purposes
+    
+    &:hover {
+        color: #EAEAEA;
 `;
 
 const LogoContainer = styled.div`
