@@ -30,7 +30,6 @@ const PortfolioDetails = styled.div`
     justify-content: flex-start; // Aligns the Portfolio to the right
     //border-top: 3px solid #666;
     //border-radius: 10px;
-    height: 500px;
 `;
 
 export const PortfolioContainer: React.FC<PortfolioDetailsProps> = ({ label, children }) => {

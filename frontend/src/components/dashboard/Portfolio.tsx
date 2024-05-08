@@ -31,6 +31,7 @@ export const PortfolioStyledCell = styled.td`
     border: 1px solid #666;
     text-align: left;
     align-items: flex-start;
+    height: 40px;
 `;
 
 const ValueCell = styled.div`
