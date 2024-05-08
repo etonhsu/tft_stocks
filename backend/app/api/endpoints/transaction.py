@@ -53,16 +53,16 @@ async def add_transaction(
         )
         user.transactions.append(transaction)
 
-        transaction_hold = {
-            'game_name': gameName,
-            'shares': shares,
-            'hold_deadline': datetime.now() + timedelta(hours=3)
-        }
-
-        user_collection.update_one(
-            {'_id': user['_id']},
-            {'$push': {'transaction_holds': transaction_hold}}
-        )
+        # transaction_hold = {
+        #     'game_name': gameName,
+        #     'shares': shares,
+        #     'hold_deadline': datetime.now() + timedelta(hours=3)
+        # }
+        #
+        # user_collection.update_one(
+        #     {'_id': user['_id']},
+        #     {'$push': {'transaction_holds': transaction_hold}}
+        # )
 
     # Selling a player
     if transaction_type == 'sell':
