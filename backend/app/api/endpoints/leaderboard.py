@@ -23,7 +23,7 @@ async def get_leaderboard(
     page: int = Query(default=0, ge=0)
 ):
     if lead_type == "portfolio":
-        entries = fetch_portfolio_leaderboard(limit=limit)
+        entries = fetch_portfolio_leaderboard(page=page, limit=limit)
     else:
         entries = fetch_leaderboard_entries(lead_type, page=page, limit=limit)
 
