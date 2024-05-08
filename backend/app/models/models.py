@@ -36,21 +36,6 @@ class Transaction(BaseModel):
     price: float
     transaction_date: datetime
 
-    # Validator to ensure the datetime is always in UTC
-    @validator('transaction_date', pre=True, always=True)
-    def set_utc(cls, v):
-        if isinstance(v, datetime) and v.tzinfo is not None:
-            # If timezone info is present, convert to UTC
-            return v.astimezone(timezone.utc)
-        elif isinstance(v, datetime):
-            # If no timezone info, assume the datetime is UTC
-            return v.replace(tzinfo=timezone.utc)
-        return v
-
-    class Config:
-        json_encoders = {
-            datetime: lambda dt: dt.isoformat()  # Ensure datetime is serialized in ISO format
-        }
 
 
 class TransactionRequest(BaseModel):

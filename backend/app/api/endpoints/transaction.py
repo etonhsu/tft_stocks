@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import Annotated
 
 from fastapi import HTTPException, Depends, APIRouter, Cookie
@@ -49,7 +49,7 @@ async def add_transaction(
             gameName=gameName,
             shares=shares,
             price=price,
-            transaction_date=datetime.now(timezone.utc)
+            transaction_date=datetime.now()
         )
         user.transactions.append(transaction)
 
@@ -71,7 +71,7 @@ async def add_transaction(
             gameName=gameName,
             shares=shares,
             price=price,
-            transaction_date=datetime.now(timezone.utc)
+            transaction_date=datetime.now()
         )
         user.transactions.append(transaction)
 
