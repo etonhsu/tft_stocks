@@ -19,6 +19,7 @@ import {Favorites} from "./pages/Favorites.tsx";
 // import {Settings} from "./pages/Settings.tsx";
 import {Slideshow} from "./components/homepage/Slideshow.tsx";
 import {ModalProvider} from "./components/auth/ModalContext.tsx";
+import {ButtonWithModal} from "./components/common/NotificationButton.tsx";
 
 function App() {
     return (
@@ -29,6 +30,7 @@ function App() {
                     <div className="App">
                         <HeaderBar>
                             <SearchBar/>
+                            <ButtonWithModal/>
                         </HeaderBar>
                         <MainContent> {/* Main content area */}
                             <Suspense fallback={<div>Loading...</div>}>

@@ -4,7 +4,7 @@ import { MainContent } from "../containers/general/MainContent.tsx";
 import { useAuth } from '../utils/Authentication.tsx';
 import { useModals } from '../components/auth/ModalContext.tsx'; // Update the import path as necessary
 import styled from "styled-components";
-import {ModalContent, ModalOverlay} from "../components/common/StyledComponents.tsx"; // Ensure the path is correct
+import {ModalContent, ModalOverlay} from "../containers/multiUse/StyledComponents.tsx"; // Ensure the path is correct
 
 
 export const LoginBarContainer = styled.div`

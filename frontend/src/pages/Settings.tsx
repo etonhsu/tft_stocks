@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useModals } from '../components/auth/ModalContext.tsx'
-import { ModalContent, ModalOverlay } from '../components/common/StyledComponents.tsx';
+import { ModalContent, ModalOverlay } from '../containers/multiUse/StyledComponents.tsx';
 import {ChangeUsername} from "../components/auth/ChangeUsername.tsx";
 import {ChangePassword} from "../components/auth/ChangePassword.tsx";
 import {Text} from "../containers/dashboard/TextStyle.tsx";

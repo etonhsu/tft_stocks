@@ -2,7 +2,7 @@ import React, { useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../utils/Authentication.tsx";
 import { useModals } from '../components/auth/ModalContext.tsx';
-import { ModalContent, ModalOverlay } from "../components/common/StyledComponents.tsx";
+import { ModalContent, ModalOverlay } from "../containers/multiUse/StyledComponents.tsx";
 import { MainContent } from "../containers/general/MainContent.tsx";
 import { ButtonContainer, LoginBarContainer, LoginContainer, StyledInput, StyledLabel } from "./Login.tsx";
 
