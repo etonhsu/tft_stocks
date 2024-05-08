@@ -34,7 +34,7 @@ class Transaction(BaseModel):
     gameName: str
     shares: int
     price: float
-    transaction_date: datetime
+    transaction_date: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
 

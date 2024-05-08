@@ -1,3 +1,4 @@
+from datetime import timezone
 from typing import List
 
 from fastapi import HTTPException, status, Depends
@@ -106,7 +107,11 @@ def fetch_portfolio_leaderboard(page: int = 0, limit: int = 100) -> List[Portfol
 def fetch_recent_transactions(user: UserPublic = Depends(get_user_from_token)) -> List[Transaction]:
     user_data = user_collection.find_one({'username': user.username})
 
-    transactions = [Transaction(**t) for t in user_data['transactions']]
+    transactions = []
+    for t in user_data['transactions']:
+        t['transaction_date'] = t['transaction_date'].replace(
+            tzinfo=timezone.utc)  # Ensure the datetime is timezone-aware
+        transactions.append(Transaction(**t))
 
     for transaction in transactions:
         transaction.price = price_model(transaction.price)
