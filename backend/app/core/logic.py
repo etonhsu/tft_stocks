@@ -1,3 +1,4 @@
+from datetime import timezone, datetime
 from typing import List
 
 from fastapi import HTTPException, status, Depends
@@ -106,10 +107,13 @@ def fetch_portfolio_leaderboard(page: int = 0, limit: int = 100) -> List[Portfol
 def fetch_recent_transactions(user: UserPublic = Depends(get_user_from_token)) -> List[Transaction]:
     user_data = user_collection.find_one({'username': user.username})
 
-    transactions = [Transaction(**t) for t in user_data['transactions']]
-
-    for transaction in transactions:
+    transactions = []
+    for t in user_data['transactions']:
+        # Ensure the transaction date is converted to a datetime object with UTC
+        t['transaction_date'] = datetime.fromisoformat(t['transaction_date']).replace(tzinfo=timezone.utc)
+        transaction = Transaction(**t)
         transaction.price = price_model(transaction.price)
+        transactions.append(transaction)
 
     # Reversing the list of transactions
     list_transactions = list(transactions)

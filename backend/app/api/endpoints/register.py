@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends, status
 from fastapi.security import OAuth2PasswordRequestForm
-from datetime import timedelta, datetime
+from datetime import timedelta, datetime, timezone
 from app.core.token import create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES
 from app.db.database import connect_user
 from passlib.context import CryptContext
@@ -28,7 +28,7 @@ async def register(form_data: OAuth2PasswordRequestForm = Depends()):
         'portfolio': {'players': {}},
         'transactions': [],
         'portfolio_history': [],
-        'date_registered': datetime.now(),
+        'date_registered': datetime.now(timezone.utc),
         'rank': 0,
         'favorites': []
     }
