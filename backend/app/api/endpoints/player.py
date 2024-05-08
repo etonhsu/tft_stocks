@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 from fastapi import APIRouter
 from app.db.database import connect_lp
 from app.models.pricing_model import price_model  # Assuming your pricing model is in app/models
@@ -17,9 +19,13 @@ async def player_info(gameName: str):
         if not info:
             return {"error": "player not found"}
 
+        info_date = datetime.fromisoformat(info['date'][-1])
+        utc_date = info_date.astimezone(timezone.utc)
+
         # Apply the pricing model to each leaguePoint to calculate the price
         price_history = [price_model(lp) for lp in info['leaguePoints']]  # Convert league points to prices
         date_history = [str(date) for date in info['date']]
+        date_updated = utc_date
         delta_8h = info['delta_8h']
         delta_24h = info['delta_24h']
         delta_72h = info['delta_72h']
@@ -28,6 +34,7 @@ async def player_info(gameName: str):
             'name': info['gameName'],
             'price': price_history,
             'date': date_history,
+            'date_updated': date_updated,
             '8 Hour Change': delta_8h,
             '24 Hour Change': delta_24h,
             '3 Day Change': delta_72h

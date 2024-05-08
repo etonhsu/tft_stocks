@@ -18,6 +18,7 @@ export interface PlayerData {
   name: string;
   price: number[];
   date: string[];
+  date_updated: Date
   '8 Hour Change': number;  // Optional because not all datasets might have this
   '24 Hour Change': number; // Optional
   '3 Day Change': number;   // Optional
@@ -74,7 +75,7 @@ export function PlayerInfo() {
               <DetailsAndTransactionColumn>
                   <PlayerDetailsContainer label="Overview">
                       <p>Current Price: {formatCurrency(playerData.price[playerData.price.length - 1], 2)}</p>
-                      <p>Updated: {formatDate(playerData.date[playerData.date.length - 1])}</p>
+                      <p>Updated: {formatDate(playerData.date_updated)}</p>
                       <p>8 Hour Change: {formatCurrency(playerData['8 Hour Change'], 1)}</p>
                       <p>24 Hour Change: {formatCurrency(playerData['24 Hour Change'], 1)}</p>
                       <p>3 Day Change: {formatCurrency(playerData['3 Day Change'], 1)}</p>
