@@ -32,10 +32,10 @@ export const Favorites: React.FC = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (!token) {
-                navigate('/login');
-                return;
-            }
+            // if (!token) {
+            //     navigate('/login');
+            //     return;
+            // }
 
             try {
                 const response = await axios.get(`${backendUrl}/favorites`, {

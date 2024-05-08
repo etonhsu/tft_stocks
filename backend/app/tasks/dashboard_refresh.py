@@ -31,6 +31,5 @@ def dashboard_refresh(user: UserProfile):
 
         # Apply pricing model
         portfolio[player_name]['current_price'] = price_model(portfolio[player_name]['current_price'])
-        portfolio[player_name]['purchase_price'] = price_model(portfolio[player_name]['purchase_price'])
 
     return user_data

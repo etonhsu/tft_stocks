@@ -18,11 +18,11 @@ export const PortfolioPage: React.FC = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (!token) {
-                // No token found, redirect to login page or handle accordingly
-                navigate('/login');
-                return;
-            }
+            // if (!token) {
+            //     // No token found, redirect to login page or handle accordingly
+            //     navigate('/login');
+            //     return;
+            // }
 
             try {
                 const response = await axios.post(`${backendUrl}/portfolio`, {

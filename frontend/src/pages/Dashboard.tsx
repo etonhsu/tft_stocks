@@ -54,10 +54,10 @@ export const Dashboard: React.FC = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (!isLoggedIn) {
-                navigate('/login');
-                return;
-            }
+            // if (!isLoggedIn) {
+            //     navigate('/login');
+            //     return;
+            // }
 
             try {
                 const response = await axios.get(`${backendUrl}/dashboard`, {

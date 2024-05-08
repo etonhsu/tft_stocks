@@ -120,10 +120,10 @@ export const TopPerformers: React.FC = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (!token) {
-                navigate('/login');
-                return;
-            }
+            // if (!token) {
+            //     navigate('/login');
+            //     return;
+            // }
             try {
                 const response = await axios.get(`${backendUrl}/top_leaderboard`, {
                     headers: { Authorization: `Bearer ${token}` }
