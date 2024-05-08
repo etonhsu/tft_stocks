@@ -6,6 +6,7 @@ from fastapi import HTTPException, Depends, APIRouter, Cookie
 from app.models.models import TransactionRequest, Player, Transaction, UserProfile
 from app.db.database import connect_lp, connect_user
 from app.core.token import get_user_from_token
+from app.models.pricing_model import price_model
 
 router = APIRouter()
 lp_collection = connect_lp()
@@ -29,7 +30,7 @@ async def add_transaction(
 
     # Set transaction details
     shares = transaction_data.shares
-    price = lp_collection.find_one({'gameName': gameName})['leaguePoints'][-1]
+    price = price_model(lp_collection.find_one({'gameName': gameName})['leaguePoints'][-1])
     total = shares * price
     player = Player(name=gameName, shares=shares, purchase_price=price, current_price=price)
 
