@@ -30,12 +30,37 @@ const ChartDetails = styled.div`
     padding-bottom: 20px;
     padding-right: 25px;
     background-color: #222; // Light background for the chart area
-    display: flex;
     justify-content: flex-end; // Aligns the chart to the right
     align-items: center;
     border: 3px solid #666;
     border-radius: 10px;
     height: 439px;
+`;
+
+export const ChartStyledButton = styled.button`
+    display: flex;
+    align-items: center; /* Vertically center the children */
+    justify-content: center; /* Aligns children (icon and text) to the start of the container */
+    font-weight: normal;
+    font-size: 16px;
+    background: #222; // Use the color from your design
+    color: #EAEAEA;
+    text-decoration: none;
+    border: none; // Remove default button border
+    border-radius: 4px;
+    width: 50px;
+    padding: 5px;
+    cursor: pointer; // Ensure it's recognizable as a clickable button
+
+    &:hover {
+        background: #222; // Slightly lighter color on hover
+        color: cornflowerblue;
+    }
+
+    &:focus {
+        outline: none; // Removes the outline to match NavLink behavior
+        background: #333
+    }
 `;
 
 export const ChartContainer: React.FC<ChartDetailsProps> = ({ label, children }) => {

@@ -13,7 +13,7 @@ const TransactionDetailsWrapper = styled.div`
     margin-top: 2%;
     margin-right: 30%;
     width: 330px;
-    height: 230px;
+    height: 217px;
     border: 3px solid #666;
     border-radius: 10px;
 `;

@@ -1,11 +1,12 @@
-import React from 'react';
+import React, {useMemo, useState} from 'react';
 import {
   XAxis, YAxis, CartesianGrid, ResponsiveContainer, AreaChart, Tooltip, Area, TooltipProps
 } from '../../../node_modules/recharts';
 import {formatCurrency} from "../../utils/CurrencyFormatter.tsx";
+import {ChartContainer, ChartStyledButton} from "../../containers/multiUse/ChartContainer.tsx";
 
 interface PortfolioHistoryData {
-  date: Date;
+  date: Date | string;
   value: number;
 }
 
@@ -14,9 +15,10 @@ interface UserChartProps {
 }
 
 const formatDate = (date: Date): string => {
-  return date.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' });
+  // Ensure date is a Date object
+  const dateObj = new Date(date);
+  return dateObj.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' });
 };
-
 
 export const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
   if (active && payload && payload.length && typeof payload[0].value === 'number') {
@@ -43,18 +45,25 @@ export const CustomTooltip = ({ active, payload, label }: TooltipProps<number, s
 };
 
 export const UserChart: React.FC<UserChartProps> = ({ portfolioHistory }) => {
-  // Prepare chart data with useMemo for performance optimization
-  const chartData = React.useMemo(() => {
-    return portfolioHistory.reduce((acc, curr, idx, src) => {
-      if (idx === 0 || curr.value !== src[idx - 1].value) {
-        acc.push({
-          date: new Date(curr.date), // Convert string date to Date object
-          value: curr.value
-        });
+  const [timeRange, setTimeRange] = useState<'3days' | '1week' | 'all'>('all');
+
+  const chartData = useMemo(() => {
+    return portfolioHistory.map(item => ({
+      date: new Date(item.date),  // Ensure each date is a Date object
+      value: item.value
+    })).filter(item => {
+      const now = new Date();
+      const date = new Date(item.date);
+      switch (timeRange) {
+        case '3days':
+          return date >= new Date(now.setDate(now.getDate() - 3));
+        case '1week':
+          return date >= new Date(now.setDate(now.getDate() - 7));
+        default:
+          return true;
       }
-      return acc;
-    }, [] as { date: Date, value: number }[]);
-  }, [portfolioHistory]);
+    });
+  }, [portfolioHistory, timeRange]);
 
     const minY = Math.min(...chartData.map(d => d.value));
     const maxY = Math.max(...chartData.map(d => d.value));
@@ -77,28 +86,35 @@ export const UserChart: React.FC<UserChartProps> = ({ portfolioHistory }) => {
     };
 
   return (
-    <ResponsiveContainer width="100%" height={400}>
-      <AreaChart data={chartData}>
-        <defs>
-          <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="10%" stopColor={lineColor} stopOpacity={0.5}/>
-            <stop offset="95%" stopColor={lineColor} stopOpacity={0}/>
-          </linearGradient>
-        </defs>
-        <CartesianGrid strokeDasharray="3 3" vertical={false} />
-        <XAxis
-            dataKey="date" tickFormatter={formatDate}
-            tick={tickStyle}
-        />
-        <YAxis
-            domain={[minY - padding, maxY + padding]}
-            tickFormatter={formatTicks}
-            tick={tickStyle}
-            ticks={ticks}
-        />
-        <Tooltip content={<CustomTooltip />} />
-        <Area type="monotone" dataKey="value" stroke={lineColor} fillOpacity={1} fill="url(#colorValue)" />
-      </AreaChart>
-    </ResponsiveContainer>
+      <ChartContainer label={"Performance"}>
+          <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+              <ChartStyledButton onClick={() => setTimeRange('all')}>All</ChartStyledButton>
+              <ChartStyledButton onClick={() => setTimeRange('1week')}>1W</ChartStyledButton>
+              <ChartStyledButton onClick={() => setTimeRange('3days')}>3D</ChartStyledButton>
+          </div>
+          <ResponsiveContainer width="100%" height={400}>
+              <AreaChart data={chartData}>
+                  <defs>
+                      <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="10%" stopColor={lineColor} stopOpacity={0.5}/>
+                          <stop offset="95%" stopColor={lineColor} stopOpacity={0}/>
+                      </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false}/>
+                  <XAxis
+                      dataKey="date" tickFormatter={formatDate}
+                      tick={tickStyle}
+                  />
+                  <YAxis
+                      domain={[minY - padding, maxY + padding]}
+                      tickFormatter={formatTicks}
+                      tick={tickStyle}
+                      ticks={ticks}
+                  />
+                  <Tooltip content={<CustomTooltip/>}/>
+                  <Area type="monotone" dataKey="value" stroke={lineColor} fillOpacity={1} fill="url(#colorValue)"/>
+              </AreaChart>
+          </ResponsiveContainer>
+      </ChartContainer>
   );
 };

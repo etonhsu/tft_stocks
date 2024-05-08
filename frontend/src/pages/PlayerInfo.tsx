@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import {TransactionComponent} from '../components/transactions/TransactionComponent.tsx';
 import {PlayerChart} from '../components/player/PlayerChart.tsx';
 import {MainContent} from "../containers/general/MainContent.tsx";
-import {ChartContainer} from "../containers/multiUse/ChartContainer.tsx";
 import {
     DetailsAndTransactionColumn, FavoritesIconContainer,
     PlayerDetailsContainer,
@@ -86,9 +85,7 @@ export function PlayerInfo() {
                       )}
                   </TransactionContainer>
               </DetailsAndTransactionColumn>
-              <ChartContainer label={"Performance"}>
-                  <PlayerChart playerData={playerData}/>
-              </ChartContainer>
+              <PlayerChart playerData={playerData}/>
           </PlayerInfoContainer>
 
       </MainContent>

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   XAxis, YAxis, CartesianGrid, ResponsiveContainer, AreaChart, Tooltip, Area, TooltipProps
 } from '../../../node_modules/recharts';
+import {ChartContainer, ChartStyledButton} from "../../containers/multiUse/ChartContainer.tsx";
 
 interface PlayerData {
   date: string[];
@@ -12,10 +13,8 @@ interface PlayerChartProps {
   playerData: PlayerData;
 }
 
-
-
 const formatDate = (date: Date): string => {
-  return date.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' });
+    return date.toLocaleDateString('en-US', {month: 'numeric', day: 'numeric'});
 };
 
 // Define a custom tooltip component
@@ -43,13 +42,28 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>)
   return null;
 };
 
-export const PlayerChart: React.FC<PlayerChartProps> = ({playerData}) => {
+export const PlayerChart: React.FC<PlayerChartProps> = ({ playerData }) => {
+  const [timeRange, setTimeRange] = useState<'3days' | '1week' | 'all'>('all');
+
   const chartData = React.useMemo(() => {
-    return playerData.price.map((price, index) => ({
+    const data = playerData.price.map((price, index) => ({
       date: new Date(playerData.date[index]),
       price
     })).filter((_, index, array) => index === 0 || array[index].price !== array[index - 1].price);
-  }, [playerData]);
+
+    if (timeRange === '3days') {
+      const threeDaysAgo = new Date();
+      threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+      return data.filter(entry => entry.date >= threeDaysAgo);
+    } else if (timeRange === '1week') {
+      const oneWeekAgo = new Date();
+      oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+      return data.filter(entry => entry.date >= oneWeekAgo);
+    }
+    return data;
+  }, [playerData, timeRange]);
+
+  const hasData = chartData.length > 0;
 
   const minY = Math.min(...chartData.map(d => d.price));
   const maxY = Math.max(...chartData.map(d => d.price));
@@ -72,25 +86,45 @@ export const PlayerChart: React.FC<PlayerChartProps> = ({playerData}) => {
     };
 
   return (
-    <ResponsiveContainer width="100%" height={400}>
-      <AreaChart data={chartData}>
-        <defs>
-          <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="10%" stopColor={lineColor} stopOpacity={0.5}/>
-            <stop offset="95%" stopColor={lineColor} stopOpacity={0}/>
-          </linearGradient>
-        </defs>
-        <CartesianGrid strokeDasharray="3 3" vertical={false} />
-        <XAxis dataKey="date" tickFormatter={formatDate} tick={tickStyle}/>
-        <YAxis
-            domain={[minY - padding, maxY + padding]}
-            tickFormatter={formatTicks}
-            tick={tickStyle}
-            ticks={ticks}
-        />
-        <Tooltip content={<CustomTooltip />} />
-        <Area type="monotone" dataKey="price" stroke={lineColor} fillOpacity={1} fill="url(#colorPrice)" />
-      </AreaChart>
-    </ResponsiveContainer>
+      <ChartContainer label={"Performance"}>
+          <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+              <ChartStyledButton onClick={() => setTimeRange('all')}>All</ChartStyledButton>
+              <ChartStyledButton onClick={() => setTimeRange('1week')}>1W</ChartStyledButton>
+              <ChartStyledButton onClick={() => setTimeRange('3days')}>3D</ChartStyledButton>
+          </div>
+          {hasData ? (
+              <ResponsiveContainer width="100%" height={400}>
+                  <AreaChart data={chartData}>
+                      <defs>
+                          <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="10%" stopColor={lineColor} stopOpacity={0.5}/>
+                              <stop offset="95%" stopColor={lineColor} stopOpacity={0}/>
+                          </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false}/>
+                      <XAxis dataKey="date" tickFormatter={formatDate} tick={tickStyle}/>
+                      <YAxis
+                          domain={[minY - padding, maxY + padding]}
+                          tickFormatter={formatTicks}
+                          tick={tickStyle}
+                          ticks={ticks}
+                      />
+                      <Tooltip content={<CustomTooltip/>}/>
+                      <Area type="monotone" dataKey="price" stroke={lineColor} fillOpacity={1} fill="url(#colorPrice)"/>
+                  </AreaChart>
+              </ResponsiveContainer>
+          ) : (
+              <div style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: '300px',
+                  fontSize: '28px',
+                  color: '#EAEAEA',
+              }}>
+                  No data available for this time frame.
+              </div>
+          )}
+      </ChartContainer>
   );
 }
