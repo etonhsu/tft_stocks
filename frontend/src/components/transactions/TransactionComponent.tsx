@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import { PreviewModal } from "./TransactionModal.tsx";
 import {useAuth} from "../../utils/Authentication.tsx";
@@ -58,25 +58,44 @@ const TransactionButton = styled.button`
 
 export interface UserData {
     gameName: string; // Example property
-    price: number;
     shares: number; // Example property
     // Add other necessary properties
 }
 
 interface TransactionComponentProps {
     gameName: string; // Make gameName optional
-    price: number;
     updateUserData: (data: UserData) => void; // Adjust the type of `data` according to what `updateUserData` expects
 }
 
-export const TransactionComponent: React.FC<TransactionComponentProps> = ({ gameName = '', price, updateUserData }) => {
+export const TransactionComponent: React.FC<TransactionComponentProps> = ({ gameName = '', updateUserData }) => {
     const [shares, setShares] = useState<string>('0');
+    const [price, setPrice] = useState<number>(0)
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [transactionType, setTransactionType] = useState<string>('');
     const [error, setError] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
     const { token } = useAuth();  // Use token from the auth context
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+    useEffect(() => {
+        const fetchPrice = async () => {
+            if (gameName) {
+                try {
+                    const response = await fetch(`${backendUrl}/players/${gameName}`);
+                    const data = await response.json();
+                    if (response.ok) {
+                        setPrice(data.price[data.price.length - 1]);  // Assuming the endpoint sends back an object with a price field
+                    } else {
+                        throw new Error(data.detail || 'Failed to fetch price data');
+                    }
+                } catch (error) {
+                    setError('Failed to fetch price');
+                }
+            }
+        };
+
+        fetchPrice();
+    }, [backendUrl, gameName]);
 
     const handleTransaction = async () => {
         setIsModalOpen(false);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MainContent } from "../containers/general/MainContent.tsx";
 import { useAuth } from '../utils/Authentication.tsx';
@@ -56,7 +56,6 @@ export function Login() {
   const { isLoginOpen, setLoginOpen } = useModals();
   const navigate = useNavigate();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
   event.preventDefault();

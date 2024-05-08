@@ -82,7 +82,7 @@ export function PlayerInfo() {
                   </PlayerDetailsContainer>
                   <TransactionContainer label={"Transaction"}>
                       {gameName && (
-                          <TransactionComponent gameName={gameName} price={playerData.price[playerData.price.length - 1]} updateUserData={handleUserDataUpdate}/>
+                          <TransactionComponent gameName={gameName} updateUserData={handleUserDataUpdate}/>
                       )}
                   </TransactionContainer>
               </DetailsAndTransactionColumn>

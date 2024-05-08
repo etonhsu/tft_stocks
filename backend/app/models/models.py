@@ -33,7 +33,7 @@ class Transaction(BaseModel):
     type: str # buy or sell
     gameName: str
     shares: int
-    price: int
+    price: float
     transaction_date: datetime
 
 
