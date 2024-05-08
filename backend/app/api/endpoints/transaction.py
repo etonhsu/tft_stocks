@@ -60,7 +60,7 @@ async def add_transaction(
         }
 
         user_collection.update_one(
-            {'_id': user['_id'], 'transaction_holds': {'$not': {'$elemMatch': transaction_hold}}},
+            {'_id': user['_id']},
             {'$push': {'transaction_holds': transaction_hold}}
         )
 

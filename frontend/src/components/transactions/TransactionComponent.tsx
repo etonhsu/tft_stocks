@@ -59,7 +59,9 @@ const TransactionButton = styled.button`
 export interface UserData {
     gameName: string; // Example property
     shares: number; // Example property
-    // Add other necessary properties
+    transactionHold: {
+        deadline: string;
+    };
 }
 
 interface TransactionComponentProps {
@@ -70,6 +72,7 @@ interface TransactionComponentProps {
 export const TransactionComponent: React.FC<TransactionComponentProps> = ({ gameName = '', updateUserData }) => {
     const [shares, setShares] = useState<string>('0');
     const [price, setPrice] = useState<number>(0)
+    const [transactionHold, setTransactionHold] = useState<string>();
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [transactionType, setTransactionType] = useState<string>('');
     const [error, setError] = useState<string>('');
@@ -112,6 +115,9 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
             const data = await response.json();
             if (!response.ok) throw new Error(data.detail || 'Transaction failed');
             updateUserData(data);
+            if (data.transactionHold) {
+                setTransactionHold(`Transaction is on hold until ${new Date(data.transactionHold.deadline).toLocaleString()}`);
+            }
             setError('');
         } catch (error) {
             if (error instanceof Error) {
@@ -185,6 +191,7 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
                         Preview
                     </TransactionButton>
                 {renderError()}
+                {transactionHold && <p>{transactionHold}</p>}
             </TransactionForm>
             <PreviewModal
                 isOpen={isModalOpen}
