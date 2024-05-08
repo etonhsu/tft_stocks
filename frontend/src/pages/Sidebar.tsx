@@ -8,14 +8,18 @@ import {LoginButton} from "../components/auth/LoginButton.tsx";
 import {RegisterButton} from "../components/auth/RegisterButton.tsx";
 import {SettingsButton} from "../components/sidebar/SettingsButton.tsx";
 import {Settings} from "./Settings.tsx";
+import {Link} from "react-router-dom";
 
-const TitleContainer = styled.div`
+const TitleLink = styled(Link)`
     width: 100%;
     position: relative;
     font-size: 2vw;
     font-weight: bold;
     padding-top: 2vh;
     margin-bottom: 12%;
+    text-decoration: none;  // Removes underline from the link
+    color: inherit;  // Inherits text color from parent or can set to specific color
+    display: block;  // Makes it behave like a div for layout purposes
 `;
 
 const LogoContainer = styled.div`
@@ -37,7 +41,7 @@ export function SidebarComponent() {
             <NavSection>
                 <TitleLogo>
                     <LogoContainer><Logo/></LogoContainer>
-                    <TitleContainer>TFT Stocks</TitleContainer>
+                    <TitleLink to="/">TFT Stocks</TitleLink>
                 </TitleLogo>
                 {token ? (
                 <>
