@@ -70,7 +70,7 @@ def fetch_leaderboard_entries(lead_type: str, page: int = 0, limit: int = 100) -
                             detail=f'Failed to fetch leaderboard data: {str(e)}')
 
 
-def fetch_portfolio_leaderboard(lead_type: str, page: int = 0, limit: int = 100) -> List[PortfolioLeaderboardEntry]:
+def fetch_portfolio_leaderboard(page: int = 0, limit: int = 100) -> List[PortfolioLeaderboardEntry]:
     collection = user_collection  # Assume user_collection is properly connected
     skip = page * limit
 
