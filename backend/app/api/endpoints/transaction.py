@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Annotated
 
 from fastapi import HTTPException, Depends, APIRouter, Cookie
@@ -52,6 +52,17 @@ async def add_transaction(
             transaction_date=datetime.now()
         )
         user.transactions.append(transaction)
+
+        transaction_hold = {
+            'game_name': gameName,
+            'shares': shares,
+            'hold_deadline': datetime.now() + timedelta(hours=3)
+        }
+
+        user_collection.update_one(
+            {'_id': user['_id'], 'transaction_holds': {'$not': {'$elemMatch': transaction_hold}}},
+            {'$push': {'transaction_holds': transaction_hold}}
+        )
 
     # Selling a player
     if transaction_type == 'sell':
