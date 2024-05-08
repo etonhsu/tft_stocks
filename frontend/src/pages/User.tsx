@@ -8,7 +8,6 @@ import {Text} from "../containers/dashboard/TextStyle.tsx";
 import styled from "styled-components";
 import {ChartContainer} from "../containers/multiUse/ChartContainer.tsx";
 import {UserChart} from "../components/user/UserChart.tsx";
-import {PortfolioContainer} from "../containers/dashboard/PortfolioContainer.tsx";
 import {PortfolioHistoryData} from "./Dashboard.tsx";
 import {
     UserAccountColumn,
@@ -106,9 +105,7 @@ export const UserProfile: React.FC = () => {
                   <UserChart portfolioHistory={user.portfolio_history} />
               </ChartContainer>
           </UserAccountContainer>
-          <PortfolioContainer label={'Portfolio'}>
-              {user.portfolio?.players && <Portfolio players={user.portfolio.players} />}
-          </PortfolioContainer>
+          {user.portfolio?.players && <Portfolio players={user.portfolio.players} />}
       </MainContent>
   );
 }
