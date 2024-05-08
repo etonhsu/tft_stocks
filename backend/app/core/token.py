@@ -42,7 +42,7 @@ def verify_token(token: str, credentials_exception):
         raise credentials_exception
 
 
-def get_user_from_token(token: str):
+def get_user_from_token(token: str = Depends(oauth2_scheme)):
     try:
         # Assuming 'verify_token' extracts the username from the token
         username = verify_token(token, credentials_exception=HTTPException(status_code=401, detail="Invalid token"))
