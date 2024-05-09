@@ -33,11 +33,7 @@ export const ButtonWithModal: React.FC = () => {
             <StyledButton onClick={handleOpenModal}>Notification</StyledButton>
         </div>
         <Modal isOpen={isModalOpen} onClose={handleCloseModal}
-               text="Hello everyone, thank you all so much for using the site, I really appreciate all the support in helping me test out the features.
-                    I am about to implement an update in an hour (6pm PDT) that will limit all buying and selling of players to those who are Grandmaster and above.
-                    I realize that will wipe out a lot of people's portfolios, so I will be instituting a hard reset of everyone's balance back to 100k, and portfolio back to empty.
-                    This will help a lot with the balance of the market, so we don't get a repeat of Pockygom's 2 trillion account balance. I'm sorry for those of you who were already
-                    invested into your portfolio, and thank you for bearing with me while I get the site features improved."
+               text="The account reset and GM+ players rollout is complete, happy trading!"
         />
     </>
   );
