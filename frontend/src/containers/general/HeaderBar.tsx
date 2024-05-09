@@ -9,7 +9,7 @@ export const HeaderBar = styled.header`
     color: #EAEAEA;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     position: fixed; /* Fix it to the top */
     top: 0; /* No space from the top */
     border-bottom: 1px solid #444;

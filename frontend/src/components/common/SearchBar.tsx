@@ -8,8 +8,9 @@ const SearchBarContainer = styled.div`
     display: flex;
     align-items: center;
     padding: 5px 15px;
+    margin-left: 10px;
     height: 40px;
-    width: 350px; // Max width of the search bar
+    width: 350px; 
     
 `;
 
