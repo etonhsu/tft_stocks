@@ -21,10 +21,6 @@ def dashboard_refresh(user: UserProfile):
             # Assuming 'leaguePoints' is a list of prices
             current_price = lp_data['leaguePoints'][-1]
             portfolio[player_name]['current_price'] = current_price
-            user_collection.update_one(
-                {'username': user.username},
-                {'$set': {f'portfolio.players.{player_name}.current_price': current_price}}
-            )
         else:
             # If no current price data is found, set to None or keep the old price
             portfolio[player_name]['current_price'] = player_info.get('current_price', player_info['price'])
