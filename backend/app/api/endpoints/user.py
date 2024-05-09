@@ -25,6 +25,7 @@ async def get_user(username: str):
             # Assuming 'leaguePoints' is a list of prices
             current_price = price_model(lp_data['leaguePoints'][-1])
             portfolio[player_name]['current_price'] = current_price
+    user_collection.update_one({'_id': user_data['_id']}, {'$set': {'portfolio.players': portfolio}})
 
     return UserPublic(**user_data)
 
