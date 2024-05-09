@@ -12,6 +12,7 @@ import {TransactionContainer} from "../containers/player/TransactionContainer.ts
 import {formatCurrency} from "../utils/CurrencyFormatter.tsx";
 import {FavoriteIcon} from "../components/player/FavoritesIcon.tsx";
 import {formatDate} from "../utils/DateFormatter.tsx";
+import styled from "styled-components";
 
 // Assuming you have a type definition for the player data from the backend
 export interface PlayerData {
@@ -23,6 +24,31 @@ export interface PlayerData {
   '24 Hour Change': number; // Optional
   '3 Day Change': number;   // Optional
 }
+
+const StyledLink = styled.a`
+  text-decoration: none; // No underline
+  color: #EAEAEA; // Example link color
+  font-weight: bold; // Bold font weight
+    padding: 8px;
+    margin-left: 90px;
+    border-radius: 4px;
+    background-color: #444;
+
+  &:hover {
+    color: cornflowerblue; // Darker color on hover
+  }
+`;
+
+// Usage in a React component
+const ExternalLink = () => {
+  return (
+    <StyledLink href="http://tactics.tools" target="_blank" rel="noopener noreferrer">
+      Visit Tactics Tools
+    </StyledLink>
+  );
+};
+
+export default ExternalLink;
 
 export function PlayerInfo() {
   const { gameName } = useParams<{ gameName?: string }>();
@@ -55,6 +81,11 @@ export function PlayerInfo() {
     }
   };
 
+  const encodedGameName = encodeURIComponent(gameName || '');
+
+  // Construct the URL dynamically based on the gameName
+  const url = `http://tactics.tools/player/na/${encodedGameName}`;
+
   const handleUserDataUpdate = () => {
     fetchPlayerData(); // Simply re-fetch player data for now
   };
@@ -79,6 +110,9 @@ export function PlayerInfo() {
                       <p>8 Hour Change: {formatCurrency(playerData['8 Hour Change'], 1)}</p>
                       <p>24 Hour Change: {formatCurrency(playerData['24 Hour Change'], 1)}</p>
                       <p>3 Day Change: {formatCurrency(playerData['3 Day Change'], 1)}</p>
+                        <StyledLink href={url} target="_blank" rel="noopener noreferrer">
+                          tactics.tools
+                        </StyledLink>
                   </PlayerDetailsContainer>
                   <TransactionContainer label={"Transaction"}>
                       {gameName && (
