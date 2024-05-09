@@ -66,7 +66,6 @@ const TransactionModal: React.FC<ModalProps> = ({ children, onClose }) => {
     );
 };
 
-
 export const PreviewModal: React.FC<PreviewModalProps> = ({
     isOpen,
     onClose,
@@ -79,17 +78,28 @@ export const PreviewModal: React.FC<PreviewModalProps> = ({
 }) => {
   if (!isOpen) return null;
 
+  const calculateNewBalance = () => {
+      const totalCost = price * shares;
+      if (transactionType.toLowerCase() === 'buy') {
+        return balance - totalCost;
+      } else if (transactionType.toLowerCase() === 'sell') {
+        return balance + totalCost;
+      }
+      return balance; // Return the current balance if transactionType is neither buy nor sell
+    };
+
+
   return (
-    <TransactionModal onClose={onClose}>
-        <h2>Transaction</h2>
-        <p>Type: {transactionType.toUpperCase()} </p>
-        <p>Player: {gameName} </p>
-        <p>Shares: {shares}</p>
-        <p>Price: ${price.toFixed(2)}</p>
-        <p>Total: ${(price * shares).toFixed(2)}</p>
-        <h3>New Balance: {formatCurrency(balance - (price * shares), 1)}</h3>
-        <br/>
-      <button onClick={onConfirm} className="buttonStyle">Confirm</button>
-    </TransactionModal>
+      <TransactionModal onClose={onClose}>
+          <h2>Transaction</h2>
+          <p>Type: {transactionType.toUpperCase()} </p>
+          <p>Player: {gameName} </p>
+          <p>Shares: {shares}</p>
+          <p>Price: ${price.toFixed(2)}</p>
+          <p>Total: ${(price * shares).toFixed(2)}</p>
+          <h3>New Balance: {formatCurrency(calculateNewBalance(), 1)}</h3>
+          <br/>
+          <button onClick={onConfirm} className="buttonStyle">Confirm</button>
+      </TransactionModal>
   );
 };
