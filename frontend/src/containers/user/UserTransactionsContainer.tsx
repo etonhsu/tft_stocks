@@ -23,7 +23,7 @@ const UserTransactionsLabel = styled.span`
 `;
 
 const UserTransactions = styled.div`
-    height: 363px;
+    height: 330px;
     min-width: 300px;
     border: 3px solid #666;
     border-radius: 10px;

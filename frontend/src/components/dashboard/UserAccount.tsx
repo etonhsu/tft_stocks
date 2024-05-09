@@ -9,7 +9,7 @@ interface UserAccountProps {
 }
 
 const Overall = styled.div`
-    margin-top: 30px;
+    margin-top: 25px;
 `;
 
 const ChangesContainer = styled.div`

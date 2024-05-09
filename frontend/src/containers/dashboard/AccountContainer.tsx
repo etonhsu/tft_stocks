@@ -37,7 +37,7 @@ const AccountDetailsLabel = styled.span`
 `;
 
 const AccountDetails = styled.div`
-    height: 293px;
+    height: 275px;
     min-width: 300px;
     border: 3px solid #666;
     border-radius: 10px;

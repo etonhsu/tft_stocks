@@ -28,9 +28,10 @@ export interface PlayerData {
 const StyledLink = styled.a`
   text-decoration: none; // No underline
   color: #EAEAEA; // Example link color
-  font-weight: normal; // Bold font weight
+  font-weight: bold; // Bold font weight
     padding: 8px;
-    margin-left: 90px;
+    margin-top: 45px;
+    margin-left: 15px;
     border-radius: 4px;
     background-color: #444;
 
@@ -101,6 +102,9 @@ export function PlayerInfo() {
               <FavoritesIconContainer>
                   <FavoriteIcon gameName={gameName}/>
               </FavoritesIconContainer>
+              <StyledLink href={url} target="_blank" rel="noopener noreferrer">
+                tactics.tools
+              </StyledLink>
           </PlayerNameContainer>
           <PlayerInfoContainer>
               <DetailsAndTransactionColumn>
@@ -110,9 +114,6 @@ export function PlayerInfo() {
                       <p>8 Hour Change: {formatCurrency(playerData['8 Hour Change'], 1)}</p>
                       <p>24 Hour Change: {formatCurrency(playerData['24 Hour Change'], 1)}</p>
                       <p>3 Day Change: {formatCurrency(playerData['3 Day Change'], 1)}</p>
-                        <StyledLink href={url} target="_blank" rel="noopener noreferrer">
-                          tactics.tools
-                        </StyledLink>
                   </PlayerDetailsContainer>
                   <TransactionContainer label={"Transaction"}>
                       {gameName && (

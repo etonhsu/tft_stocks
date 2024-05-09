@@ -46,7 +46,7 @@ const PlayerDetailsLabel = styled.span`
 `;
 
 const PlayerDetails = styled.div`
-    height: 255px;
+    height: 220px;
     min-width: 300px;
     border: 3px solid #666;
     border-radius: 10px;
