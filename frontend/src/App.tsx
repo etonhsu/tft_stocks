@@ -20,12 +20,14 @@ import {Favorites} from "./pages/Favorites.tsx";
 import {Slideshow} from "./components/homepage/Slideshow.tsx";
 import {ModalProvider} from "./components/auth/ModalContext.tsx";
 import {ButtonWithModal} from "./components/common/NotificationButton.tsx";
+import {ScrollToTop} from "./components/common/ScrollToTop.ts";
 
 function App() {
     return (
         <AuthProvider>
             <ModalProvider>
                 <Router>
+                    <ScrollToTop/>
                     <SidebarComponent/>
                     <div className="App">
                         <HeaderBar>
