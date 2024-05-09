@@ -528,5 +528,22 @@ export function NotificationIcon() {
   );
 }
 
+export function NotificationIcon2() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="800"
+      height="800"
+      viewBox="0 0 24 24"
+    >
+      <path fill="#f44336" d="M20 6a2 2 0 10-2 2 2 2 0 002-2z"></path>
+      <path
+        fill="#EAEAEA"
+        d="M12 23a2 2 0 01-2-2h4a2 2 0 01-2 2zm8.707-5.707L19 15.586V10h-2v6a1 1 0 00.293.707l.293.293H6.414l.293-.293A1 1 0 007 16v-6a4.98 4.98 0 015.912-4.912L14.5 3.5a.913.913 0 00-.168-.1A7 7 0 0013 3.084V2a1 1 0 00-2 0v1.08A7 7 0 005 10v5.586l-1.707 1.707A1 1 0 004 19h16a1 1 0 00.707-1.707z"
+      ></path>
+    </svg>
+  );
+}
+
 
 

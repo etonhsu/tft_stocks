@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 import {ModalContent, ModalOverlay} from "../../containers/multiUse/StyledComponents.tsx";
-import {NotificationIcon} from "../../assets/Icons.tsx";
+import {NotificationIcon, NotificationIcon2} from "../../assets/Icons.tsx";
 import styled from "styled-components";
 
 interface ModalProps {
@@ -57,19 +57,37 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, text }) => {
   );
 };
 
+const currentNotification = {
+  message:  "There will be a pricing model change sometime later today. " +
+            "This change is meant to increase the value of lp gained above 1000, but will slightly decrease the majority of players' valuations. " +
+            "If your total account value decreases during this change, you will be credited with extra balance to make up the difference. " +
+            "I will be releasing a detailed breakdown of the pricing model in an FAQ section along with the rollout.",
+  version: 1
+};
+
 export const ButtonWithModal: React.FC = () => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [notificationAcknowledged, setNotificationAcknowledged] = useState(() => {
+    const lastSeenVersion = parseInt(localStorage.getItem('lastSeenNotificationVersion') || '0', 10);
+    return lastSeenVersion >= currentNotification.version;
+  });
 
-  const handleOpenModal = () => setModalOpen(true);
+  const handleOpenModal = () => {
+    setModalOpen(true);
+    setNotificationAcknowledged(true);
+    localStorage.setItem('lastSeenNotificationVersion', currentNotification.version.toString());
+  };
   const handleCloseModal = () => setModalOpen(false);
 
   return (
     <>
         <div> {/* Container with specific width */}
-            <StyledButton onClick={handleOpenModal}><NotificationIcon/></StyledButton>
+            <StyledButton onClick={handleOpenModal}>
+                {notificationAcknowledged ? <NotificationIcon /> : <NotificationIcon2 />}
+            </StyledButton>
         </div>
         <Modal isOpen={isModalOpen} onClose={handleCloseModal}
-               text="The account reset and GM+ players rollout is complete, happy trading!"
+               text={currentNotification.message}
         />
     </>
   );
