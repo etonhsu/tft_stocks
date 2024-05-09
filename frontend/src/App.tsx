@@ -7,7 +7,7 @@ const PlayerInfo = lazy(() => import('./pages/PlayerInfo').then(module => ({ def
 import { LeaderboardPage } from './pages/LeaderboardPage';
 const Register = lazy(() => import('./pages/Register').then(module => ({ default: module.Register })));
 const SearchBar = lazy(() => import('./components/common/SearchBar.tsx').then(module => ({ default: module.SearchBar })));
-const UserProfile = lazy(() => import('./pages/User').then(module => ({ default: module.default })));  // Assuming UserProfile is a default export
+const UserProfile = lazy(() => import('./pages/User').then(module => ({ default: module.UserProfile })));
 const PortfolioPage = lazy(() => import('./pages/PortfolioPage').then(module => ({ default: module.PortfolioPage })));
 const TransactionPage = lazy(() => import('./pages/TransactionPage').then(module => ({ default: module.TransactionPage })));
 
