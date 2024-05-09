@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
+import axios from 'axios';
 import { PreviewModal } from "./TransactionModal.tsx";
 import {useAuth} from "../../utils/Authentication.tsx";
 
@@ -27,12 +28,29 @@ const TransactionSelect = styled.select`
 
 `;
 
-const TransactionInput = styled.input`
-    padding: 10px;
+const SliderContainer = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 10px;
+`;
+
+const SharesDisplay = styled.div`
+    display: flex;
+    padding: 6px 10px 2px 4px;
     border: 1px solid #EAEAEA;
+    background-color: black;
     border-radius: 4px;
-    width: 200px;
-    justify-content: end;
+    width: 190px;
+    height: 27px;
+    text-align: center;
+    justify-content: center;
+    color: #EAEAEA
+    
+`;
+
+const SharesSlider = styled.input`
+    flex-grow: 1;
+    cursor: pointer;
 `;
 
 const TransactionButton = styled.button`
@@ -73,11 +91,13 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
     const [shares, setShares] = useState<string>('0');
     const [price, setPrice] = useState<number>(0)
     // const [transactionHold, setTransactionHold] = useState<string>();
+    const [userBalance, setUserBalance] = useState<number>(0);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [transactionType, setTransactionType] = useState<string>('');
     const [error, setError] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
     const { token } = useAuth();  // Use token from the auth context
+    const { isLoggedIn } = useAuth();
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     useEffect(() => {
@@ -96,9 +116,28 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
                 }
             }
         };
-
         fetchPrice();
     }, [backendUrl, gameName]);
+
+    useEffect(() => {
+        const fetchUserBalance = async () => {
+            if (isLoggedIn) {
+                try {
+                    const response = await axios.get(`${backendUrl}/dashboard`, {
+                        headers: {
+                            Authorization: `Bearer ${token}` // Use the token for authorization
+                        }
+                    });
+                    setUserBalance(response.data.balance);
+                    setLoading(false);
+            }   catch (error) {
+                console.error('Error fetching data: ', error);
+                setLoading(false);
+                }
+            }
+        };
+        fetchUserBalance();
+    }, [backendUrl, isLoggedIn, token]);
 
     const handleTransaction = async () => {
         setIsModalOpen(false);
@@ -130,19 +169,6 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
         }
     };
 
-
-    const handleSharesInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-
-        // Remove any leading zeros if the current input is not just "0"
-        const normalizedValue = value.replace(/^0+/, '');
-
-        // Allow only numeric values; also allow an empty string to revert to the placeholder or default
-        if (/^\d*$/.test(normalizedValue) || normalizedValue === '') {
-            setShares(normalizedValue || '0');
-        }
-    };
-
     const renderError = () => {
         if (error) {
             return <p style={{ color: 'red' }}>{error}</p>;
@@ -159,6 +185,10 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
         if (transactionType && shares !== '0') {
           setIsModalOpen(true);
         }
+    };
+
+    const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setShares(e.target.value);  // Update the shares state based on the slider value
     };
 
     return (
@@ -179,14 +209,21 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
                 </FieldWrapper>
                 <FieldWrapper>
                 <label htmlFor="sharesInput">Quantity:</label>
-                    <TransactionInput
-                        id="sharesInput"
-                        type="number"
-                        value={shares}
-                        onChange={handleSharesInputChange}
-                        min="0"
-                        disabled={loading}/>
-                    </FieldWrapper>
+                    <SliderContainer>
+                        <SharesDisplay>
+                            {shares}
+                        </SharesDisplay>
+                    </SliderContainer>
+                </FieldWrapper>
+                <SharesSlider
+                    id="sharesSlider"
+                    type="range"
+                    min="0"
+                    max="100"  // Adjust max value based on your maximum allowed shares
+                    value={shares}
+                    onChange={handleSliderChange}
+                    disabled={loading}
+                />
                     <TransactionButton onClick={handlePreview} disabled={loading || !transactionType || shares === '0'}>
                         Preview
                     </TransactionButton>
@@ -200,6 +237,7 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
                 price={price}
                 shares={Number(shares)}
                 gameName={gameName}
+                balance={userBalance}
                 onConfirm={handleTransaction}
             />
         </>

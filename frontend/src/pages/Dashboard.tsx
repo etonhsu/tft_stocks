@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Portfolio, Player } from '../components/dashboard/Portfolio.tsx';
 import {Transaction} from "../components/transactions/RecentTransactions.tsx";
-import {UserAccount} from "../components/user/UserAccount.tsx";
+import {UserAccount} from "../components/dashboard/UserAccount.tsx";
 import axios from 'axios';
 import {MainContent} from "../containers/general/MainContent.tsx";
 import {AccountColumn, AccountDetailsContainer, AccountContainer} from "../containers/dashboard/AccountContainer.tsx";

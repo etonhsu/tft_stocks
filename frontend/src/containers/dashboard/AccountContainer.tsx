@@ -37,11 +37,13 @@ const AccountDetailsLabel = styled.span`
 `;
 
 const AccountDetails = styled.div`
-    height: 250px;
+    height: 293px;
     min-width: 300px;
     border: 3px solid #666;
     border-radius: 10px;
     padding-left: 25px;
+    
+    
 `;
 
 export const AccountDetailsContainer: React.FC<AccountDetailsProps> = ({ label, children }) => {

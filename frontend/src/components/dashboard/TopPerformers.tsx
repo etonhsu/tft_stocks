@@ -26,7 +26,7 @@ const PerformersContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 25px;
     width: 100%;  // Ensures the container takes full width
 `;
 

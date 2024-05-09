@@ -23,7 +23,7 @@ const PerformersDetailsLabel = styled.span`
 `;
 
 const PerformersDetails = styled.div`
-    height: 189px;
+    height: 200px;
     min-width: 300px;
     border: 3px solid #666;
     border-radius: 10px;

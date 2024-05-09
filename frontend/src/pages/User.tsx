@@ -33,7 +33,7 @@ const TextContainer = styled.div`
 `;
 
 const ValueLabel = styled.p`
-    margin-top: 20px; // Reduces the space below the paragraph
+    margin-top: 25px; // Reduces the space below the paragraph
     margin-bottom: 0;
     font-size: 14px; // Set the size as needed
     color: #EAEAEA;
@@ -94,7 +94,7 @@ export const UserProfile: React.FC = () => {
                       <AccountValue>{total != undefined ?formatCurrency(total, 2) : 'N/A'}</AccountValue>
                   </UserAccountDetailsContainer>
                   <UserTransactionsContainer label={"Recent Transactions"}>
-                      {user.transactions.slice().reverse().slice(0, 7).map((transaction, index) => (
+                      {user.transactions.slice().reverse().slice(0, 8).map((transaction, index) => (
                         <div key={index}>
                             <p>{transaction.type} | {transaction.gameName} | {transaction.shares} Shares</p>
                         </div>
@@ -110,5 +110,4 @@ export const UserProfile: React.FC = () => {
   );
 }
 
-export default UserProfile;
 

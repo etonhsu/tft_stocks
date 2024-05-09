@@ -34,7 +34,7 @@ const ChartDetails = styled.div`
     align-items: center;
     border: 3px solid #666;
     border-radius: 10px;
-    height: 439px;
+    height: 494px;
 `;
 
 export const ChartStyledButton = styled.button`

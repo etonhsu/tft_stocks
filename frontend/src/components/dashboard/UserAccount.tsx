@@ -1,12 +1,16 @@
 import React from 'react';
 import {UserSummary} from "../../pages/Dashboard.tsx";
-import {Player} from "../dashboard/Portfolio.tsx";
+import {Player} from "./Portfolio.tsx";
 import styled from "styled-components";
 import {formatCurrency} from "../../utils/CurrencyFormatter.tsx";
 
 interface UserAccountProps {
     userSummary: UserSummary;
 }
+
+const Overall = styled.div`
+    margin-top: 30px;
+`;
 
 const ChangesContainer = styled.div`
     display: flex;
@@ -90,7 +94,7 @@ export const UserAccount: React.FC<UserAccountProps> = ({ userSummary }) => {
 
 
     return (
-        <div>
+        <Overall>
             <ValueLabel>Account Value: </ValueLabel>
             <AccountValue>{formatCurrency(accountTotal, 2)}</AccountValue>
             <ChangesContainer>
@@ -113,7 +117,7 @@ export const UserAccount: React.FC<UserAccountProps> = ({ userSummary }) => {
                     <ChangeValue>{formatCurrency(portfolioTotal, 2)}</ChangeValue>
                 </BPColumn2>
             </BalancePortfolioContainer>
-        </div>
+        </Overall>
     );
 };
 
