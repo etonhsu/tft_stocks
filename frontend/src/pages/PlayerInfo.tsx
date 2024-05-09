@@ -28,7 +28,7 @@ export interface PlayerData {
 const StyledLink = styled.a`
   text-decoration: none; // No underline
   color: #EAEAEA; // Example link color
-  font-weight: bold; // Bold font weight
+  font-weight: normal; // Bold font weight
     padding: 8px;
     margin-left: 90px;
     border-radius: 4px;
