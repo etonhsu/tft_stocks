@@ -58,11 +58,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, text }) => {
 };
 
 const currentNotification = {
-  message:  "There will be a pricing model change sometime later today. " +
-            "This change is meant to increase the value of lp gained above 1000, but will slightly decrease the majority of players' valuations. " +
-            "If your total account value decreases during this change, you will be credited with extra balance to make up the difference. " +
-            "I will be releasing a detailed breakdown of the pricing model in an FAQComponent section along with the rollout.",
-  version: 1
+  message:  "The pricing model change has been rolled out, " +
+            "please bear with me as I adjust the balances of those who were negatively affected. " +
+            "You can see more information about the pricing model in the FAQ section.",
+  version: 2
 };
 
 export const ButtonWithModal: React.FC = () => {

@@ -105,7 +105,7 @@ export const LeaderboardPage = () => {
             <div>
                 <h1>{isPortfolio ? 'Portfolio Leaderboard' : 'Leaderboard'}</h1>
                     <SwitchStyledButton onClick={toggleLeadType}>
-                        {leadType === 'Standard' ? 'Portfolio' : 'Standard'} Leaderboard
+                        {leadType === 'lp' ? 'Portfolio' : 'Standard'} Leaderboard
                     </SwitchStyledButton>
                 {isPortfolio ? (
                     <PortfolioLeaderboard entries={entries as PortfolioLeaderboardEntry[]} type={leadType} onSortChange={handleSortChange} />
