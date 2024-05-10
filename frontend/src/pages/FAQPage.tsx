@@ -97,7 +97,7 @@ const faqs = [
     },
     {
         question: "What other features are you planning on implementing?",
-        answer: "My short term priority are to implement minimum hold times, which prevents users from watching a stream " +
+        answer: "My short term priority is to implement minimum hold times, which prevents users from watching a stream " +
                 "and sniping an easy boost in a stock because they can see who's going first, and immediately selling. " +
                 "Long term I hope to implement some sort of monthly league system where people can compete to " +
                 "see who can make the best portfolio in a month, as well as mutual funds/ etfs for different study groups!"
