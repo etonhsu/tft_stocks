@@ -16,8 +16,8 @@ def fetch_leaderboard_entries(lead_type: str, page: int = 0, limit: int = 100) -
     collection = lp_collection  # Assume lp_collection is properly connected
     skip = page * limit
 
-    A = 1.35
-    B = 0.11282
+    A = 1.75
+    B = 0.00698
 
     # Determine the field and sort direction based on 'neg_' prefix
     if 'neg_' in lead_type:
