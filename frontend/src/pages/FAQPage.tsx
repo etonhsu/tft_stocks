@@ -2,7 +2,7 @@ import React from 'react';
 import {FAQComponent} from '../components/FAQComponent';
 import {MainContent} from "../containers/general/MainContent.tsx";
 import styled from "styled-components";
-import {CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis} from 'recharts';
+import {CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis} from '../../../node_modules/recharts';
 
 interface DataPoint {
     lp: number;
