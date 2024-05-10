@@ -57,7 +57,7 @@ export const SwitchStyledButton = styled(StyledButton)`
 
 export const LeaderboardPage = () => {
     const [entries, setEntries] = useState<Array<LeaderboardEntry | PortfolioLeaderboardEntry>>([]);
-    const [leadType, setLeadType] = useState<string>('lp');
+    const [leadType, setLeadType] = useState<string>('portfolio');
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [page, setPage] = useState<number>(0);
@@ -87,7 +87,7 @@ export const LeaderboardPage = () => {
     };
 
     const toggleLeadType = () => {
-        setLeadType(leadType === 'lp' ? 'portfolio' : 'lp');
+        setLeadType(leadType === 'portfolio' ? 'lp' : 'portfolio');
         setPage(0); // Optionally reset the page when toggling
     };
 
@@ -105,7 +105,7 @@ export const LeaderboardPage = () => {
             <div>
                 <h1>{isPortfolio ? 'Portfolio Leaderboard' : 'Leaderboard'}</h1>
                     <SwitchStyledButton onClick={toggleLeadType}>
-                        {leadType === 'portfolio' ? 'Standard' : 'Portfolio'} Leaderboard
+                        {leadType === 'Standard' ? 'Portfolio' : 'Standard'} Leaderboard
                     </SwitchStyledButton>
                 {isPortfolio ? (
                     <PortfolioLeaderboard entries={entries as PortfolioLeaderboardEntry[]} type={leadType} onSortChange={handleSortChange} />

@@ -20,17 +20,20 @@ const FAQContainer = styled.div`
 
 const PriceChart = () => {
     // Example data
-    const data: DataPoint[] = [{'lp': 0, 'currentPrice': 0.0, 'newPrice': 0.0}, {'lp': 100, 'currentPrice': 61.56, 'newPrice': 27.0},
-            {'lp': 200, 'currentPrice': 156.91, 'newPrice': 84.72}, {'lp': 300, 'currentPrice': 271.26, 'newPrice': 165.4},
-            {'lp': 400, 'currentPrice': 399.99, 'newPrice': 265.89}, {'lp': 500, 'currentPrice': 540.6, 'newPrice': 384.24},
-            {'lp': 600, 'currentPrice': 691.47, 'newPrice': 519.1}, {'lp': 700, 'currentPrice': 851.43, 'newPrice': 669.44},
-            {'lp': 800, 'currentPrice': 1019.63, 'newPrice': 834.44}, {'lp': 900, 'currentPrice': 1195.35, 'newPrice': 1013.44},
-            {'lp': 1000, 'currentPrice': 1378.06, 'newPrice': 1205.86}, {'lp': 1100, 'currentPrice': 1567.29, 'newPrice': 1411.22},
-            {'lp': 1200, 'currentPrice': 1762.64, 'newPrice': 1629.1}, {'lp': 1300, 'currentPrice': 1963.78, 'newPrice': 1859.11},
-            {'lp': 1400, 'currentPrice': 2170.41, 'newPrice': 2100.92}, {'lp': 1500, 'currentPrice': 2382.28, 'newPrice': 2354.23},
-            {'lp': 1600, 'currentPrice': 2599.15, 'newPrice': 2618.76}, {'lp': 1700, 'currentPrice': 2820.82, 'newPrice': 2894.27},
-            {'lp': 1800, 'currentPrice': 3047.1, 'newPrice': 3180.51}, {'lp': 1900, 'currentPrice': 3277.83, 'newPrice': 3477.29},
-            {'lp': 2000, 'currentPrice': 3512.85, 'newPrice': 3784.4}];
+    const data: DataPoint[] =
+        [
+            {'lp': 0, 'currentPrice': 0.0, 'newPrice': 0.0}, {'lp': 100, 'currentPrice': 61.56, 'newPrice': 22.07},
+            {'lp': 200, 'currentPrice': 156.91, 'newPrice': 74.24}, {'lp': 300, 'currentPrice': 271.26, 'newPrice': 150.94},
+            {'lp': 400, 'currentPrice': 399.99, 'newPrice': 249.72}, {'lp': 500, 'currentPrice': 540.6, 'newPrice': 369.02},
+            {'lp': 600, 'currentPrice': 691.47, 'newPrice': 507.72}, {'lp': 700, 'currentPrice': 851.43, 'newPrice': 664.93},
+            {'lp': 800, 'currentPrice': 1019.63, 'newPrice': 839.97}, {'lp': 900, 'currentPrice': 1195.35, 'newPrice': 1032.24},
+            {'lp': 1000, 'currentPrice': 1378.06, 'newPrice': 1241.24}, {'lp': 1100, 'currentPrice': 1567.29, 'newPrice': 1466.54},
+            {'lp': 1200, 'currentPrice': 1762.64, 'newPrice': 1707.74}, {'lp': 1300, 'currentPrice': 1963.78, 'newPrice': 1964.52},
+            {'lp': 1400, 'currentPrice': 2170.41, 'newPrice': 2236.55}, {'lp': 1500, 'currentPrice': 2382.28, 'newPrice': 2523.57},
+            {'lp': 1600, 'currentPrice': 2599.15, 'newPrice': 2825.31}, {'lp': 1700, 'currentPrice': 2820.82, 'newPrice': 3141.53},
+            {'lp': 1800, 'currentPrice': 3047.1, 'newPrice': 3472.02}, {'lp': 1900, 'currentPrice': 3277.83, 'newPrice': 3816.58},
+            {'lp': 2000, 'currentPrice': 3512.85, 'newPrice': 4175.01}
+        ];
 
     const formatLabel = (value: number) => `LP: ${value}`;
 
@@ -45,7 +48,7 @@ const PriceChart = () => {
             margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} />
             <XAxis dataKey="lp" label={{ value: "League Points (LP)", position: 'insideBottomRight', offset: 0, dy: 15 }} />
-            <YAxis label={{ value: 'Price', angle: -90, position: 'insideLeft', dx: -10 }} />
+            <YAxis domain={[0, 4500]} label={{ value: 'Price', angle: -90, position: 'insideLeft', dx: -10 }} />
             <Tooltip
                 labelFormatter={formatLabel}
                 formatter={formatTooltipContent}
@@ -70,6 +73,10 @@ const faqs = [
             <span>
                 The price correlates with the LP of each player, scaling more as a player's LP goes up.
                 We are currently on an old price model, and will be switching to a new one soon, you can see the difference below.
+                The exact scaling formula is <strong> (LP<sup>A</sup>) &times; B</strong>,
+                with the values for <strong> A = 1.35, B = 0.12282 </strong> for the current model, and
+                <strong> A = 1.75, B = 0.00698 </strong> for the new model.
+
                 <br/>
                 <div style={{marginTop: '20px'}}>  {/* Add space using margin-top */}
                     <PriceChart/>
@@ -87,6 +94,13 @@ const faqs = [
         question: "Can I put real money on this?",
         answer: "No, there's no real money involved at all, and I don't plan to put any sort of real money gambling features " +
                 "into the site."
+    },
+    {
+        question: "What other features are you planning on implementing?",
+        answer: "My short term priority are to implement minimum hold times, which prevents users from watching a stream " +
+                "and sniping an easy boost in a stock because they can see who's going first, and immediately selling. " +
+                "Long term I hope to implement some sort of monthly league system where people can compete to " +
+                "see who can make the best portfolio in a month, as well as mutual funds/ etfs for different study groups!"
     },
     {
         question: "Where can I submit suggestions?",
