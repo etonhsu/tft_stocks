@@ -33,9 +33,11 @@ function App() {
                     <div className="App">
                         <HeaderBar>
                             <SearchBar/>
-                            <Link to="/faq">
-                                <StyledButton>FAQ</StyledButton>
-                            </Link>
+                            <div style={{marginLeft: '550px'}}>
+                                <Link to="/faq">
+                                    <StyledButton>FAQ</StyledButton>
+                                </Link>
+                            </div>
                             <ButtonWithModal/>
                         </HeaderBar>
                         <MainContent> {/* Main content area */}
