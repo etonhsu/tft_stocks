@@ -58,10 +58,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, text }) => {
 };
 
 const currentNotification = {
-  message:  "The pricing model change has been rolled out, " +
-            "please bear with me as I adjust the balances of those who were negatively affected. " +
+  message:  "All users whose accounts were negatively impacted by the pricing change have " +
+            "had their balances increased to match the total account value you had before the change. " +
             "You can see more information about the pricing model in the FAQ section.",
-  version: 2
+  version: 3
 };
 
 export const ButtonWithModal: React.FC = () => {
