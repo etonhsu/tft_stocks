@@ -1,16 +1,17 @@
 import './App.css';
 import { Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom';
 const Login = lazy(() => import('./pages/Login.tsx').then(module => ({ default: module.Login })));
 const Dashboard = lazy(() => import('./pages/Dashboard').then(module => ({ default: module.Dashboard })));
 const PlayerInfo = lazy(() => import('./pages/PlayerInfo').then(module => ({ default: module.PlayerInfo })));
-import { LeaderboardPage } from './pages/LeaderboardPage';
+import {LeaderboardPage, StyledButton} from './pages/LeaderboardPage';
 const Register = lazy(() => import('./pages/Register').then(module => ({ default: module.Register })));
 const SearchBar = lazy(() => import('./components/common/SearchBar.tsx').then(module => ({ default: module.SearchBar })));
 const UserProfile = lazy(() => import('./pages/User').then(module => ({ default: module.UserProfile })));
 const PortfolioPage = lazy(() => import('./pages/PortfolioPage').then(module => ({ default: module.PortfolioPage })));
 const TransactionPage = lazy(() => import('./pages/TransactionPage').then(module => ({ default: module.TransactionPage })));
 
+import {FAQPage} from './pages/FAQPage';
 import {HeaderBar} from "./containers/general/HeaderBar.tsx";
 import {MainContent} from "./containers/general/MainContent.tsx";
 import {SidebarComponent} from "./pages/Sidebar.tsx";
@@ -32,6 +33,9 @@ function App() {
                     <div className="App">
                         <HeaderBar>
                             <SearchBar/>
+                            <Link to="/faq">
+                                <StyledButton>FAQ</StyledButton>
+                            </Link>
                             <ButtonWithModal/>
                         </HeaderBar>
                         <MainContent> {/* Main content area */}
@@ -47,6 +51,7 @@ function App() {
                                     <Route path="/transaction_history" element={<TransactionPage/>}/>
                                     <Route path="/favorites" element={<Favorites/>}/>
                                     <Route path="/" element={<Slideshow/>}/>
+                                    <Route path="/FAQ" element={<FAQPage/>}/>
                                 </Routes>
                             </Suspense>
                             <Login />
