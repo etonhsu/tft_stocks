@@ -58,10 +58,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, text }) => {
 };
 
 const currentNotification = {
-  message:  "All users whose accounts were negatively impacted by the pricing change have " +
-            "had their balances increased to match the total account value you had before the change. " +
-            "You can see more information about the pricing model in the FAQ section.",
-  version: 3
+  message:  "Made a couple changes to how transactions look on each player page. " +
+            "Share sliders now cap out at the maximum number of shares you're allowed purchase, " +
+            "and there's a new added % indicator for how much of your remaining balance you'd be spending.",
+  version: 4
 };
 
 export const ButtonWithModal: React.FC = () => {

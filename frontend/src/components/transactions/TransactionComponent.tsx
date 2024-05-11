@@ -4,7 +4,6 @@ import axios from 'axios';
 import { PreviewModal } from "./TransactionModal.tsx";
 import {useAuth} from "../../utils/Authentication.tsx";
 
-
 const TransactionForm = styled.form`
   display: flex;
   flex-direction: column; // Change from row to column
@@ -40,7 +39,21 @@ const SharesDisplay = styled.div`
     border: 1px solid #EAEAEA;
     background-color: black;
     border-radius: 4px;
-    width: 190px;
+    width: 80px;
+    height: 27px;
+    text-align: center;
+    justify-content: center;
+    color: #EAEAEA
+    
+`;
+
+const PercentageDisplay = styled.div`
+    display: flex;
+    padding: 6px 10px 2px 4px;
+    border: 1px solid #EAEAEA;
+    background-color: black;
+    border-radius: 4px;
+    width: 80px;
     height: 27px;
     text-align: center;
     justify-content: center;
@@ -52,6 +65,7 @@ const SharesSlider = styled.input`
     flex-grow: 1;
     cursor: pointer;
 `;
+
 
 const TransactionButton = styled.button`
     padding: 10px 20px;
@@ -213,13 +227,16 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
                         <SharesDisplay>
                             {shares}
                         </SharesDisplay>
+                        <PercentageDisplay>
+                            % {(((price * parseInt(shares, 10)) / userBalance) * 100).toFixed(2)}
+                        </PercentageDisplay>
                     </SliderContainer>
                 </FieldWrapper>
                 <SharesSlider
                     id="sharesSlider"
                     type="range"
                     min="0"
-                    max="100"  // Adjust max value based on your maximum allowed shares
+                    max={Math.floor(userBalance / price)}  // Adjust max value based on your maximum allowed shares
                     value={shares}
                     onChange={handleSliderChange}
                     disabled={loading}
