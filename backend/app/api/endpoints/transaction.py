@@ -30,7 +30,7 @@ async def add_transaction(
 
     # Set transaction details
     shares = transaction_data.shares
-    price = user.portfolio.players[gameName].current_price
+    price = price_model(lp_collection.find_one({'gameName': gameName})['leaguePoints'][-1])
     total = shares * price
     player = Player(name=gameName, shares=shares, purchase_price=price, current_price=price)
 
