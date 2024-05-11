@@ -41,6 +41,11 @@ async def add_transaction(
 
         user.balance -= total
         if gameName in user.portfolio.players:
+            old_purchase = user.portfolio.players[gameName].purchase_price
+            old_shares = user.portfolio.players[gameName].shares
+            new_purchase_price = ((old_purchase * old_shares) + (price * shares)) / (old_shares + shares)
+
+            user.portfolio.players[gameName].purchase_price = new_purchase_price
             user.portfolio.players[gameName].shares += shares
         else:
             user.portfolio.players[gameName] = player
