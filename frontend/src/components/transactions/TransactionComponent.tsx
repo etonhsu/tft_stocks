@@ -235,7 +235,7 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
                     id="sharesSlider"
                     type="range"
                     min="0"
-                    max={Math.floor(userBalance / price)}  // Adjust max value based on your maximum allowed shares
+                    max="100"
                     value={shares}
                     onChange={handleSliderChange}
                 />
