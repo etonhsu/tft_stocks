@@ -205,6 +205,20 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
         setShares(e.target.value);  // Update the shares state based on the slider value
     };
 
+    const calculateMaxShares = () => {
+        if (!price || price <= 0) return 0;  // Check if price is valid
+
+        switch (transactionType) {
+            case 'buy':
+                return Math.floor(userBalance / price);  // Max shares user can buy
+            case 'sell':
+                // Assuming you have a state `userShares` which tracks the shares owned by the user
+                return shares;  // Max shares user can sell
+            default:
+                return 0;  // Default no shares can be transacted
+        }
+    };
+
     return (
         <>
             <TransactionForm onSubmit={(e) => e.preventDefault()}>
@@ -214,6 +228,7 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
                         id="actionSelect"
                         value={transactionType}
                         onChange={(e) => setTransactionType(e.target.value)}
+                        disabled={loading}
                     >
                         <option value="">Select</option>
                         <option value="buy">Buy</option>
@@ -235,9 +250,10 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
                     id="sharesSlider"
                     type="range"
                     min="0"
-                    max="100"
+                    max={calculateMaxShares()}
                     value={shares}
                     onChange={handleSliderChange}
+                    disabled={loading || !transactionType}
                 />
                     <TransactionButton onClick={handlePreview} disabled={loading || !transactionType || shares === '0'}>
                         Preview
