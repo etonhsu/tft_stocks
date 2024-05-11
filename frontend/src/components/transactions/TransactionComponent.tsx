@@ -214,7 +214,6 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
                         id="actionSelect"
                         value={transactionType}
                         onChange={(e) => setTransactionType(e.target.value)}
-                        disabled={loading}
                     >
                         <option value="">Select</option>
                         <option value="buy">Buy</option>
@@ -239,7 +238,6 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
                     max={Math.floor(userBalance / price)}  // Adjust max value based on your maximum allowed shares
                     value={shares}
                     onChange={handleSliderChange}
-                    disabled={loading}
                 />
                     <TransactionButton onClick={handlePreview} disabled={loading || !transactionType || shares === '0'}>
                         Preview
