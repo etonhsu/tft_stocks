@@ -206,16 +206,14 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
     };
 
     const calculateMaxShares = () => {
-        if (!price || price <= 0) return 0;  // Check if price is valid
-
         switch (transactionType) {
             case 'buy':
                 return Math.floor(userBalance / price);  // Max shares user can buy
             case 'sell':
                 // Assuming you have a state `userShares` which tracks the shares owned by the user
-                return shares;  // Max shares user can sell
+                return 100;  // Max shares user can sell
             default:
-                return 0;  // Default no shares can be transacted
+                return 100;
         }
     };
 
@@ -253,7 +251,6 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
                     max={calculateMaxShares()}
                     value={shares}
                     onChange={handleSliderChange}
-                    disabled={loading || !transactionType}
                 />
                     <TransactionButton onClick={handlePreview} disabled={loading || !transactionType || shares === '0'}>
                         Preview
