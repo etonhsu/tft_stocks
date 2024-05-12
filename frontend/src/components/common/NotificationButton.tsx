@@ -58,10 +58,12 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, text }) => {
 };
 
 const currentNotification = {
-  message:  "Made a couple changes to how transactions look on each player page. " +
-            "Share sliders now cap out at the maximum number of shares you're allowed purchase, " +
-            "and there's a new added % indicator for how much of your remaining balance you'd be spending.",
-  version: 4
+  message:  "I'm sure some of have had issue with your transactions today, and I wanted to apologize for all the " +
+            "issues that happened while I was updating the transaction component of each player page. " +
+            "Thankfully I can say that the transaction area should be completely functional, now with a % balance " +
+            "indicator when buying shares, and a +amount indicator when you sell. Thank you all for your patience while " +
+            "I continue to improve the site!",
+  version: 5
 };
 
 export const ButtonWithModal: React.FC = () => {

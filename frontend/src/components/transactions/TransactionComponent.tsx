@@ -39,7 +39,7 @@ const SharesDisplay = styled.div`
     border: 1px solid #EAEAEA;
     background-color: black;
     border-radius: 4px;
-    width: 80px;
+    width: 40px;
     height: 27px;
     text-align: center;
     justify-content: center;
@@ -53,7 +53,7 @@ const PercentageDisplay = styled.div`
     border: 1px solid #EAEAEA;
     background-color: black;
     border-radius: 4px;
-    width: 80px;
+    width: 125px;
     height: 27px;
     text-align: center;
     justify-content: center;
@@ -106,6 +106,7 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
     const [price, setPrice] = useState<number>(0)
     // const [transactionHold, setTransactionHold] = useState<string>();
     const [userBalance, setUserBalance] = useState<number>(0);
+    const [currentShares, setCurrentShares] = useState<number>(0);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [transactionType, setTransactionType] = useState<string>('');
     const [error, setError] = useState<string>('');
@@ -143,6 +144,14 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
                         }
                     });
                     setUserBalance(response.data.balance);
+
+                    const playersData = response.data.portfolio.players;
+                        if (playersData && playersData[gameName]) {
+                            const playerShares = playersData[gameName].shares;
+                            setCurrentShares(playerShares);
+                        } else {
+                            throw new Error(`Player data not found for ${gameName}`);
+                        }
                     setLoading(false);
             }   catch (error) {
                 console.error('Error fetching data: ', error);
@@ -151,7 +160,7 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
             }
         };
         fetchUserBalance();
-    }, [backendUrl, isLoggedIn, token]);
+    }, [backendUrl, gameName, isLoggedIn, token]);
 
     const handleTransaction = async () => {
         setIsModalOpen(false);
@@ -211,7 +220,7 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
                 return Math.floor(userBalance / price);  // Max shares user can buy
             case 'sell':
                 // Assuming you have a state `userShares` which tracks the shares owned by the user
-                return 100;  // Max shares user can sell
+                return currentShares;  // Max shares user can sell
             default:
                 return 100;
         }
@@ -240,7 +249,11 @@ export const TransactionComponent: React.FC<TransactionComponentProps> = ({ game
                             {shares}
                         </SharesDisplay>
                         <PercentageDisplay>
-                            % {(((price * parseInt(shares, 10)) / userBalance) * 100).toFixed(2)}
+                            {transactionType === 'buy' ?
+                                `% ${(price * parseInt(shares, 10) / userBalance * 100).toFixed(2)} Balance`
+                                : transactionType === 'sell' ?
+                                    `+ $${((parseInt(shares) * price)).toFixed(2)}`
+                                    : ''}
                         </PercentageDisplay>
                     </SliderContainer>
                 </FieldWrapper>
