@@ -22,8 +22,8 @@ export const StyledButton = styled.button`
     border: none; // Remove default button border
     border-radius: 4px;
     width: 65px;
+    margin-top: 5px;
     cursor: pointer; // Ensure it's recognizable as a clickable button
-    margin-right: 310px;
 
     svg {
         height: 25px; /* Adjust height to match your design */
@@ -58,12 +58,11 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, text }) => {
 };
 
 const currentNotification = {
-  message:  "I'm sure some of have had issue with your transactions today, and I wanted to apologize for all the " +
-            "issues that happened while I was updating the transaction component of each player page. " +
-            "Thankfully I can say that the transaction area should be completely functional, now with a % balance " +
-            "indicator when buying shares, and a +amount indicator when you sell. Thank you all for your patience while " +
-            "I continue to improve the site!",
-  version: 5
+  message:  "I've just rolled out transaction holds, which prevents you from selling a stock you bought for 3 hours. " +
+            "The hope that this will prevent people from sniping firsts while watching someone's stream. " +
+            "I won't be implementing a portfolio and balance reset just yet, since there are other features I'd like to rollout first, " +
+            "but this is hopefully how the state of transactions will be going forward.",
+  version: 6
 };
 
 export const ButtonWithModal: React.FC = () => {

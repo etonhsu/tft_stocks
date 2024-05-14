@@ -1,5 +1,5 @@
 import React from 'react';
-import {FAQComponent} from '../components/common/FAQComponent.tsx';
+import {FAQComponent} from '../components/headerbar/FAQComponent.tsx';
 import {MainContent} from "../containers/general/MainContent.tsx";
 import styled from "styled-components";
 import {

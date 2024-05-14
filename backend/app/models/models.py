@@ -20,8 +20,15 @@ class Player(BasePlayer):
         return self.shares * self.price
 
 
+class Holds(BaseModel):
+    gameName: str
+    shares: int
+    hold_deadline: datetime
+
+
 class Portfolio(BaseModel):
     players: dict[str, Player] = {}
+    holds: List[Holds] = []
 
 
 class PortfolioHistory(BaseModel):
@@ -51,22 +58,22 @@ class FavoritesEntry(BaseModel):
 
 
 class FavoritesResponse(BaseModel):
-    favorites: list[FavoritesEntry]
+    favorites: List[FavoritesEntry]
 
 
 class UserPublic(BaseModel):
     username: str
     portfolio: Portfolio = Portfolio()
-    transactions: list[Transaction] = []
+    transactions: List[Transaction] = []
     one_day_change: float = 0.0
     three_day_change: float = 0.0
     rank: int = None
-    portfolio_history: list[PortfolioHistory]
+    portfolio_history: List[PortfolioHistory]
 
 
 class UserProfile(UserPublic):
     balance: float = 100_000.0
-    favorites: list[FavoritesEntry] = []
+    favorites: List[FavoritesEntry] = []
     date_registered: datetime
 
 
@@ -95,12 +102,12 @@ class PortfolioLeaderboardEntry(BaseModel):
 
 class LeaderboardResponse(BaseModel):
     leaderboard_type: str  # LP, delta, portfolio
-    entries: list[LeaderboardEntry]
+    entries: List[LeaderboardEntry]
 
 
 class PortfolioLeaderboardResponse(BaseModel):
     leaderboard_type: str
-    entries: list[PortfolioLeaderboardEntry]
+    entries: List[PortfolioLeaderboardEntry]
 
 
 class TopLeaderboardEntry(BaseModel):

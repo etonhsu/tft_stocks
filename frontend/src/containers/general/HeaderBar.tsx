@@ -16,4 +16,9 @@ export const HeaderBar = styled.header`
     z-index: 90; /* Ensure it's above other content */
 `;
 
+export const HeaderRight = styled.div`
+    display: flex;
+    margin-right: 17vw;
+`
+
 
