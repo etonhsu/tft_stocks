@@ -1,5 +1,5 @@
 import React from 'react';
-import {FAQComponent} from '../components/FAQComponent';
+import {FAQComponent} from '../components/common/FAQComponent.tsx';
 import {MainContent} from "../containers/general/MainContent.tsx";
 import styled from "styled-components";
 import {
@@ -107,11 +107,12 @@ const faqs = [
         answer:
             <span>
                 Currently I don't have a submit form in place, you can try dm'ing me
-                on <a href="https://discord.com/users/168482976252821504" target="_blank"
-                      rel="noopener noreferrer">Discord </a>
-                or <a href="https://twitter.com/2BrainCel1" target="_blank"
+                on <a href="https://twitter.com/2BrainCel1" target="_blank"
                       rel="noopener noreferrer">Twitter. </a>
-                I can't guarantee I'll be able to answer you quickly, as I'm putting in a lot of my time into the site,
+                or joining the newly created TFT Stocks
+                <a href="https://discord.gg/QHmEsJ6qRr" target="_blank"
+                      rel="noopener noreferrer"> Discord</a>
+                . I can't guarantee I'll be able to answer you quickly, as I'm putting in a lot of my time into the site,
                 but I'll try to get back to everyone!
             </span>
     },
