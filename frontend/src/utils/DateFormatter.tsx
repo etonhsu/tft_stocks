@@ -1,5 +1,11 @@
-export const formatDate = (dateString: string | number | Date) => {
-    const date = new Date(dateString);
+export const formatDate = (dateInput: string | number | Date) => {
+    let date: Date;
+    if (typeof dateInput === 'string') {
+        // Parse the date string correctly, considering it might be in ISO format
+        date = new Date(dateInput);
+    } else {
+        date = new Date(dateInput);
+    }
     return date.toLocaleString('en-US', {
         month: 'numeric',
         day: 'numeric',
@@ -8,4 +14,4 @@ export const formatDate = (dateString: string | number | Date) => {
         minute: '2-digit',
         hour12: true
     });
-  };
+};

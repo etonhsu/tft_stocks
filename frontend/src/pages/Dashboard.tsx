@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Portfolio, Player } from '../components/dashboard/Portfolio.tsx';
+import {Portfolio, Player, Hold} from '../components/dashboard/Portfolio.tsx';
 import {Transaction} from "../components/transactions/RecentTransactions.tsx";
 import {UserAccount} from "../components/dashboard/UserAccount.tsx";
 import axios from 'axios';
@@ -20,6 +20,7 @@ export interface UserSummary {
     username: string;
     portfolio: {
         players: { [key: string]: Player };
+        holds: Hold[];
     };
     transactions: Transaction[];
     balance: number
@@ -111,7 +112,7 @@ export const Dashboard: React.FC = () => {
                 <UserChart portfolioHistory={userSummary.portfolio_history} />
             </AccountContainer>
             <PortfolioContainer label={'Portfolio'}>
-                <Portfolio players={userSummary.portfolio.players} />
+                <Portfolio players={userSummary.portfolio.players} holds={userSummary.portfolio.holds} />
             </PortfolioContainer>
             {/*<ButtonContainer>*/}
             {/*    <DashboardControls updateDashboard={updateDashboardState} />*/}

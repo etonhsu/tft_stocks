@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from fastapi import HTTPException, Depends, APIRouter
 from pymongo import MongoClient, ReturnDocument
 from app.models.models import TransactionRequest, Player, Transaction, UserProfile, Holds
@@ -60,7 +60,7 @@ async def add_transaction(
         transaction_hold = Holds(
             gameName=gameName,
             shares=shares,
-            hold_deadline=datetime.now() + timedelta(hours=3)
+            hold_deadline=datetime.now(timezone.utc) + timedelta(hours=3)
         )
         user.portfolio.holds.append(transaction_hold)
 
