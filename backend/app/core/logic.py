@@ -45,6 +45,7 @@ def fetch_leaderboard_entries(lead_type: str, page: int = 0, limit: int = 100) -
                 ]
             }
         }},
+        {'$addFields': {'lp': {'$add': ['$lp', 10]}}},  # Add 10 to the lp value
         {'$sort': {sort_field: sort_direction}},  # Sort by the specified field and direction
         {'$skip': skip},  # Skip a number of documents
         {'$limit': limit}  # Limit the results to 'limit'

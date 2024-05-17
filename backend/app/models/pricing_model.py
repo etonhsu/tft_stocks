@@ -3,4 +3,4 @@ B = 0.00698
 
 
 def price_model(lp: float) -> float:
-    return (lp ** A) * B
+    return ((lp ** A) * B) + 10
