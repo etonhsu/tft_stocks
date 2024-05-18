@@ -6,7 +6,9 @@ user_collection = connect_user()
 
 
 def portfolio_change(user_data: dict):
-    portfolio_history = user_data['portfolio_history']
+    portfolio_history = user_data.get('portfolio_history', [])
+
+    print(f"Portfolio history before calculating changes: {portfolio_history}")
 
     # Calculate changes in the portfolio value
     if len(portfolio_history) >= 2:
@@ -26,7 +28,8 @@ def portfolio_change(user_data: dict):
         user_data['three_day_change'] = three_day_change
     else:
         # If there's only one entry or none, no change is possible
-        one_day_change = None
-        three_day_change = None
+        user_data['one_day_change'] = None
+        user_data['three_day_change'] = None
 
+    print(f"User data after calculating portfolio changes: {user_data}")
     return user_data

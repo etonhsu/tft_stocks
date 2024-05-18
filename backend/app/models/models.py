@@ -9,6 +9,7 @@ class TokenData(BaseModel):
 
 class BasePlayer(BaseModel):
     name: str
+    tagLine: Optional[str] = None
     current_price: float
 
 

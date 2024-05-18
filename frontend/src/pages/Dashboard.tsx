@@ -18,6 +18,7 @@ import styled from "styled-components";
 
 export interface UserSummary {
     username: string;
+    tagLine: string;
     portfolio: {
         players: { [key: string]: Player };
         holds: Hold[];
