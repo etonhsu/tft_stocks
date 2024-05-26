@@ -58,11 +58,14 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, text }) => {
 };
 
 const currentNotification = {
-  message:  "I've just rolled out transaction holds, which prevents you from selling a stock you bought for 3 hours. " +
-            "The hope that this will prevent people from sniping firsts while watching someone's stream. " +
-            "I won't be implementing a portfolio and balance reset just yet, since there are other features I'd like to rollout first, " +
-            "but this is hopefully how the state of transactions will be going forward.",
-  version: 6
+  message:  "Hey everyone, thank you for all the support these past few weeks! I know I haven't rolled out too many new features, " +
+            "but I promise I've been working hard to keep making the site better. On that note, I have disabled a lot of the live update " +
+            "functions on the site, so player prices and people's ranks will be disabled for the next couple of days while I work on rolling out " +
+            "what I hope to be the live release version of the website. This version will fix a lot of the bugs we've had in this 'beta testing' period, as " +
+            "well as add a few new features I think you all will enjoy! Finally, I want to thank those of you who have been here for this early period " +
+            "and helped me by suggesting features or identifying bugs. Even those who just made an account to mess around with it a little, I'm eternally " +
+            "grateful for the support all of you have shown me. The new version of the site is coming soon, and I hope you all enjoy it!",
+  version: 7
 };
 
 export const ButtonWithModal: React.FC = () => {
